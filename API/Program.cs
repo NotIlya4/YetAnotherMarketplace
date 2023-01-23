@@ -1,3 +1,4 @@
+using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,8 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
 builder.Services.AddDbContext<StoreContext>(
-    options => {
+    options =>
+    {
         options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
     }
 );
@@ -17,7 +21,25 @@ builder.Services.AddDbContext<StoreContext>(
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//builder.Configuration.
+
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    ILogger logger = app.Services.GetRequiredService<ILoggerFactory>().CreateLogger<string>();
+    StoreContext dbContext = scope.ServiceProvider.GetRequiredService<StoreContext>();
+    try
+    {
+        await dbContext.Database.MigrateAsync();
+    }
+    catch (OperationCanceledException e)
+    {
+        logger.LogError(e, "Error occured during migration");
+        throw;
+    }
+    await StoreContextSeed.SeedAsync(dbContext);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
