@@ -10,25 +10,31 @@ namespace API.Controllers;
 [Route("api/Products")]
 public class ProductsController : ControllerBase
 {
-    private readonly IProductRepository _repo;
+    private readonly IGenericRepository<Product> _productsRepo;
+    private readonly IGenericRepository<ProductBrand> _productBrandRepo;
+    private readonly IGenericRepository<ProductType> _productTypeRepo;
 
-    public ProductsController(IProductRepository repo)
+    public ProductsController(
+            IGenericRepository<Product> productsRepo,
+            IGenericRepository<ProductBrand> productBrandRepo,
+            IGenericRepository<ProductType> productTypeRepo
+        )
     {
-        this._repo = repo;
+        _productsRepo = productsRepo;
+        _productBrandRepo = productBrandRepo;
+        _productTypeRepo = productTypeRepo;
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+    public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts()
     {
-        IEnumerable<Product> prods = await _repo.GetProductsAsync();
-
-        return Ok(prods);
+        return Ok(await _productsRepo.GetAllAsync());
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Product>> GetProduct(int id) 
     {
-        Product? prod = await _repo.GetProductByIdAsync(id);
+        Product? prod = await _productsRepo.GetByIdAsync(id);
 
         if (prod is null) {
             return BadRequest();
@@ -38,10 +44,14 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet("brands")]
-    public async Task<ActionResult<IEnumerable<ProductBrand>>> GetBrands()
+    public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetBrands()
     {
-        return Ok(await _repo.GetProductBrandsAsync());
+        return Ok(await _productBrandRepo.GetAllAsync());
     }
 
-
+    [HttpGet("types")]
+    public async Task<ActionResult<IReadOnlyList<ProductType>>> GetTypes()
+    {
+        return Ok(await _productTypeRepo.GetAllAsync());
+    }
 }
