@@ -3,6 +3,7 @@ using Core.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Core.Interfaces;
+using Core.Specifications;
 
 namespace API.Controllers;
 
@@ -28,16 +29,18 @@ public class ProductsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts()
     {
-        return Ok(await _productsRepo.GetAllAsync());
+        return Ok(await _productsRepo.ListAsync(new ProductsWithTypesAndBrandsSpecification()));
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Product>> GetProduct(int id) 
     {
-        Product? prod = await _productsRepo.GetByIdAsync(id);
+        var spec = new ProductsWithTypesAndBrandsSpecification(id);
+
+        Product? prod = await _productsRepo.GetEntityWithSpec(spec);
 
         if (prod is null) {
-            return BadRequest();
+            return NotFound();
         }
 
         return Ok(prod);
