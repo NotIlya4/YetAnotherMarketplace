@@ -1,0 +1,5 @@
+Add migration
+dotnet ef migrations add {MigrationName} --project Infrastructure --startup-project Api -o Data/EntityFramework/Migrations
+
+Update database
+dotnet ef database update --project Infrastructure --startup-project Api
