@@ -12,7 +12,7 @@ public class NoSuchEntityInRepositoryExceptionMapper : IExceptionMapper<NoSuchEn
     {
         return new BadResponse()
         {
-            StatusCode = StatusCodes.Status400BadRequest,
+            StatusCode = StatusCodes.Status404NotFound,
             ExceptionDto = new BadResponseDto()
             {
                 Title = "Entity not found",

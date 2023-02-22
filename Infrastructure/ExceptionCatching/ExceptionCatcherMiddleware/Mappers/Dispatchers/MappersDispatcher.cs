@@ -5,12 +5,12 @@ using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Except
 
 namespace Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Dispatchers;
 
-internal class HierarchicalMappersDispatcher : IMappersDispatcher
+internal class MappersDispatcher
 {
     private readonly IMapperInstanceProvider _mapperInstanceProvider;
     private readonly IReflectionBundlesProvider _reflectionBundlesProvider;
 
-    public HierarchicalMappersDispatcher(IMapperInstanceProvider mapperInstanceProvider,
+    public MappersDispatcher(IMapperInstanceProvider mapperInstanceProvider,
         IReflectionBundlesProvider reflectionBundlesProvider)
     {
         _mapperInstanceProvider = mapperInstanceProvider;

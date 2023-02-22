@@ -7,7 +7,6 @@ namespace Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Options;
 internal class ExceptionMiddlewareOptions : IExceptionMiddlewareOptionsBuilder
 {
     public MapperMethodsCompilePolicy CompilePolicy { get; set; } = MapperMethodsCompilePolicy.LazyCompile;
-    public MappersDispatcherMode MappersDispatcherMode { get; set; } = MappersDispatcherMode.HierarchicalDispatcher;
     public ReflectionBundlesManager ReflectionBundlesManager { get; }
 
     public ExceptionMiddlewareOptions()

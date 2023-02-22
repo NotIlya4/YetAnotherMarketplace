@@ -47,7 +47,6 @@ public static class DiExtensions
         serviceCollection.AddExceptionCatcherMiddlewareServices(optionsBuilder =>
         {
             optionsBuilder.CompilePolicy = MapperMethodsCompilePolicy.CompileAllAtStart;
-            optionsBuilder.MappersDispatcherMode = MappersDispatcherMode.HierarchicalDispatcher;
             
             optionsBuilder.RegisterExceptionMapper<NoSuchEntityInRepositoryException, NoSuchEntityInRepositoryExceptionMapper>();
         });
