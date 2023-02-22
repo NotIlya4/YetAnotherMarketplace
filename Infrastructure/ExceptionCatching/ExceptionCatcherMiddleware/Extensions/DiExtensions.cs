@@ -1,8 +1,6 @@
-﻿using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers;
-using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Dispatchers;
-using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Dispatchers.DispatcherDependencies;
-using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Dispatchers.MappersReflection;
-using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Middleware;
+﻿using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Dispatcher;
+using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Dispatcher.DispatcherDependencies;
+using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Dispatcher.MappersReflection;
 using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Options;
 using Microsoft.Extensions.DependencyInjection;
 

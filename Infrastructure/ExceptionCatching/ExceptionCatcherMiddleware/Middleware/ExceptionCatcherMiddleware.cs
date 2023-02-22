@@ -1,13 +1,8 @@
-﻿using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers;
-using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.CreatingCustomMappers;
-using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Dispatchers;
+﻿using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.CreatingCustomMappers;
+using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Dispatcher;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Middleware;
 

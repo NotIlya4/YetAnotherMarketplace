@@ -1,6 +1,5 @@
-﻿using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers;
-using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.CreatingCustomMappers;
-using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Dispatchers.MappersReflection;
+﻿using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.CreatingCustomMappers;
+using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Dispatcher.MappersReflection;
 
 namespace Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Options;
 

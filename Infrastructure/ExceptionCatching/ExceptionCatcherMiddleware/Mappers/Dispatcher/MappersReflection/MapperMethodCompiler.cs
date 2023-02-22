@@ -3,7 +3,7 @@ using System.Reflection;
 using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.CreatingCustomMappers;
 using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Exceptions;
 
-namespace Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Dispatchers.MappersReflection;
+namespace Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Dispatcher.MappersReflection;
 
 internal delegate BadResponse CompiledMapperMethod(object mapperInstance, Exception exception);
 internal class MapperMethodCompiler
@@ -11,7 +11,7 @@ internal class MapperMethodCompiler
     public static CompiledMapperMethod CompileMapperMethod(Type mapperType)
     {
         MethodInfo methodInfo = mapperType.GetMethod(nameof(IExceptionMapper<Exception>.Map)) 
-                                ?? throw new TypeValidationException(mapperType, $"Map method not found");;
+                                ?? throw new TypeValidationException(mapperType, $"Map method not found");
         
         Type argumentExceptionType = methodInfo.GetParameters()[0].ParameterType;
         

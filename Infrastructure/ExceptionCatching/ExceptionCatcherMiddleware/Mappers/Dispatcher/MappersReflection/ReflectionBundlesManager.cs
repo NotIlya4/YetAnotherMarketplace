@@ -1,7 +1,7 @@
-﻿using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Dispatchers.DispatcherDependencies;
+﻿using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Dispatcher.DispatcherDependencies;
 using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Exceptions;
 
-namespace Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Dispatchers.MappersReflection;
+namespace Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Dispatcher.MappersReflection;
 
 internal class ReflectionBundlesManager : IReflectionBundlesProvider
 {

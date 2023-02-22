@@ -1,5 +1,4 @@
-﻿using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers;
-using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.CreatingCustomMappers;
+﻿using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.CreatingCustomMappers;
 using Infrastructure.ExceptionCatching.ExceptionMappers.BadResponseDtos;
 
 namespace Infrastructure.ExceptionCatching.ExceptionMappers;

@@ -3,7 +3,7 @@ using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Creati
 using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Exceptions;
 using Exception = System.Exception;
 
-namespace Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Dispatchers.MappersReflection;
+namespace Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Dispatcher.MappersReflection;
 
 internal class ReflectionBundle
 {

@@ -1,6 +1,5 @@
 using Infrastructure.BrandService;
 using Infrastructure.BrandService.Dtos;
-using Infrastructure.ExceptionCatching.ExceptionMappers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.BrandsControllers;

@@ -1,5 +1,4 @@
 ﻿using Infrastructure.Data.Repositories.QueryableExtensions;
-using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers;
 using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.CreatingCustomMappers;
 using Infrastructure.ExceptionCatching.ExceptionMappers.BadResponseDtos;
 using Microsoft.AspNetCore.Http;
