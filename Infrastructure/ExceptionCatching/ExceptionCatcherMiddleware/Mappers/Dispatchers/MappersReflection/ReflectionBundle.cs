@@ -17,18 +17,18 @@ internal class ReflectionBundle
     {
         // Ensure that type has method Map
         MethodInfo mapMethod = mapperType.GetMethod(nameof(IExceptionMapper<Exception>.Map))
-                               ?? throw new MethodNotFoundException(mapperType);
+                               ?? throw new TypeValidationException(mapperType, $"Map method not found");
         
         // Ensure that return type is BadResponse
         if (mapMethod.ReturnType != typeof(BadResponse))
         {
-            throw new BadTypeException("Map method have to return BadResponse");
+            throw new TypeValidationException(mapperType, $"Map method have to return BadResponse");
         } 
 
         // Ensure that type has only 1 param
         if (mapMethod.GetParameters().Length != 1)
         {
-            throw new BadTypeException("Map method have to contain only one parameter that assignable to Exception");
+            throw new TypeValidationException(mapperType, $"Map method have to contain only one parameter that assignable to Exception");
         }
         
         Type paramterType = mapMethod.GetParameters()[0].ParameterType;
@@ -36,7 +36,7 @@ internal class ReflectionBundle
         // Ensure that param is assignable to Exception
         if (!paramterType.IsAssignableTo(typeof(Exception)))
         {
-            throw new BadTypeException("Exception type must be assignable to Exception");
+            throw new TypeValidationException(mapperType, $"Exception type must be assignable to Exception");
         }
 
         MapperType = mapperType;

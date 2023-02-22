@@ -11,7 +11,8 @@ internal class ReflectionBundlesManager : IReflectionBundlesProvider
     {
         if (defaultReflectionBundle.ExceptionTypeThatMapperMaps != typeof(Exception))
         {
-            throw new BadTypeException("defaultMapperType's exception must be Exception");
+            throw new TypeValidationException(defaultReflectionBundle.GetType(),
+                $"{nameof(defaultReflectionBundle)}'s exception that mapper maps must be Exception");
         }
         
         Set(defaultReflectionBundle);

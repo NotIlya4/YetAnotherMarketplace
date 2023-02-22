@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Extensions;
 
-public static class DependencyInjectionExtensions
+public static class DiExtensions
 {
     public static void AddServices(this IServiceCollection serviceCollection)
     {
@@ -47,6 +47,7 @@ public static class DependencyInjectionExtensions
         serviceCollection.AddExceptionCatcherMiddlewareServices(optionsBuilder =>
         {
             optionsBuilder.CompilePolicy = MapperMethodsCompilePolicy.CompileAllAtStart;
+            optionsBuilder.MappersDispatcherMode = MappersDispatcherMode.HierarchicalDispatcher;
             
             optionsBuilder.RegisterExceptionMapper<NoSuchEntityInRepositoryException, NoSuchEntityInRepositoryExceptionMapper>();
         });

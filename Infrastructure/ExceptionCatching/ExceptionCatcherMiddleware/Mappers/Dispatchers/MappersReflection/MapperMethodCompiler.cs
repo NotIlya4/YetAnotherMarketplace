@@ -11,7 +11,7 @@ internal class MapperMethodCompiler
     public static CompiledMapperMethod CompileMapperMethod(Type mapperType)
     {
         MethodInfo methodInfo = mapperType.GetMethod(nameof(IExceptionMapper<Exception>.Map)) 
-                                ?? throw new MethodNotFoundException(mapperType);
+                                ?? throw new TypeValidationException(mapperType, $"Map method not found");;
         
         Type argumentExceptionType = methodInfo.GetParameters()[0].ParameterType;
         

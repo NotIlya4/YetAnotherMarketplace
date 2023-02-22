@@ -1,30 +1,41 @@
 ﻿using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.CreatingCustomMappers;
 using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Dispatchers.DispatcherDependencies;
 using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Dispatchers.MappersReflection;
+using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Exceptions;
 
 namespace Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Mappers.Dispatchers;
 
-internal class StrictMappersDispatcher : IMappersDispatcher
+internal class HierarchicalMappersDispatcher : IMappersDispatcher
 {
     private readonly IMapperInstanceProvider _mapperInstanceProvider;
     private readonly IReflectionBundlesProvider _reflectionBundlesProvider;
-    private readonly ReflectionBundle _defaultReflectionBundle;
 
-    public StrictMappersDispatcher(IMapperInstanceProvider mapperInstanceProvider,
+    public HierarchicalMappersDispatcher(IMapperInstanceProvider mapperInstanceProvider,
         IReflectionBundlesProvider reflectionBundlesProvider)
     {
         _mapperInstanceProvider = mapperInstanceProvider;
         _reflectionBundlesProvider = reflectionBundlesProvider;
-        _defaultReflectionBundle = reflectionBundlesProvider.GetDefault();
     }
     
     public BadResponse Map(Exception exception)
     {
-        ReflectionBundle? reflectionBundle = _reflectionBundlesProvider.Get(exception.GetType());
+        Type? exceptionType = exception.GetType();
+        ReflectionBundle? reflectionBundle = null;
+        
+        while (exceptionType is not null)
+        {
+            reflectionBundle = _reflectionBundlesProvider.Get(exceptionType);
+            if (reflectionBundle is not null)
+            {
+                break;
+            }
+            exceptionType = exceptionType.BaseType;
+        }
 
         if (reflectionBundle is null)
         {
-            reflectionBundle = _defaultReflectionBundle;
+            throw new MappersDispatchingException(
+                $"Not found reflection bundle for all parents of exception: {exception.GetType().FullName}");
         }
         
         object mapperInstance = _mapperInstanceProvider.GetMapperInstanceByType(reflectionBundle.MapperType);

@@ -21,7 +21,7 @@ public static class DiExtensions
             reflectionBundlesManager.CompileAllMappersMethods();
         }
 
-        serviceCollection.AddMappersDispatcher(reflectionBundlesManager);
+        serviceCollection.AddMappersDispatcher(reflectionBundlesManager, options.MappersDispatcherMode);
         serviceCollection.AddAllUsersMappersToServiceCollection(reflectionBundlesManager.GetAllMapperTypes());
         serviceCollection.AddMiddleware();
     }
@@ -42,10 +42,15 @@ public static class DiExtensions
     }
 
     private static void AddMappersDispatcher(this IServiceCollection serviceCollection,
-        IReflectionBundlesProvider reflectionBundlesManager)
+        IReflectionBundlesProvider reflectionBundlesManager, MappersDispatcherMode dispatcherMode)
     {
+        Type dispatcherType =
+            dispatcherMode == MappersDispatcherMode.StrictDispatcher
+                ? typeof(StrictMappersDispatcher)
+                : typeof(HierarchicalMappersDispatcher);
+
         serviceCollection.AddScoped<IMapperInstanceProvider, ServiceProviderWrapper>();
         serviceCollection.AddSingleton<IReflectionBundlesProvider>(reflectionBundlesManager);
-        serviceCollection.AddScoped<StrictMappersDispatcher>();
+        serviceCollection.AddScoped(typeof(IMappersDispatcher), dispatcherType);
     }
 }

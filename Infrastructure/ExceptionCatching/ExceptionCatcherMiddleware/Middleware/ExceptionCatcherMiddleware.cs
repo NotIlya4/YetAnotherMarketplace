@@ -9,15 +9,15 @@ namespace Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Middleware
 internal class ExceptionCatcherMiddleware : IMiddleware
 {
     private readonly ILogger<ExceptionCatcherMiddleware> _logger;
-    private readonly StrictMappersDispatcher _strictMappersDispatcher;
+    private readonly IMappersDispatcher _mappersDispatcher;
     private readonly JsonSerializer _jsonSerializer;
 
     public ExceptionCatcherMiddleware(ILogger<ExceptionCatcherMiddleware> logger,
-        StrictMappersDispatcher strictMappersDispatcher,
+        IMappersDispatcher mappersDispatcher,
         JsonSerializer jsonSerializer)
     {
         _logger = logger;
-        _strictMappersDispatcher = strictMappersDispatcher;
+        _mappersDispatcher = mappersDispatcher;
         _jsonSerializer = jsonSerializer;
     }
 
@@ -31,7 +31,7 @@ internal class ExceptionCatcherMiddleware : IMiddleware
         {
             _logger.LogError(e, "Exception caught by {catcher}", nameof(ExceptionCatcherMiddleware));
             
-            BadResponse badResponse = _strictMappersDispatcher.Map(e);
+            BadResponse badResponse = _mappersDispatcher.Map(e);
             string body = _jsonSerializer.Serialize(badResponse.ExceptionDto);
             
             context.Response.StatusCode = badResponse.StatusCode;
