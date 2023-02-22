@@ -4,6 +4,10 @@ using Infrastructure.BrandService;
 using Infrastructure.Data.EntityFramework;
 using Infrastructure.Data.Repositories.BrandRepository;
 using Infrastructure.Data.Repositories.ProductRepository;
+using Infrastructure.Data.Repositories.QueryableExtensions;
+using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Extensions;
+using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Options;
+using Infrastructure.ExceptionCatching.ExceptionMappers;
 using Infrastructure.Helpers;
 using Infrastructure.ProductService;
 using Microsoft.EntityFrameworkCore;
@@ -36,5 +40,15 @@ public static class DependencyInjectionExtensions
     {
         serviceCollection.AddScoped<IProductIdFactory, GuidFactory>();
         serviceCollection.AddScoped<IBrandIdFactory, GuidFactory>();
+    }
+
+    public static void AddExceptionCatcherMiddlewareServicesConfigured(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddExceptionCatcherMiddlewareServices(optionsBuilder =>
+        {
+            optionsBuilder.CompilePolicy = MapperMethodsCompilePolicy.CompileAllAtStart;
+            
+            optionsBuilder.RegisterExceptionMapper<NoSuchEntityInRepositoryException, NoSuchEntityInRepositoryExceptionMapper>();
+        });
     }
 }

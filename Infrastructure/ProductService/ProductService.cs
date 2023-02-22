@@ -36,10 +36,12 @@ public class ProductService : IProductService
         return products.Select(GetProductDto.FromDomainModel).ToList();
     }
 
-    public async Task CreateNewProduct(CreateProductDto createProductDto)
+    public async Task<GetProductDto> CreateNewProduct(CreateProductDto createProductDto)
     {
-        Brand brand = await _brandRepository.GetBrandByName(createProductDto.BrandName);
+        Brand brand = await _brandRepository.GetBrandByNameAsync(createProductDto.BrandName);
         Product product = createProductDto.ToDomain(_productIdFactory.CreateProductId(), brand);
         await _productRepository.InsertAsync(product);
+        
+        return GetProductDto.FromDomainModel(product);
     }
 }

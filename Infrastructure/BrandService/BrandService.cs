@@ -17,23 +17,25 @@ public class BrandService : IBrandService
 
     public async Task<GetBrandDto> GetBrandById(string id)
     {
-        return GetBrandDto.FromDomain(await _brandRepository.GetBrandById(new BrandId(id)));
+        return GetBrandDto.FromDomain(await _brandRepository.GetBrandByIdAsync(new BrandId(id)));
     }
 
     public async Task<GetBrandDto> GetBrandByName(string name)
     {
-        return GetBrandDto.FromDomain(await _brandRepository.GetBrandByName(name));
+        return GetBrandDto.FromDomain(await _brandRepository.GetBrandByNameAsync(name));
     }
 
     public async Task<List<GetBrandDto>> GetBrands()
     {
-        return (await _brandRepository.GetBrands()).Select(GetBrandDto.FromDomain).ToList();
+        return (await _brandRepository.GetBrandsAsync()).Select(GetBrandDto.FromDomain).ToList();
     }
 
-    public async Task CreateNewBrand(CreateBrandDto createBrandDto)
+    public async Task<GetBrandDto> CreateNewBrand(CreateBrandDto createBrandDto)
     {
         Brand brand = createBrandDto.ToDomain(_brandIdFactory.CreateBrandId());
 
-        await _brandRepository.Insert(brand);
+        await _brandRepository.InsertAsync(brand);
+        
+        return GetBrandDto.FromDomain(brand);
     }
 }

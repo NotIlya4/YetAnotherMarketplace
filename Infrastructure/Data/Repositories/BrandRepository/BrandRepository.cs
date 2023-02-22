@@ -14,22 +14,22 @@ public class BrandRepository : IBrandRepository
         _dbContext = dbContext;
     }
 
-    public async Task<Brand> GetBrandById(BrandId brandId)
+    public async Task<Brand> GetBrandByIdAsync(BrandId brandId)
     {
         return await _dbContext.Brands.FirstAsyncOrThrow<BrandRepository, Brand>(b => b.Id == brandId);
     }
 
-    public async Task<Brand> GetBrandByName(string brandName)
+    public async Task<Brand> GetBrandByNameAsync(string brandName)
     {
         return await _dbContext.Brands.FirstAsyncOrThrow<BrandRepository, Brand>(b => b.Name == brandName);
     }
 
-    public async Task<List<Brand>> GetBrands()
+    public async Task<List<Brand>> GetBrandsAsync()
     {
         return await _dbContext.Brands.ToListAsync();
     }
 
-    public async Task Insert(Brand brand)
+    public async Task InsertAsync(Brand brand)
     {
         await _dbContext.Brands.AddAsync(brand);
         await _dbContext.SaveChangesAsync();
