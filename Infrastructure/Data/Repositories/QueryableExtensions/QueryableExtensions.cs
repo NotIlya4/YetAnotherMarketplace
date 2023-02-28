@@ -7,6 +7,6 @@ public static class QueryableExtensions
 {
     public static async Task<TEntity> FirstAsyncOrThrow<TRepository, TEntity>(this IQueryable<TEntity> query, Expression<Func<TEntity, bool>> predicate)
     {
-        return await query.FirstOrDefaultAsync(predicate) ?? throw new NoSuchEntityInRepositoryException(typeof(TEntity), typeof(TRepository));
+        return await query.FirstOrDefaultAsync(predicate) ?? throw new EntityNotFoundException(typeof(TEntity), typeof(TRepository));
     }
 }

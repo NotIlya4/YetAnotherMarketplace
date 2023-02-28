@@ -1,13 +1,13 @@
 ﻿using Domain.Entities.Brand;
 using Domain.Entities.Product;
+using ExceptionCatcherMiddleware.Extensions;
+using ExceptionCatcherMiddleware.Options;
 using Infrastructure.BrandService;
 using Infrastructure.Data.EntityFramework;
 using Infrastructure.Data.Repositories.BrandRepository;
 using Infrastructure.Data.Repositories.ProductRepository;
 using Infrastructure.Data.Repositories.QueryableExtensions;
-using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Extensions;
-using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Options;
-using Infrastructure.ExceptionCatching.ExceptionMappers;
+using Infrastructure.ExceptionCatching;
 using Infrastructure.Helpers;
 using Infrastructure.ProductService;
 using Microsoft.EntityFrameworkCore;
@@ -48,7 +48,7 @@ public static class DiExtensions
         {
             optionsBuilder.CompilePolicy = MapperMethodsCompilePolicy.CompileAllAtStart;
             
-            optionsBuilder.RegisterExceptionMapper<NoSuchEntityInRepositoryException, NoSuchEntityInRepositoryExceptionMapper>();
+            optionsBuilder.RegisterExceptionMapper<EntityNotFoundException, EntityNotFoundExceptionMapper>();
         });
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.ExceptionCatching.ExceptionMappers.BadResponseDtos;
+﻿namespace Infrastructure.ExceptionCatching;
 
 public class BadResponseDto
 {

@@ -1,6 +1,6 @@
 using Api.Extensions;
 using Api.Parameters;
-using Infrastructure.ExceptionCatching.ExceptionCatcherMiddleware.Extensions;
+using ExceptionCatcherMiddleware.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 IServiceCollection services = builder.Services;

@@ -1,4 +1,4 @@
-﻿using Infrastructure.ExceptionCatching.ExceptionMappers.BadResponseDtos;
+﻿using Infrastructure.ExceptionCatching;
 using Infrastructure.ProductService;
 using Microsoft.AspNetCore.Mvc;
 
