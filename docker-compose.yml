@@ -1,0 +1,21 @@
+services:
+  app:
+    build: ./src/backend/
+    container_name: app
+    ports:
+      - "5000:80"
+    depends_on:
+      - sql-server
+    restart: on-failure
+  sql-server:
+    image: "mcr.microsoft.com/mssql/server"
+    container_name: sql-server
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=A&VeryComplex123Password
+    ports:
+      - 2000:1433
+    volumes:
+      - sql-server-volume:/var/opt/mssql
+volumes:
+  sql-server-volume:
