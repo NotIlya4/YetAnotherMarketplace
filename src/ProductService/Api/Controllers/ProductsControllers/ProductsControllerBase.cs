@@ -1,5 +1,5 @@
 ﻿using Infrastructure.ExceptionCatching;
-using Infrastructure.ProductService;
+using Infrastructure.Services.ProductService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.ProductsControllers;

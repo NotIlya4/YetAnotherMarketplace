@@ -1,5 +1,5 @@
 ﻿using ExceptionCatcherMiddleware.Mappers.CreatingCustomMappers;
-using Infrastructure.Data.Repositories.QueryableExtensions;
+using Infrastructure.Repositories.Exceptions;
 using Microsoft.AspNetCore.Http;
 
 namespace Infrastructure.ExceptionCatching;

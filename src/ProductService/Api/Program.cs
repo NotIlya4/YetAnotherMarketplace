@@ -9,7 +9,6 @@ IConfiguration configuration = builder.Configuration;
 services.AddServices();
 services.AddRepositories();
 services.AddAppDbContext(ParametersProvider.GetConnectionString(configuration));
-services.AddDomainModelsIdGenerators();
 services.AddExceptionCatcherMiddlewareServicesConfigured();
 
 services.AddControllers()

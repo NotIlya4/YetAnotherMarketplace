@@ -29,7 +29,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Data\EntityFramework\Migrations" />
+      <Folder Include="Services" />
     </ItemGroup>
 
 </Project>

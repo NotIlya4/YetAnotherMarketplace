@@ -1,15 +1,13 @@
-﻿using Domain.Entities.Brand;
-using Domain.Entities.Product;
+﻿using Domain.Exceptions;
 using ExceptionCatcherMiddleware.Extensions;
 using ExceptionCatcherMiddleware.Options;
-using Infrastructure.BrandService;
-using Infrastructure.Data.EntityFramework;
-using Infrastructure.Data.Repositories.BrandRepository;
-using Infrastructure.Data.Repositories.ProductRepository;
-using Infrastructure.Data.Repositories.QueryableExtensions;
+using Infrastructure.EntityFramework;
 using Infrastructure.ExceptionCatching;
-using Infrastructure.Helpers;
-using Infrastructure.ProductService;
+using Infrastructure.Repositories.BrandRepository;
+using Infrastructure.Repositories.Exceptions;
+using Infrastructure.Repositories.ProductRepository;
+using Infrastructure.Services.BrandService;
+using Infrastructure.Services.ProductService;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Extensions;
@@ -36,12 +34,6 @@ public static class DiExtensions
         });
     }
 
-    public static void AddDomainModelsIdGenerators(this IServiceCollection serviceCollection)
-    {
-        serviceCollection.AddScoped<IProductIdFactory, GuidFactory>();
-        serviceCollection.AddScoped<IBrandIdFactory, GuidFactory>();
-    }
-
     public static void AddExceptionCatcherMiddlewareServicesConfigured(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddExceptionCatcherMiddlewareServices(optionsBuilder =>
@@ -49,6 +41,7 @@ public static class DiExtensions
             optionsBuilder.CompilePolicy = MapperMethodsCompilePolicy.CompileAllAtStart;
             
             optionsBuilder.RegisterExceptionMapper<EntityNotFoundException, EntityNotFoundExceptionMapper>();
+            optionsBuilder.RegisterExceptionMapper<ValidationException, ValidationExceptionMapper>();
         });
     }
 }

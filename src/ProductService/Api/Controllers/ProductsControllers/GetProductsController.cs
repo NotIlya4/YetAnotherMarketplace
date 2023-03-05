@@ -1,6 +1,9 @@
+using Api.Controllers.ProductsControllers.Dtos;
 using Api.ControllersAttributes;
-using Infrastructure.ProductService;
-using Infrastructure.ProductService.Dtos;
+using Domain.Primitives;
+using Infrastructure.Repositories.Primitives;
+using Infrastructure.Services.ProductService;
+using Infrastructure.Services.ProductService.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.ProductsControllers;
@@ -12,27 +15,34 @@ public class GetProductsController : ProductsControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<List<GetProductDto>>> GetProducts()
+    [ProducesOk]
+    [ProducesBadRequest]
+    public async Task<ActionResult<List<GetProductView>>> GetProducts(int offset, int limit)
     {
-        return Ok(await ProductService.GetProducts());
+        List<GetProductDto> productDtos = await ProductService.GetProducts(new Pagination(offset, limit));
+        List<GetProductView> productViews = productDtos.Select(GetProductView.FromGetProductDto).ToList();
+        return Ok(productViews);
     }
 
     [HttpGet]
     [Route("id/{id}", Name = nameof(GetProductById))]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesEntityNotFound]
-    public async Task<ActionResult<GetProductDto>> GetProductById(string id)
+    [ProducesOk]
+    [ProducesNotFound]
+    public async Task<ActionResult<GetProductView>> GetProductById(Guid id)
     {
-        return Ok(await ProductService.GetProductById(id));
+        GetProductDto productDto = await ProductService.GetProductById(id);
+        GetProductView productView = GetProductView.FromGetProductDto(productDto);
+        return Ok(productView);
     }
 
     [HttpGet]
     [Route("name/{name}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesEntityNotFound]
-    public async Task<ActionResult<GetProductDto>> GetProductByName(string name)
+    [ProducesOk]
+    [ProducesNotFound]
+    public async Task<ActionResult<GetProductView>> GetProductByName(string name)
     {
-        return Ok(await ProductService.GetProductByName(name));
+        GetProductDto productDto = await ProductService.GetProductByName(new NotNullString(name));
+        GetProductView getProductView = GetProductView.FromGetProductDto(productDto);
+        return Ok(getProductView);
     }
 }

@@ -1,5 +1,5 @@
-﻿using Infrastructure.BrandService;
-using Infrastructure.ExceptionCatching;
+﻿using Infrastructure.ExceptionCatching;
+using Infrastructure.Services.BrandService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.BrandsControllers;
