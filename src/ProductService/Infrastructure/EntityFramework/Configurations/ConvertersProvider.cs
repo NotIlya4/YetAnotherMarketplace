@@ -25,4 +25,18 @@ public static class ConvertersProvider
             uri => uri.ToString(),
             str => new Uri(str));
     }
+
+    public static ValueConverter<Price, decimal> GetPriceConverter()
+    {
+        return new ValueConverter<Price, decimal>(
+            price => price.Value,
+            dec => new Price(dec));
+    }
+
+    public static ValueConverter<ProductType, string> GetProductTypeConverter()
+    {
+        return new ValueConverter<ProductType, string>(
+            pt => pt.ToString(),
+            str => Enum.Parse<ProductType>(str));
+    }
 }

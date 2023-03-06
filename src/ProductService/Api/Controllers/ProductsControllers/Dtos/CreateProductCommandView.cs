@@ -1,9 +1,9 @@
 ﻿using Domain.Primitives;
-using Infrastructure.Services.ProductService.Dtos;
+using Infrastructure.Services.ProductService;
 
 namespace Api.Controllers.ProductsControllers.Dtos;
 
-public record CreateProductView
+public record CreateProductCommandView
 {
     public required string Name { get; set; }
     public required string Description { get; set; }
@@ -12,15 +12,15 @@ public record CreateProductView
     public required string ProductType { get; set; }
     public required string BrandName { get; set; }
     
-    public CreateProductDto ToCreateProductDto()
+    public CreateProductCommand ToCreateProductDto()
     {
-        return new CreateProductDto()
+        return new CreateProductCommand()
         {
             Name = new NotNullString(Name),
             Description = new NotNullString(Description),
-            Price = Price,
+            Price = new Price(Price),
             PictureUrl = PictureUrl,
-            ProductType = new NotNullString(ProductType),
+            ProductType = Enum.Parse<ProductType>(ProductType),
             BrandName = new NotNullString(BrandName)
         };
     }

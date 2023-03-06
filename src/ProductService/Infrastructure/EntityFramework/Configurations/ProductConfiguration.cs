@@ -51,6 +51,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
     {
         Builder
             .Property(p => p.Price)
+            .HasConversion(ConvertersProvider.GetPriceConverter())
             .HasColumnType("decimal(19,4)");
     }
     
@@ -65,7 +66,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
     {
         Builder
             .Property(p => p.ProductType)
-            .HasConversion(ConvertersProvider.GetHandsomeStringConverter());
+            .HasConversion(ConvertersProvider.GetProductTypeConverter());
     }
 
     private void ConfigureBrand()

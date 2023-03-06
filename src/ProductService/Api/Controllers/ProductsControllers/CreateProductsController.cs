@@ -1,6 +1,6 @@
 ﻿using Api.Controllers.ProductsControllers.Dtos;
+using Domain.Entities;
 using Infrastructure.Services.ProductService;
-using Infrastructure.Services.ProductService.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.ProductsControllers;
@@ -13,10 +13,10 @@ public class CreateProductsController : ProductsControllerBase
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    public async Task<ActionResult<GetProductView>> CreateProduct(CreateProductView createProductDto)
+    public async Task<ActionResult<ProductView>> CreateProduct(CreateProductCommandView createProductCommandDto)
     {
-        GetProductDto productDto = await ProductService.CreateNewProduct(createProductDto.ToCreateProductDto());
-        GetProductView productView = GetProductView.FromGetProductDto(productDto);
-        return CreatedAtRoute(nameof(GetProductsController.GetProductById), new {Id = productDto.Id}, productView);
+        Product product = await ProductService.CreateNewProduct(createProductCommandDto.ToCreateProductDto());
+        ProductView productView = ProductView.FromGetProductDto(product);
+        return CreatedAtRoute(nameof(GetProductsController.GetProductById), new {Id = product.Id}, productView);
     }
 }

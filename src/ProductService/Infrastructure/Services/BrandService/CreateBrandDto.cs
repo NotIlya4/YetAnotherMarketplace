@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Primitives;
 
-namespace Infrastructure.Services.BrandService.Dtos;
+namespace Infrastructure.Services.BrandService;
 
 public record CreateBrandDto
 {

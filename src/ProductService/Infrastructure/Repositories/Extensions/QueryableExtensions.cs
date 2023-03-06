@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
+using Infrastructure.ListQuery;
 using Infrastructure.Repositories.Exceptions;
-using Infrastructure.Repositories.Primitives;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.Extensions;
@@ -17,5 +17,10 @@ public static class QueryableExtensions
         return query
             .Skip(pagination.Offset)
             .Take(pagination.Limit);
+    }
+
+    public static IQueryable<TEntity> ApplySorting<TEntity, TKey>(this IQueryable<TEntity> query, Expression<Func<TEntity, TKey>> keySelector, SortingType sortingType)
+    {
+        return sortingType == SortingType.Asc ? query.OrderBy(keySelector) : query.OrderByDescending(keySelector);
     }
 }

@@ -1,9 +1,8 @@
 ﻿using Api.Controllers.BrandsControllers.Dtos;
 using Api.ControllersAttributes;
+using Domain.Entities;
 using Domain.Primitives;
-using Infrastructure.Repositories.Primitives;
 using Infrastructure.Services.BrandService;
-using Infrastructure.Services.BrandService.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.BrandsControllers;
@@ -17,10 +16,12 @@ public class GetBrandsController : BrandsControllerBase
     
     [HttpGet]
     [ProducesOk]
-    public async Task<ActionResult<IEnumerable<GetBrandView>>> GetBrands(int offset, int limit)
+    public async Task<ActionResult<IEnumerable<BrandView>>> GetBrands(GetBrandsQueryView getBrandsQueryView)
     {
-        List<GetBrandDto> brandDtos = await BrandService.GetBrands(new Pagination(offset, limit));
-        List<GetBrandView> brandViews = brandDtos.Select(GetBrandView.FromGetBrandDto).ToList();
+        List<Brand> brands = await BrandService.GetBrands(
+            pagination: getBrandsQueryView.ToPagination(),
+            sortingType: getBrandsQueryView.ToSortingType());
+        List<BrandView> brandViews = brands.Select(BrandView.FromGetBrandDto).ToList();
         return Ok(brandViews);
     }
     
@@ -28,10 +29,10 @@ public class GetBrandsController : BrandsControllerBase
     [Route("id/{id}", Name = nameof(GetBrandById))]
     [ProducesOk]
     [ProducesNotFound]
-    public async Task<ActionResult<GetBrandView>> GetBrandById(Guid id)
+    public async Task<ActionResult<BrandView>> GetBrandById(Guid id)
     {
-        GetBrandDto brandDto = await BrandService.GetBrandById(id);
-        GetBrandView brandView = GetBrandView.FromGetBrandDto(brandDto);
+        Brand brand = await BrandService.GetBrandById(id);
+        BrandView brandView = BrandView.FromGetBrandDto(brand);
         return Ok(brandView);
     }
     
@@ -39,10 +40,10 @@ public class GetBrandsController : BrandsControllerBase
     [Route("name/{name}")]
     [ProducesOk]
     [ProducesNotFound]
-    public async Task<ActionResult<GetBrandView>> GetBrandByName(string name)
+    public async Task<ActionResult<BrandView>> GetBrandByName(string name)
     {
-        GetBrandDto brandDto = await BrandService.GetBrandByName(new NotNullString(name));
-        GetBrandView brandView = GetBrandView.FromGetBrandDto(brandDto);
+        Brand brand = await BrandService.GetBrandByName(new NotNullString(name));
+        BrandView brandView = BrandView.FromGetBrandDto(brand);
         return Ok(brandView);
     }
 }

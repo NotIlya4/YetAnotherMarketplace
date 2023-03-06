@@ -12,9 +12,13 @@ services.AddAppDbContext(ParametersProvider.GetConnectionString(configuration));
 services.AddExceptionCatcherMiddlewareServicesConfigured();
 
 services.AddControllers()
+    .AddNewtonsoftJson()
     .AddXmlDataContractSerializerFormatters();
 services.AddEndpointsApiExplorer();
-services.AddSwaggerGen();
+services.AddSwaggerGen(options =>
+{
+    options.DescribeAllParametersInCamelCase();
+});
 
 var app = builder.Build();
 

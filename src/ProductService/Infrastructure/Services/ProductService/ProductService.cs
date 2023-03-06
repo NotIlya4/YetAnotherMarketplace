@@ -1,9 +1,8 @@
 ﻿using Domain.Entities;
 using Domain.Primitives;
+using Infrastructure.ListQuery;
 using Infrastructure.Repositories.BrandRepository;
-using Infrastructure.Repositories.Primitives;
 using Infrastructure.Repositories.ProductRepository;
-using Infrastructure.Services.ProductService.Dtos;
 
 namespace Infrastructure.Services.ProductService;
 
@@ -18,30 +17,27 @@ public class ProductService : IProductService
         _brandRepository = brandRepository;
     }
 
-    public async Task<GetProductDto> GetProductById(Guid productId)
+    public async Task<Product> GetProductById(Guid productId)
     {
-        var product = await _productRepository.GetProductByIdAsync(productId);
-        return GetProductDto.FromDomainModel(product);
+        return await _productRepository.GetProductById(productId);
     }
 
-    public async Task<GetProductDto> GetProductByName(NotNullString productName)
+    public async Task<Product> GetProductByName(NotNullString productName)
     {
-        return GetProductDto.FromDomainModel(await _productRepository.GetProductByNameAsync(productName));
+        return await _productRepository.GetProductByName(productName);
     }
 
-    public async Task<List<GetProductDto>> GetProducts(Pagination pagination)
+    public async Task<List<Product>> GetProducts(Pagination pagination, ProductSortingField sortingField, SortingType sortingType)
     {
-        var products = await _productRepository
-            .GetProductsAsync(pagination);
-        return products.Select(GetProductDto.FromDomainModel).ToList();
+        return await _productRepository.GetProducts(pagination, sortingField, sortingType);
     }
 
-    public async Task<GetProductDto> CreateNewProduct(CreateProductDto createProductDto)
+    public async Task<Product> CreateNewProduct(CreateProductCommand createProductCommand)
     {
-        Brand brand = await _brandRepository.GetBrandByNameAsync(createProductDto.BrandName);
-        Product product = createProductDto.ToDomain(Guid.NewGuid(), brand);
-        await _productRepository.InsertAsync(product);
-        
-        return GetProductDto.FromDomainModel(product);
+        Brand brand = await _brandRepository.GetBrandByName(createProductCommand.BrandName);
+        Product product = createProductCommand.ToDomain(Guid.NewGuid(), brand);
+        await _productRepository.Insert(product);
+
+        return product;
     }
 }

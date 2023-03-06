@@ -1,13 +1,13 @@
-﻿using Domain.Primitives;
-using Infrastructure.Repositories.Primitives;
-using Infrastructure.Services.ProductService.Dtos;
+﻿using Domain.Entities;
+using Domain.Primitives;
+using Infrastructure.ListQuery;
 
 namespace Infrastructure.Services.ProductService;
 
 public interface IProductService
 {
-    public Task<GetProductDto> GetProductById(Guid productId);
-    public Task<GetProductDto> GetProductByName(NotNullString productName);
-    public Task<List<GetProductDto>> GetProducts(Pagination pagination);
-    public Task<GetProductDto> CreateNewProduct(CreateProductDto createProductDto);
+    public Task<Product> GetProductById(Guid productId);
+    public Task<Product> GetProductByName(NotNullString productName);
+    public Task<List<Product>> GetProducts(Pagination pagination, ProductSortingField sortingField, SortingType sortingType);
+    public Task<Product> CreateNewProduct(CreateProductCommand createProductCommand);
 }

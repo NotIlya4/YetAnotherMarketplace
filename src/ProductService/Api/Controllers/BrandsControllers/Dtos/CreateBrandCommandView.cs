@@ -1,9 +1,9 @@
 ﻿using Domain.Primitives;
-using Infrastructure.Services.BrandService.Dtos;
+using Infrastructure.Services.BrandService;
 
 namespace Api.Controllers.BrandsControllers.Dtos;
 
-public record CreateBrandView
+public record CreateBrandCommandView
 {
     public required string Name { get; set; }
     public required Uri Website { get; set; }

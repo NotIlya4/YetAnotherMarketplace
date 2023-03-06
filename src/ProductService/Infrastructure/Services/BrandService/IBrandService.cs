@@ -1,13 +1,13 @@
-﻿using Domain.Primitives;
-using Infrastructure.Repositories.Primitives;
-using Infrastructure.Services.BrandService.Dtos;
+﻿using Domain.Entities;
+using Domain.Primitives;
+using Infrastructure.ListQuery;
 
 namespace Infrastructure.Services.BrandService;
 
 public interface IBrandService
 {
-    public Task<GetBrandDto> GetBrandById(Guid brandId);
-    public Task<GetBrandDto> GetBrandByName(NotNullString brandName);
-    public Task<List<GetBrandDto>> GetBrands(Pagination pagination);
-    public Task<GetBrandDto> CreateNewBrand(CreateBrandDto createBrandDto);
+    public Task<Brand> GetBrandById(Guid brandId);
+    public Task<Brand> GetBrandByName(NotNullString brandName);
+    public Task<List<Brand>> GetBrands(Pagination pagination, SortingType sortingType);
+    public Task<Brand> CreateNewBrand(CreateBrandDto createBrandDto);
 }

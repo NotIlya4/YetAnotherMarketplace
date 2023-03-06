@@ -1,8 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Primitives;
+using Infrastructure.ListQuery;
 using Infrastructure.Repositories.BrandRepository;
-using Infrastructure.Repositories.Primitives;
-using Infrastructure.Services.BrandService.Dtos;
 
 namespace Infrastructure.Services.BrandService;
 
@@ -15,27 +14,27 @@ public class BrandService : IBrandService
         _brandRepository = brandRepository;
     }
 
-    public async Task<GetBrandDto> GetBrandById(Guid brandId)
+    public async Task<Brand> GetBrandById(Guid brandId)
     {
-        return GetBrandDto.FromDomain(await _brandRepository.GetBrandByIdAsync(brandId));
+        return await _brandRepository.GetBrandById(brandId);
     }
 
-    public async Task<GetBrandDto> GetBrandByName(NotNullString brandName)
+    public async Task<Brand> GetBrandByName(NotNullString brandName)
     {
-        return GetBrandDto.FromDomain(await _brandRepository.GetBrandByNameAsync(brandName));
+        return await _brandRepository.GetBrandByName(brandName);
     }
 
-    public async Task<List<GetBrandDto>> GetBrands(Pagination pagination)
+    public async Task<List<Brand>> GetBrands(Pagination pagination, SortingType sortingType)
     {
-        return (await _brandRepository.GetBrandsAsync(pagination)).Select(GetBrandDto.FromDomain).ToList();
+        return await _brandRepository.GetBrands(pagination, sortingType);
     }
 
-    public async Task<GetBrandDto> CreateNewBrand(CreateBrandDto createBrandDto)
+    public async Task<Brand> CreateNewBrand(CreateBrandDto createBrandDto)
     {
         Brand brand = createBrandDto.ToDomain(Guid.NewGuid());
 
-        await _brandRepository.InsertAsync(brand);
-        
-        return GetBrandDto.FromDomain(brand);
+        await _brandRepository.Insert(brand);
+
+        return brand;
     }
 }
