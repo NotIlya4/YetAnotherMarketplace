@@ -1,0 +1,30 @@
+.nav-link {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.icon{
+  font-size: 1.3rem;
+}
+
+.skinet-image{
+  height: 70px;
+}
+
+.cart-no{
+  position: absolute;
+  min-height: 25px;
+  min-width: 25px;
+  padding: 2px;
+  border-radius: 50%;
+  font-size: 1em;
+  background: blue;
+  color: white;
+  text-align: center;
+  top: -7px;
+  right: -15px;
+}
+
+.navbar{
+  min-width: 320px;
+}

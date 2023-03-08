@@ -10,9 +10,7 @@ services.AddServices();
 services.AddRepositories();
 services.AddAppDbContext(ParametersProvider.GetConnectionString(configuration));
 services.AddExceptionCatcherMiddlewareServicesConfigured();
-
 services.AddControllers()
-    .AddNewtonsoftJson()
     .AddXmlDataContractSerializerFormatters();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen(options =>
