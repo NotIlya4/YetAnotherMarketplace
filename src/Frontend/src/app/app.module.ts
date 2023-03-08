@@ -5,14 +5,13 @@ import { AppComponent } from './app.component';
 import {NgbCollapseModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from "@angular/common/http";
+import {CoreModule} from "./core/core.module";
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavBarComponent,
   ],
   imports: [
     BrowserModule,
@@ -22,7 +21,8 @@ import {HttpClientModule} from "@angular/common/http";
     BrowserAnimationsModule,
     NgbAccordionModule,
     NgbCollapseModule,
-    HttpClientModule
+    HttpClientModule,
+    CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]
