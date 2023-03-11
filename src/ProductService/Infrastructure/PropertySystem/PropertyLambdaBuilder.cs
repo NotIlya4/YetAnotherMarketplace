@@ -2,9 +2,9 @@
 
 namespace Infrastructure.PropertySystem;
 
-public static class PropertyReflections
+public class PropertyLambdaBuilder<TClass, TReturn> : IPropertyLambdaBuilder<TClass, TReturn>
 {
-    public static Expression<Func<TClass, TReturn>> BuildPropertyLambdaFromName<TClass, TReturn>(PropertyName<TClass> propertyName)
+    public Expression<Func<TClass, TReturn>> Build(PropertyName<TClass> propertyName)
     {
         ParameterExpression entityParameter = Expression.Parameter(typeof(TClass), typeof(TClass).Name.ToLower());
 
@@ -15,7 +15,7 @@ public static class PropertyReflections
         return Expression.Lambda<Func<TClass, TReturn>>(returnPropertyConvertedToObject, entityParameter);
     }
 
-    public static string GetNameFromPropertyLambda<TClass, TReturn>(Expression<Func<TClass, TReturn>> lambda)
+    public static string GetNameFromPropertyLambda(Expression<Func<TClass, TReturn>> lambda)
     {
         MemberExpression? memberExpression = null;
 

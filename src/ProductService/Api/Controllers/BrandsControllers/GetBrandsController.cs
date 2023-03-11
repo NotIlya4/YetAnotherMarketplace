@@ -6,7 +6,6 @@ using Infrastructure.ListQuery;
 using Infrastructure.Services.BrandService;
 using Infrastructure.SortingSystem;
 using Infrastructure.SortingSystem.Core;
-using Infrastructure.SortingSystem.Parser;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.BrandsControllers;
@@ -26,11 +25,11 @@ public class GetBrandsController : BrandsControllerBase
     {
         Pagination pagination = getBrandsQueryView.ToPagination();
 
-        List<PropertySortingInfo<Brand>> parsedPropertySortingInfos =
+        List<SortingInfo<Brand>> parsedPropertySortingInfos =
             _sortingInfoParser.Parse(getBrandsQueryView.Sorting);
-        BrandSortingInfo brandSortingInfo = new(parsedPropertySortingInfos);
+        BrandSortingInfoProvider brandSortingInfoProvider = new(parsedPropertySortingInfos);
         
-        List<Brand> brands = await BrandService.GetBrands(pagination, brandSortingInfo);
+        List<Brand> brands = await BrandService.GetBrands(pagination, brandSortingInfoProvider);
         
         List<BrandView> brandViews = brands.Select(BrandView.FromGetBrandDto).ToList();
         return Ok(brandViews);

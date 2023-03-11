@@ -25,9 +25,9 @@ public class BrandService : IBrandService
         return await _brandRepository.GetBrandByName(brandName);
     }
 
-    public async Task<List<Brand>> GetBrands(Pagination pagination, BrandSortingInfo brandSortingInfo)
+    public async Task<List<Brand>> GetBrands(Pagination pagination, BrandSortingInfoProvider brandSortingInfoProvider)
     {
-        return await _brandRepository.GetBrands(pagination, brandSortingInfo);
+        return await _brandRepository.GetBrands(pagination, brandSortingInfoProvider);
     }
 
     public async Task<Brand> CreateNewBrand(CreateBrandDto createBrandDto)

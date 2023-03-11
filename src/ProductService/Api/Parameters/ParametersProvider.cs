@@ -4,6 +4,8 @@ public static class ParametersProvider
 {
     public static string GetConnectionString(IConfiguration configuration)
     {
-        return configuration.GetConnectionString("docker-compose") ?? throw new NullReferenceException();
+        string connectionStringName =
+            configuration.GetSection("ConnectionStringName").Value ?? throw new NullReferenceException();
+        return configuration.GetConnectionString(connectionStringName) ?? throw new NullReferenceException();
     }
 }

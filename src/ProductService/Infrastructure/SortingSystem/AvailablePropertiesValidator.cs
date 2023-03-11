@@ -16,7 +16,7 @@ public class AvailablePropertiesValidator<TEntity>
 
     public AvailablePropertiesValidator(List<PropertyName<TEntity>> availableProperties)
     {
-        _availablePropertyStrings = availableProperties.Select(ap => ap.Value.ToLower()).ToList();
+        _availablePropertyStrings = availableProperties.Select(ap => ap.Value).ToList();
     }
 
     public void Validate(PropertyName<TEntity> propertyName)
@@ -24,15 +24,20 @@ public class AvailablePropertiesValidator<TEntity>
         if (!_availablePropertyStrings.Contains(propertyName.Value, StringComparer.OrdinalIgnoreCase))
         {
             throw new ValidationException(
-                $"Bad property {propertyName}, available are: {_availablePropertyStrings}");
+                $"{propertyName.Value} property isn't available, available are: {_availablePropertyStrings.ToReadableString()}");
         }
     }
+    
+    public void Validate(SortingInfo<TEntity> sortingInfo)
+    {
+        Validate(sortingInfo.PropertyName);
+    }
 
-    public void Validate(IEnumerable<PropertySortingInfo<TEntity>> sortingInfos)
+    public void Validate(IEnumerable<SortingInfo<TEntity>> sortingInfos)
     {
         foreach (var sortingInfo in sortingInfos)
         {
-            Validate(sortingInfo.PropertyName);
+            Validate(sortingInfo);
         }
     }
 }

@@ -3,7 +3,6 @@ using Domain.Primitives;
 using Infrastructure.EntityFramework;
 using Infrastructure.ListQuery;
 using Infrastructure.Repositories.Extensions;
-using Infrastructure.SortingSystem;
 using Infrastructure.SortingSystem.Core;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,12 +11,12 @@ namespace Infrastructure.Repositories.ProductRepository;
 public class ProductRepository : IProductRepository
 {
     private readonly ApplicationDbContext _dbContext;
-    private readonly QueryableSorterApplier _queryableSorterApplier;
+    private readonly SortingApplier<Product> _sortingApplier;
 
-    public ProductRepository(ApplicationDbContext dbContext, QueryableSorterApplier queryableSorterApplier)
+    public ProductRepository(ApplicationDbContext dbContext, SortingApplier<Product> sortingApplier)
     {
         _dbContext = dbContext;
-        _queryableSorterApplier = queryableSorterApplier;
+        _sortingApplier = sortingApplier;
     }
 
     public async Task<Product> GetProductById(Guid productId)
@@ -42,7 +41,7 @@ public class ProductRepository : IProductRepository
             .Products
             .IncludeProductDependencies();
         
-        IQueryable<Product> sortedQuery = _queryableSorterApplier
+        IQueryable<Product> sortedQuery = _sortingApplier
             .ApplySorting(query, sortingInfoProvider);
         
         return await sortedQuery

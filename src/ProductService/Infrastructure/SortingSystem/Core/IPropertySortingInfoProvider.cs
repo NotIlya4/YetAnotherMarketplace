@@ -1,9 +1,9 @@
-﻿using System.Linq.Expressions;
+﻿using Infrastructure.PropertySystem;
 
 namespace Infrastructure.SortingSystem.Core;
 
-public interface IPropertySortingInfoProvider<TEntity>
+public interface ISortingInfo<TEntity>
 {
-    Expression<Func<TEntity, object>> PropertyLambda { get; }
+    PropertyName<TEntity> PropertyName { get; }
     SortingSide SortingSide { get; }
 }

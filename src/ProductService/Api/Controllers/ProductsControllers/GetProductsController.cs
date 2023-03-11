@@ -6,7 +6,6 @@ using Infrastructure.ListQuery;
 using Infrastructure.Services.ProductService;
 using Infrastructure.SortingSystem;
 using Infrastructure.SortingSystem.Core;
-using Infrastructure.SortingSystem.Parser;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.ProductsControllers;
@@ -27,7 +26,7 @@ public class GetProductsController : ProductsControllerBase
     {
         Pagination pagination = getProductsQueryView.ToPagination();
 
-        List<PropertySortingInfo<Product>> parsedPropertySortingInfos =
+        List<SortingInfo<Product>> parsedPropertySortingInfos =
             _sortingInfoParser.Parse(getProductsQueryView.Sorting);
         ProductSortingInfo productSortingInfo = new(parsedPropertySortingInfos);
 

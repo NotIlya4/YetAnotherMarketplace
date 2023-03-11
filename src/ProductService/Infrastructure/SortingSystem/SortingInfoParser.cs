@@ -1,18 +1,19 @@
-﻿using Infrastructure.SortingSystem.Core;
+﻿using Infrastructure.PropertySystem;
+using Infrastructure.SortingSystem.Core;
 
-namespace Infrastructure.SortingSystem.Parser;
+namespace Infrastructure.SortingSystem;
 
 public class SortingInfoParser<TEntity>
 {
-    public PropertySortingInfo<TEntity> Parse(string rawPropertySortingInfo)
+    public SortingInfo<TEntity> Parse(string rawPropertySortingInfo)
     {
         SortingSide sortingSide = GetSortingSide(rawPropertySortingInfo);
         string rawPropertyName = RemoveSortingSideFromString(rawPropertySortingInfo);
 
-        return new PropertySortingInfo<TEntity>(rawPropertyName, sortingSide);
+        return new SortingInfo<TEntity>(new PropertyName<TEntity>(rawPropertyName), sortingSide);
     }
 
-    public List<PropertySortingInfo<TEntity>> Parse(IEnumerable<string> rawPropertySortingInfos)
+    public List<SortingInfo<TEntity>> Parse(IEnumerable<string> rawPropertySortingInfos)
     {
         return rawPropertySortingInfos.Select(Parse).ToList();
     }
