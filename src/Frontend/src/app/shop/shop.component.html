@@ -1,1 +1,43 @@
-<p>shop works!</p>
+<div class="container">
+  <div class="row">
+
+    <section class="col-3">
+      <h5 class="text-warning ml-3">Sort</h5>
+      <select class="form-select mb-3">
+        <option>Alphabetical</option>
+        <option>Price Low to High</option>
+        <option>Price High to Low</option>
+      </select>
+
+      <h5 class="text-warning ml-3">Brands</h5>
+      <ul class="list-group my-3">
+        <li class="list-group-item" *ngFor="let brand of brands">
+          {{brand.name}}
+        </li>
+      </ul>
+      <h5 class="text-warning ml-3">Types</h5>
+      <ul class="list-group my-3">
+        <li class="list-group-item" *ngFor="let productType of productTypes">
+          {{productType.name}}
+        </li>
+      </ul>
+    </section>
+
+    <section class="col-9">
+      <div class="d-flex justify-content-between align-items-center pb-2">
+        <header>
+          <span>Showing <strong>10</strong> of <strong>16</strong> Results</span>
+        </header>
+        <div class="mt-2">
+          <input class="form-control d-inline me-2" style="width: 300px" placeholder="Search" type="text">
+          <button class="btn btn-outline-primary my-2 me-2">Search</button>
+          <button class="btn btn-outline-success ml-2">Reset</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <app-product-item *ngFor="let product of products" [product]="product" class="col-xl-3 col-lg-4 col-md-6 mb-4"></app-product-item>
+      </div>
+    </section>
+  </div>
+</div>

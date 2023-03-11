@@ -3,7 +3,8 @@ using Domain.Primitives;
 using Infrastructure.EntityFramework;
 using Infrastructure.ListQuery;
 using Infrastructure.Repositories.Extensions;
-using Infrastructure.Services.ProductService;
+using Infrastructure.SortingSystem;
+using Infrastructure.SortingSystem.Core;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.ProductRepository;
@@ -11,10 +12,12 @@ namespace Infrastructure.Repositories.ProductRepository;
 public class ProductRepository : IProductRepository
 {
     private readonly ApplicationDbContext _dbContext;
+    private readonly QueryableSorterApplier _queryableSorterApplier;
 
-    public ProductRepository(ApplicationDbContext dbContext)
+    public ProductRepository(ApplicationDbContext dbContext, QueryableSorterApplier queryableSorterApplier)
     {
         _dbContext = dbContext;
+        _queryableSorterApplier = queryableSorterApplier;
     }
 
     public async Task<Product> GetProductById(Guid productId)
@@ -33,12 +36,16 @@ public class ProductRepository : IProductRepository
             .FirstAsyncOrThrow<ProductRepository, Product>(p => p.Name.Equals(name));
     }
 
-    public async Task<List<Product>> GetProducts(Pagination pagination, ProductSortingField sortingField, SortingType sortingType)
+    public async Task<List<Product>> GetProducts(Pagination pagination, ISortingInfoProvider<Product> sortingInfoProvider)
     {
-        return await _dbContext
+        IQueryable<Product> query = _dbContext
             .Products
-            .IncludeProductDependencies()
-            .ApplySorting(sortingField.ProductProperty, sortingType)
+            .IncludeProductDependencies();
+        
+        IQueryable<Product> sortedQuery = _queryableSorterApplier
+            .ApplySorting(query, sortingInfoProvider);
+        
+        return await sortedQuery
             .ApplyPagination(pagination)
             .ToListAsync();
     }

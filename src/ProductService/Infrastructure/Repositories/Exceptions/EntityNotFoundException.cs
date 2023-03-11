@@ -1,6 +1,8 @@
-﻿namespace Infrastructure.Repositories.Exceptions;
+﻿using Domain.Exceptions;
 
-public class EntityNotFoundException : Exception
+namespace Infrastructure.Repositories.Exceptions;
+
+public class EntityNotFoundException : NotFoundException
 {
     public Type Entity { get; }
     public Type Repository { get; }

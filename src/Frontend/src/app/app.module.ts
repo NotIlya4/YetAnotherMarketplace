@@ -8,6 +8,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from "@angular/common/http";
 import {CoreModule} from "./core/core.module";
+import {ShopModule} from "./shop/shop.module";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {CoreModule} from "./core/core.module";
     NgbAccordionModule,
     NgbCollapseModule,
     HttpClientModule,
-    CoreModule
+    CoreModule,
+    ShopModule
   ],
   providers: [],
   bootstrap: [AppComponent]

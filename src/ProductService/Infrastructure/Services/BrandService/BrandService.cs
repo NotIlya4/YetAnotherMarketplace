@@ -2,6 +2,7 @@
 using Domain.Primitives;
 using Infrastructure.ListQuery;
 using Infrastructure.Repositories.BrandRepository;
+using Infrastructure.SortingSystem;
 
 namespace Infrastructure.Services.BrandService;
 
@@ -24,9 +25,9 @@ public class BrandService : IBrandService
         return await _brandRepository.GetBrandByName(brandName);
     }
 
-    public async Task<List<Brand>> GetBrands(Pagination pagination, SortingType sortingType)
+    public async Task<List<Brand>> GetBrands(Pagination pagination, BrandSortingInfo brandSortingInfo)
     {
-        return await _brandRepository.GetBrands(pagination, sortingType);
+        return await _brandRepository.GetBrands(pagination, brandSortingInfo);
     }
 
     public async Task<Brand> CreateNewBrand(CreateBrandDto createBrandDto)

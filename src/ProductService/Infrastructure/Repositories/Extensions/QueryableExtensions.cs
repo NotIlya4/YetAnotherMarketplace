@@ -18,9 +18,4 @@ public static class QueryableExtensions
             .Skip(pagination.Offset)
             .Take(pagination.Limit);
     }
-
-    public static IQueryable<TEntity> ApplySorting<TEntity, TKey>(this IQueryable<TEntity> query, Expression<Func<TEntity, TKey>> keySelector, SortingType sortingType)
-    {
-        return sortingType == SortingType.Asc ? query.OrderBy(keySelector) : query.OrderByDescending(keySelector);
-    }
 }

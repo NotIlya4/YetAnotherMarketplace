@@ -1,12 +1,14 @@
 using Api.Extensions;
 using Api.Parameters;
 using ExceptionCatcherMiddleware.Extensions;
+using Infrastructure.SortingSystem.Parser;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 IServiceCollection services = builder.Services;
 IConfiguration configuration = builder.Configuration;
 
 services.AddServices();
+services.AddSortingInfoParsers();
 services.AddRepositories();
 services.AddAppDbContext(ParametersProvider.GetConnectionString(configuration));
 services.AddExceptionCatcherMiddlewareServicesConfigured();

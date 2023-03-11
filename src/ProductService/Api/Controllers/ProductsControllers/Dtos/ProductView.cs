@@ -2,16 +2,16 @@
 
 namespace Api.Controllers.ProductsControllers.Dtos;
 
-public record ProductView
+public class ProductView
 {
-    public required Guid Id { get; set; }
-    public required string Name { get; set; }
-    public required string Description { get; set; }
-    public required decimal Price { get; set; }
-    public required Uri PictureUrl { get; set; }
-    public required string ProductType { get; set; }
-    public required string BrandName { get; set; }
-    public required Uri BrandWebsite { get; set; }
+    public required Guid Id { get; init; }
+    public required string Name { get; init; }
+    public required string Description { get; init; }
+    public required decimal Price { get; init; }
+    public required Uri PictureUrl { get; init; }
+    public required string ProductType { get; init; }
+    public required string BrandName { get; init; }
+    public required Uri BrandWebsite { get; init; }
 
     public static ProductView FromGetProductDto(Product product)
     {
@@ -26,5 +26,10 @@ public record ProductView
             BrandName = product.Brand.Name.Value,
             BrandWebsite = product.Brand.Website
         };
+    }
+
+    public static List<ProductView> FromGetProductDto(IEnumerable<Product> product)
+    {
+        return product.Select(FromGetProductDto).ToList();
     }
 }

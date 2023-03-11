@@ -2,25 +2,36 @@
 using Api.ControllersAttributes;
 using Domain.Entities;
 using Domain.Primitives;
+using Infrastructure.ListQuery;
 using Infrastructure.Services.BrandService;
+using Infrastructure.SortingSystem;
+using Infrastructure.SortingSystem.Core;
+using Infrastructure.SortingSystem.Parser;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.BrandsControllers;
 
 public class GetBrandsController : BrandsControllerBase
 {
-    public GetBrandsController(IBrandService brandService) : base(brandService)
+    private readonly SortingInfoParser<Brand> _sortingInfoParser;
+
+    public GetBrandsController(IBrandService brandService, SortingInfoParser<Brand> sortingInfoParser) : base(brandService)
     {
-        
+        _sortingInfoParser = sortingInfoParser;
     }
     
     [HttpGet]
     [ProducesOk]
-    public async Task<ActionResult<IEnumerable<BrandView>>> GetBrands(GetBrandsQueryView getBrandsQueryView)
+    public async Task<ActionResult<IEnumerable<BrandView>>> GetBrands([FromQuery] GetBrandsQueryView getBrandsQueryView)
     {
-        List<Brand> brands = await BrandService.GetBrands(
-            pagination: getBrandsQueryView.ToPagination(),
-            sortingType: getBrandsQueryView.ToSortingType());
+        Pagination pagination = getBrandsQueryView.ToPagination();
+
+        List<PropertySortingInfo<Brand>> parsedPropertySortingInfos =
+            _sortingInfoParser.Parse(getBrandsQueryView.Sorting);
+        BrandSortingInfo brandSortingInfo = new(parsedPropertySortingInfos);
+        
+        List<Brand> brands = await BrandService.GetBrands(pagination, brandSortingInfo);
+        
         List<BrandView> brandViews = brands.Select(BrandView.FromGetBrandDto).ToList();
         return Ok(brandViews);
     }

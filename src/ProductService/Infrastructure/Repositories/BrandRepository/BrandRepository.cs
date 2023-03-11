@@ -3,6 +3,8 @@ using Domain.Primitives;
 using Infrastructure.EntityFramework;
 using Infrastructure.ListQuery;
 using Infrastructure.Repositories.Extensions;
+using Infrastructure.SortingSystem;
+using Infrastructure.SortingSystem.Core;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.BrandRepository;
@@ -10,10 +12,12 @@ namespace Infrastructure.Repositories.BrandRepository;
 public class BrandRepository : IBrandRepository
 {
     private readonly ApplicationDbContext _dbContext;
+    private readonly QueryableSorterApplier _queryableSorterApplier;
 
-    public BrandRepository(ApplicationDbContext dbContext)
+    public BrandRepository(ApplicationDbContext dbContext, QueryableSorterApplier queryableSorterApplier)
     {
         _dbContext = dbContext;
+        _queryableSorterApplier = queryableSorterApplier;
     }
 
     public async Task<Brand> GetBrandById(Guid brandId)
@@ -26,10 +30,15 @@ public class BrandRepository : IBrandRepository
         return await _dbContext.Brands.FirstAsyncOrThrow<BrandRepository, Brand>(b => b.Name.Equals(brandName));
     }
 
-    public async Task<List<Brand>> GetBrands(Pagination pagination, SortingType sortingType)
+    public async Task<List<Brand>> GetBrands(Pagination pagination, ISortingInfoProvider<Brand> sortingInfoProvider)
     {
-        return await _dbContext.Brands
-            .ApplySorting(b => b.Name, sortingType)
+        IQueryable<Brand> query = _dbContext
+            .Brands;
+        
+        IQueryable<Brand> sortedQuery = _queryableSorterApplier
+            .ApplySorting(query, sortingInfoProvider);
+        
+        return await sortedQuery
             .ApplyPagination(pagination)
             .ToListAsync();
     }

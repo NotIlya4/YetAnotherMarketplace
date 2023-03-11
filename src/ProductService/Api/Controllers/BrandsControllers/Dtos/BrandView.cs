@@ -2,11 +2,11 @@
 
 namespace Api.Controllers.BrandsControllers.Dtos;
 
-public record BrandView
+public class BrandView
 {
-    public required Guid Id { get; set; }
-    public required string Name { get; set; }
-    public required Uri Website { get; set; }
+    public required Guid Id { get; init; }
+    public required string Name { get; init; }
+    public required Uri Website { get; init; }
 
     public static BrandView FromGetBrandDto(Brand brandDto)
     {

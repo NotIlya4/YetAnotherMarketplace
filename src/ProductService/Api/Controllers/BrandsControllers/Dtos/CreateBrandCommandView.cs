@@ -3,10 +3,10 @@ using Infrastructure.Services.BrandService;
 
 namespace Api.Controllers.BrandsControllers.Dtos;
 
-public record CreateBrandCommandView
+public readonly struct CreateBrandCommandView
 {
-    public required string Name { get; set; }
-    public required Uri Website { get; set; }
+    public required string Name { get; init; }
+    public required Uri Website { get; init; }
 
     public CreateBrandDto ToCreateBrandDto()
     {

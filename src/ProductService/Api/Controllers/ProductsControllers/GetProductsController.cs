@@ -2,15 +2,22 @@ using Api.Controllers.ProductsControllers.Dtos;
 using Api.ControllersAttributes;
 using Domain.Entities;
 using Domain.Primitives;
+using Infrastructure.ListQuery;
 using Infrastructure.Services.ProductService;
+using Infrastructure.SortingSystem;
+using Infrastructure.SortingSystem.Core;
+using Infrastructure.SortingSystem.Parser;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.ProductsControllers;
 
 public class GetProductsController : ProductsControllerBase
 {
-    public GetProductsController(IProductService productService) : base(productService)
+    private readonly SortingInfoParser<Product> _sortingInfoParser;
+
+    public GetProductsController(IProductService productService, SortingInfoParser<Product> sortingInfoParser) : base(productService)
     {
+        _sortingInfoParser = sortingInfoParser;
     }
 
     [HttpGet]
@@ -18,11 +25,15 @@ public class GetProductsController : ProductsControllerBase
     [ProducesBadRequest]
     public async Task<ActionResult<List<ProductView>>> GetProducts([FromQuery] GetProductsQueryView getProductsQueryView)
     {
-        List<Product> products = await ProductService.GetProducts(
-            pagination: getProductsQueryView.ToPagination(),
-            sortingField: getProductsQueryView.ToSortingField(),
-            sortingType: getProductsQueryView.ToSortingType());
-        List<ProductView> productViews = products.Select(ProductView.FromGetProductDto).ToList();
+        Pagination pagination = getProductsQueryView.ToPagination();
+
+        List<PropertySortingInfo<Product>> parsedPropertySortingInfos =
+            _sortingInfoParser.Parse(getProductsQueryView.Sorting);
+        ProductSortingInfo productSortingInfo = new(parsedPropertySortingInfos);
+
+        List<Product> products = await ProductService.GetProducts(pagination, productSortingInfo);
+        
+        List<ProductView> productViews = ProductView.FromGetProductDto(products);
         return Ok(productViews);
     }
 

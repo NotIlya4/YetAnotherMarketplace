@@ -5,5 +5,9 @@
 //  "light": #e5e5e5
 //);
 
+body {
+  min-width: 320px;
+}
+
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';

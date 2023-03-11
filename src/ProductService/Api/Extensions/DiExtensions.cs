@@ -1,4 +1,5 @@
-﻿using Domain.Exceptions;
+﻿using Domain.Entities;
+using Domain.Exceptions;
 using ExceptionCatcherMiddleware.Extensions;
 using ExceptionCatcherMiddleware.Options;
 using Infrastructure.EntityFramework;
@@ -8,6 +9,8 @@ using Infrastructure.Repositories.Exceptions;
 using Infrastructure.Repositories.ProductRepository;
 using Infrastructure.Services.BrandService;
 using Infrastructure.Services.ProductService;
+using Infrastructure.SortingSystem;
+using Infrastructure.SortingSystem.Parser;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Extensions;
@@ -24,6 +27,7 @@ public static class DiExtensions
     {
         serviceCollection.AddScoped<IProductRepository, ProductRepository>();
         serviceCollection.AddScoped<IBrandRepository, BrandRepository>();
+        serviceCollection.AddScoped<QueryableSorterApplier>();
     }
 
     public static void AddAppDbContext(this IServiceCollection serviceCollection, string connectionString)
@@ -43,5 +47,11 @@ public static class DiExtensions
             optionsBuilder.RegisterExceptionMapper<EntityNotFoundException, EntityNotFoundExceptionMapper>();
             optionsBuilder.RegisterExceptionMapper<ValidationException, ValidationExceptionMapper>();
         });
+    }
+
+    public static void AddSortingInfoParsers(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddScoped<SortingInfoParser<Product>>();
+        serviceCollection.AddScoped<SortingInfoParser<Brand>>();
     }
 }
