@@ -1,4 +1,7 @@
-﻿using Domain.Entities;
+﻿using System.Reflection;
+using Api.Swagger.Enrichers.Extensions;
+using Api.Swagger.Nullable;
+using Domain.Entities;
 using Domain.Exceptions;
 using ExceptionCatcherMiddleware.Extensions;
 using ExceptionCatcherMiddleware.Options;
@@ -65,5 +68,20 @@ public static class DiExtensions
     {
         serviceCollection.AddScoped<SortingApplier<Product>>();
         serviceCollection.AddScoped<SortingApplier<Brand>>();
+    }
+
+    public static void AddConfiguredSwaggerGen(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddAllEnrichersInAssembly(new List<Assembly>()
+        {
+            typeof(ApiAssemblyReference).Assembly
+        });
+        serviceCollection.AddSwaggerGen(options =>
+        {
+            options.DescribeAllParametersInCamelCase();
+            options.AddEnricherFilters();
+            options.AddNullableFilters();
+            options.EnableAnnotations();
+        });
     }
 }

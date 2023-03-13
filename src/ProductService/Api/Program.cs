@@ -16,21 +16,15 @@ services.AddExceptionCatcherMiddlewareServicesConfigured();
 services.AddControllers()
     .AddXmlDataContractSerializerFormatters();
 services.AddEndpointsApiExplorer();
-services.AddSwaggerGen(options =>
-{
-    options.DescribeAllParametersInCamelCase();
-    
-});
+services.AddConfiguredSwaggerGen();
+
 
 var app = builder.Build();
 
 app.UpdateDb();
 
 app.UseExceptionCatcherMiddleware();
-app.UseSwagger(options =>
-{
-    
-});
+app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
 app.UseStaticFiles();

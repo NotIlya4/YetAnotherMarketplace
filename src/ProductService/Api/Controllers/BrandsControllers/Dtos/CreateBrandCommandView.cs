@@ -3,7 +3,7 @@ using Infrastructure.Services.BrandService;
 
 namespace Api.Controllers.BrandsControllers.Dtos;
 
-public readonly struct CreateBrandCommandView
+public class CreateBrandCommandView
 {
     public required string Name { get; init; }
     public required Uri Website { get; init; }
