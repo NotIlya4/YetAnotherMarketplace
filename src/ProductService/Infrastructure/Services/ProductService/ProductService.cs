@@ -41,4 +41,16 @@ public class ProductService : IProductService
 
         return product;
     }
+
+    public async Task DeleteProductById(Guid productId)
+    {
+        Product product = await _productRepository.GetProductById(productId);
+        await _productRepository.Delete(product);
+    }
+
+    public async Task DeleteProductByName(NotNullString productName)
+    {
+        Product product = await _productRepository.GetProductByName(productName);
+        await _productRepository.Delete(product);
+    }
 }

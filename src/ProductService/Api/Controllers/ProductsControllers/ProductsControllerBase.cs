@@ -9,7 +9,7 @@ namespace Api.Controllers.ProductsControllers;
 [ProducesInternalException]
 public class ProductsControllerBase : ControllerBase
 {
-    protected IProductService ProductService { get; }
+    protected readonly IProductService ProductService;
 
     public ProductsControllerBase(IProductService productService)
     {

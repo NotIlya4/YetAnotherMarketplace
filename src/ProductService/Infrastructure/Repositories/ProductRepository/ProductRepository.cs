@@ -53,4 +53,10 @@ public class ProductRepository : IProductRepository
         await _dbContext.Products.AddAsync(product);
         await _dbContext.SaveChangesAsync();
     }
+
+    public async Task Delete(Product product)
+    {
+        _dbContext.Remove(product);
+        await _dbContext.SaveChangesAsync();
+    }
 }

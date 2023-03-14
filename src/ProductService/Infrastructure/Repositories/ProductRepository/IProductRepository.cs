@@ -11,4 +11,5 @@ public interface IProductRepository
     public Task<Product> GetProductByName(NotNullString productName);
     public Task<List<Product>> GetProducts(Pagination pagination, ISortingInfoProvider<Product> sortingInfoProvider);
     public Task Insert(Product product);
+    public Task Delete(Product product);
 }
