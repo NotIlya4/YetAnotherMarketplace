@@ -1,11 +1,11 @@
-using Api.Controllers.ProductsControllers.Dtos;
-using Api.ControllersAttributes;
+using Api.Controllers.Attributes;
+using Api.Controllers.ProductsControllers.Views;
 using Domain.Entities;
 using Domain.Primitives;
-using Infrastructure.ListQuery;
+using Infrastructure.FilteringSystem;
 using Infrastructure.Services.ProductService;
-using Infrastructure.SortingSystem;
-using Infrastructure.SortingSystem.Core;
+using Infrastructure.SortingSystem.Models;
+using Infrastructure.SortingSystem.SortingInfoProviders;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.ProductsControllers;
@@ -21,7 +21,6 @@ public class GetProductsController : ProductsControllerBase
 
     [HttpGet]
     [ProducesOk]
-    [ProducesBadRequest]
     public async Task<ActionResult<List<ProductView>>> GetProducts([FromQuery] GetProductsQueryView getProductsQueryView)
     {
         Pagination pagination = getProductsQueryView.ToPagination();
@@ -39,7 +38,7 @@ public class GetProductsController : ProductsControllerBase
     [HttpGet]
     [Route("id/{id}", Name = nameof(GetProductById))]
     [ProducesOk]
-    [ProducesNotFound]
+    [ProducesProductNotFound]
     public async Task<ActionResult<ProductView>> GetProductById(Guid id)
     {
         Product product = await ProductService.GetProductById(id);
@@ -50,7 +49,7 @@ public class GetProductsController : ProductsControllerBase
     [HttpGet]
     [Route("name/{name}")]
     [ProducesOk]
-    [ProducesNotFound]
+    [ProducesProductNotFound]
     public async Task<ActionResult<ProductView>> GetProductByName(string name)
     {
         Product productDto = await ProductService.GetProductByName(new NotNullString(name));

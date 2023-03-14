@@ -1,6 +1,6 @@
 ﻿using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Api.Swagger.Nullable;
+namespace Api.Swagger.NullableSystem;
 
 public static class DiExtensions
 {

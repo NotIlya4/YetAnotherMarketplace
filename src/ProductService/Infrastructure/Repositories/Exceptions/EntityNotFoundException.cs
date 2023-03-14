@@ -4,12 +4,8 @@ namespace Infrastructure.Repositories.Exceptions;
 
 public class EntityNotFoundException : NotFoundException
 {
-    public Type Entity { get; }
-    public Type Repository { get; }
-
-    public EntityNotFoundException(Type entity, Type repository) : base($"There is no specified {entity.Name} in {repository.Name}")
+    public EntityNotFoundException(string entityName, string repositoryName) : base($"There is no specified {entityName} in {repositoryName}")
     {
-        Entity = entity;
-        Repository = repository;
+        
     }
 }

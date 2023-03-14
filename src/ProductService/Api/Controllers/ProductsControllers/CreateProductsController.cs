@@ -1,4 +1,4 @@
-﻿using Api.Controllers.ProductsControllers.Dtos;
+﻿using Api.Controllers.ProductsControllers.Views;
 using Domain.Entities;
 using Infrastructure.Services.ProductService;
 using Microsoft.AspNetCore.Mvc;

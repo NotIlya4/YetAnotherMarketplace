@@ -1,9 +1,9 @@
 ﻿using Domain.Entities;
 using Domain.Primitives;
-using Infrastructure.ListQuery;
+using Infrastructure.FilteringSystem;
 using Infrastructure.Repositories.BrandRepository;
 using Infrastructure.Repositories.ProductRepository;
-using Infrastructure.SortingSystem;
+using Infrastructure.SortingSystem.SortingInfoProviders;
 
 namespace Infrastructure.Services.ProductService;
 

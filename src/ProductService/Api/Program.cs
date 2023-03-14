@@ -1,5 +1,5 @@
 using Api.Extensions;
-using Api.Parameters;
+using Api.Properties;
 using ExceptionCatcherMiddleware.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);

@@ -1,11 +1,11 @@
-﻿using Api.Controllers.BrandsControllers.Dtos;
-using Api.ControllersAttributes;
+﻿using Api.Controllers.Attributes;
+using Api.Controllers.BrandsControllers.Views;
 using Domain.Entities;
 using Domain.Primitives;
-using Infrastructure.ListQuery;
+using Infrastructure.FilteringSystem;
 using Infrastructure.Services.BrandService;
-using Infrastructure.SortingSystem;
-using Infrastructure.SortingSystem.Core;
+using Infrastructure.SortingSystem.Models;
+using Infrastructure.SortingSystem.SortingInfoProviders;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.BrandsControllers;
@@ -27,9 +27,9 @@ public class GetBrandsController : BrandsControllerBase
 
         List<SortingInfo<Brand>> parsedPropertySortingInfos =
             _sortingInfoParser.Parse(getBrandsQueryView.Sorting);
-        BrandSortingInfoProvider brandSortingInfoProvider = new(parsedPropertySortingInfos);
+        BrandSortingInfo brandSortingInfo = new(parsedPropertySortingInfos);
         
-        List<Brand> brands = await BrandService.GetBrands(pagination, brandSortingInfoProvider);
+        List<Brand> brands = await BrandService.GetBrands(pagination, brandSortingInfo);
         
         List<BrandView> brandViews = brands.Select(BrandView.FromGetBrandDto).ToList();
         return Ok(brandViews);
@@ -38,7 +38,7 @@ public class GetBrandsController : BrandsControllerBase
     [HttpGet]
     [Route("id/{id}", Name = nameof(GetBrandById))]
     [ProducesOk]
-    [ProducesNotFound]
+    [ProducesBrandNotFound]
     public async Task<ActionResult<BrandView>> GetBrandById(Guid id)
     {
         Brand brand = await BrandService.GetBrandById(id);
@@ -49,7 +49,7 @@ public class GetBrandsController : BrandsControllerBase
     [HttpGet]
     [Route("name/{name}")]
     [ProducesOk]
-    [ProducesNotFound]
+    [ProducesBrandNotFound]
     public async Task<ActionResult<BrandView>> GetBrandByName(string name)
     {
         Brand brand = await BrandService.GetBrandByName(new NotNullString(name));

@@ -1,9 +1,9 @@
 ﻿using Domain.Entities;
 using Domain.Primitives;
 using Infrastructure.EntityFramework;
-using Infrastructure.ListQuery;
+using Infrastructure.FilteringSystem;
 using Infrastructure.Repositories.Extensions;
-using Infrastructure.SortingSystem.Core;
+using Infrastructure.SortingSystem.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.ProductRepository;
@@ -41,8 +41,7 @@ public class ProductRepository : IProductRepository
             .Products
             .IncludeProductDependencies();
         
-        IQueryable<Product> sortedQuery = _sortingApplier
-            .ApplySorting(query, sortingInfoProvider);
+        IQueryable<Product> sortedQuery = _sortingApplier.ApplySorting(query, sortingInfoProvider);
         
         return await sortedQuery
             .ApplyPagination(pagination)

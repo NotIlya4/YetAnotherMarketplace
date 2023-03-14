@@ -1,4 +1,4 @@
-﻿using Infrastructure.ExceptionCatching;
+﻿using Api.Controllers.Attributes;
 using Infrastructure.Services.ProductService;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,7 +6,7 @@ namespace Api.Controllers.ProductsControllers;
 
 [ApiController]
 [Route("api/Products")]
-[ProducesResponseType(typeof(BadResponseDto), StatusCodes.Status500InternalServerError)]
+[ProducesInternalException]
 public class ProductsControllerBase : ControllerBase
 {
     protected IProductService ProductService { get; }

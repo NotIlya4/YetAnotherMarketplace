@@ -5,6 +5,8 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>1591</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
@@ -29,7 +31,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Swagger\EnricherSystem" />
         <Folder Include="wwwroot" />
     </ItemGroup>
 

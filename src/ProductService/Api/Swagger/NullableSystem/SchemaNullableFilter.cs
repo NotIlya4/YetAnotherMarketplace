@@ -2,7 +2,7 @@
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Api.Swagger.Nullable;
+namespace Api.Swagger.NullableSystem;
 
 public class SchemaNullableFilter : ISchemaFilter
 {

@@ -1,9 +1,9 @@
 ﻿using Domain.Entities;
 using Domain.Primitives;
 using Infrastructure.EntityFramework;
-using Infrastructure.ListQuery;
+using Infrastructure.FilteringSystem;
 using Infrastructure.Repositories.Extensions;
-using Infrastructure.SortingSystem.Core;
+using Infrastructure.SortingSystem.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.BrandRepository;

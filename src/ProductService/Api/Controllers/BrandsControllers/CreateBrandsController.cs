@@ -1,4 +1,4 @@
-using Api.Controllers.BrandsControllers.Dtos;
+using Api.Controllers.BrandsControllers.Views;
 using Domain.Entities;
 using Infrastructure.Services.BrandService;
 using Microsoft.AspNetCore.Mvc;

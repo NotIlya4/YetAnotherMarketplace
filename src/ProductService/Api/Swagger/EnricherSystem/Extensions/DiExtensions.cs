@@ -1,9 +1,9 @@
 ﻿using System.Reflection;
-using Api.Swagger.Enrichers.EnrichersInterfaces;
-using Api.Swagger.Enrichers.Filters;
+using Api.Swagger.EnricherSystem.CreateOwnEnrichers;
+using Api.Swagger.EnricherSystem.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Api.Swagger.Enrichers.Extensions;
+namespace Api.Swagger.EnricherSystem.Extensions;
 
 public static class DiExtensions
 {
@@ -14,11 +14,12 @@ public static class DiExtensions
             assembly.GetTypes()
                 .Where(type =>
                     type.IsAssignableTo(typeof(ISchemaEnricher)) || type.IsAssignableTo(typeof(IParameterEnricher)))
+                .Where(type => !type.IsAbstract)
                 .ToList()).ToList();
 
         foreach (var enricherImplementation in enricherImplementations)
         {
-            serviceCollection.AddScoped(enricherImplementation);
+            serviceCollection.AddTransient(enricherImplementation);
         }
     }
 

@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Primitives;
-using Infrastructure.ListQuery;
-using Infrastructure.SortingSystem.Core;
+using Infrastructure.FilteringSystem;
+using Infrastructure.SortingSystem.Models;
 
 namespace Infrastructure.Repositories.ProductRepository;
 

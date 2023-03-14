@@ -1,4 +1,4 @@
-﻿using Infrastructure.ExceptionCatching;
+﻿using Api.Controllers.Attributes;
 using Infrastructure.Services.BrandService;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,7 +6,7 @@ namespace Api.Controllers.BrandsControllers;
 
 [Route("api/Brands")]
 [ApiController]
-[ProducesResponseType(typeof(BadResponseDto), StatusCodes.Status500InternalServerError)]
+[ProducesInternalException]
 public class BrandsControllerBase : ControllerBase
 {
     protected IBrandService BrandService { get; }

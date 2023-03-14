@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Primitives;
-using Infrastructure.ListQuery;
-using Infrastructure.SortingSystem;
+using Infrastructure.FilteringSystem;
+using Infrastructure.SortingSystem.SortingInfoProviders;
 
 namespace Infrastructure.Services.ProductService;
 
