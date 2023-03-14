@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.ProductsControllers;
 
+[Tags("Products")]
 public class GetProductsController : ProductsControllerBase
 {
     private readonly SortingInfoParser<Product> _sortingInfoParser;

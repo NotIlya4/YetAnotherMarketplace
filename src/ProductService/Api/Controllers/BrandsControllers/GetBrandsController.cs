@@ -7,9 +7,11 @@ using Infrastructure.Services.BrandService;
 using Infrastructure.SortingSystem.Models;
 using Infrastructure.SortingSystem.SortingInfoProviders;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Api.Controllers.BrandsControllers;
 
+[Tags("Brands")]
 public class GetBrandsController : BrandsControllerBase
 {
     private readonly SortingInfoParser<Brand> _sortingInfoParser;

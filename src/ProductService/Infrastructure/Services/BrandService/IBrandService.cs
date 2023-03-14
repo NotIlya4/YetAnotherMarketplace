@@ -11,4 +11,6 @@ public interface IBrandService
     public Task<Brand> GetBrandByName(NotNullString brandName);
     public Task<List<Brand>> GetBrands(Pagination pagination, BrandSortingInfo brandSortingInfo);
     public Task<Brand> CreateNewBrand(CreateBrandDto createBrandDto);
+    public Task DeleteBrandById(Guid brandId);
+    public Task DeleteBrandByName(NotNullString brandName);
 }

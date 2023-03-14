@@ -38,4 +38,16 @@ public class BrandService : IBrandService
 
         return brand;
     }
+
+    public async Task DeleteBrandById(Guid brandId)
+    {
+        Brand brand = await _brandRepository.GetBrandById(brandId);
+        await _brandRepository.Delete(brand);
+    }
+
+    public async Task DeleteBrandByName(NotNullString brandName)
+    {
+        Brand brand = await _brandRepository.GetBrandByName(brandName);
+        await _brandRepository.Delete(brand);
+    }
 }

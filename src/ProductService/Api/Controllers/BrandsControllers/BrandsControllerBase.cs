@@ -1,4 +1,5 @@
 ﻿using Api.Controllers.Attributes;
+using Domain.Entities;
 using Infrastructure.Services.BrandService;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +10,7 @@ namespace Api.Controllers.BrandsControllers;
 [ProducesInternalException]
 public class BrandsControllerBase : ControllerBase
 {
-    protected IBrandService BrandService { get; }
+    protected readonly IBrandService BrandService;
 
     public BrandsControllerBase(IBrandService brandService)
     {

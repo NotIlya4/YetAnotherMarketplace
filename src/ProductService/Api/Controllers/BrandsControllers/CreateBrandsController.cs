@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.BrandsControllers;
 
+[Tags("Brands")]
 public class CreateBrandsController : BrandsControllerBase
 {
     public CreateBrandsController(IBrandService brandService) : base(brandService)

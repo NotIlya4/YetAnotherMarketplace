@@ -47,4 +47,10 @@ public class BrandRepository : IBrandRepository
         await _dbContext.Brands.AddAsync(brand);
         await _dbContext.SaveChangesAsync();
     }
+
+    public async Task Delete(Brand brand)
+    {
+        _dbContext.Remove(brand);
+        await _dbContext.SaveChangesAsync();
+    }
 }

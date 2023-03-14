@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.ProductsControllers;
 
+[Tags("Products")]
 public class CreateProductsController : ProductsControllerBase
 {
     public CreateProductsController(IProductService productService) : base(productService)
