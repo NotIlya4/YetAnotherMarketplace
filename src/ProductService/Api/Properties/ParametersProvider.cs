@@ -1,11 +1,25 @@
-﻿namespace Api.Properties;
+﻿using Infrastructure;
 
-public static class ParametersProvider
+namespace Api.Properties;
+
+public class ParametersProvider
 {
-    public static string GetConnectionString(IConfiguration configuration)
+    private readonly IConfiguration _configuration;
+
+    public ParametersProvider(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
+    
+    public string GetConnectionString()
     {
         string connectionStringName =
-            configuration.GetSection("ConnectionStringName").Value ?? throw new NullReferenceException();
-        return configuration.GetConnectionString(connectionStringName) ?? throw new NullReferenceException();
+            _configuration.GetSection("ConnectionStringName").Value ?? "local";
+        return _configuration.GetConnectionString(connectionStringName) ?? throw new NullReferenceException();
+    }
+
+    public bool IsAutoMigrationsApply()
+    {
+        return !_configuration.GetSection("DisableAutoApplyMigrations").Value.EqualsIgnoreCase("true");
     }
 }

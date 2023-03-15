@@ -5,13 +5,14 @@ using ExceptionCatcherMiddleware.Extensions;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 IServiceCollection services = builder.Services;
 IConfiguration configuration = builder.Configuration;
+ParametersProvider parametersProvider = new ParametersProvider(configuration);
 
 services.AddServices();
 services.AddSortingInfoParsers();
 services.AddPropertyLambdaBuilders();
 services.AddSortingAppliers();
 services.AddRepositories();
-services.AddAppDbContext(ParametersProvider.GetConnectionString(configuration));
+services.AddAppDbContext(parametersProvider.GetConnectionString());
 services.AddExceptionCatcherMiddlewareServicesConfigured();
 services.AddControllers()
     .AddXmlDataContractSerializerFormatters();
@@ -21,7 +22,10 @@ services.AddConfiguredSwaggerGen();
 
 var app = builder.Build();
 
-app.UpdateDb();
+if (parametersProvider.IsAutoMigrationsApply())
+{
+    app.UpdateDb();
+}
 
 app.UseExceptionCatcherMiddleware();
 app.UseSwagger();

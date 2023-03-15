@@ -12,6 +12,7 @@ using Infrastructure.Repositories;
 using Infrastructure.Repositories.BrandRepository;
 using Infrastructure.Repositories.Exceptions;
 using Infrastructure.Repositories.ProductRepository;
+using Infrastructure.Repositories.ProductTypeRepository;
 using Infrastructure.Services.BrandService;
 using Infrastructure.Services.ProductService;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,7 @@ public static class DiExtensions
     {
         serviceCollection.AddScoped<IProductRepository, ProductRepository>();
         serviceCollection.AddScoped<IBrandRepository, BrandRepository>();
+        serviceCollection.AddScoped<IProductTypeRepository, ProductTypeRepository>();
     }
 
     public static void AddAppDbContext(this IServiceCollection serviceCollection, string connectionString)

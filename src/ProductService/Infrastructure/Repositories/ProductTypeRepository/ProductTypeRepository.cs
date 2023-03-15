@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.ProductTypeRepository;
 
-class ProductTypeRepository : IProductTypeRepository
+public class ProductTypeRepository : IProductTypeRepository
 {
     private readonly ApplicationDbContext _dbContext;
 

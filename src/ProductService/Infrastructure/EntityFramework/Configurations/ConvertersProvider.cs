@@ -1,5 +1,4 @@
-﻿using Domain.Entities;
-using Domain.Primitives;
+﻿using Domain.Primitives;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.EntityFramework.Configurations;
