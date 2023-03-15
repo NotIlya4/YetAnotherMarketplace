@@ -4,17 +4,16 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.EntityFramework.Configurations;
 
-public class BrandConfiguration : IEntityTypeConfiguration<Brand>
+public class ProductTypeConfiguration : IEntityTypeConfiguration<ProductType>
 {
-    public EntityTypeBuilder<Brand> Builder { get; set; } = null!;
+    public EntityTypeBuilder<ProductType> Builder { get; set; } = null!;
 
-    public void Configure(EntityTypeBuilder<Brand> builder)
+    public void Configure(EntityTypeBuilder<ProductType> builder)
     {
         Builder = builder;
-        
+
         ConfigureId();
         ConfigureName();
-        ConfigureWebsite();
     }
 
     private void ConfigureId()
@@ -34,12 +33,5 @@ public class BrandConfiguration : IEntityTypeConfiguration<Brand>
         Builder
             .HasIndex(b => b.Name)
             .IsUnique();
-    }
-
-    private void ConfigureWebsite()
-    {
-        Builder
-            .Property(b => b.Website)
-            .HasConversion(ConvertersProvider.GetUriConverter());
     }
 }

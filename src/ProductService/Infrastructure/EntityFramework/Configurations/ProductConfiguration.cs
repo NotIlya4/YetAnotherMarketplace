@@ -34,7 +34,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
     {
         Builder
             .Property(p => p.Name)
-            .HasConversion(ConvertersProvider.GetHandsomeStringConverter());
+            .HasConversion(ConvertersProvider.GetNameConverter());
         Builder
             .HasIndex(p => p.Name)
             .IsUnique();
@@ -44,7 +44,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
     {
         Builder
             .Property(p => p.Description)
-            .HasConversion(ConvertersProvider.GetHandsomeStringConverter());
+            .HasConversion(ConvertersProvider.GetDescriptionConverter());
     }
 
     private void ConfigurePrice()
@@ -65,8 +65,9 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
     private void ConfigureProductType()
     {
         Builder
-            .Property(p => p.ProductType)
-            .HasConversion(ConvertersProvider.GetProductTypeConverter());
+            .HasOne(p => p.ProductType)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Restrict);
     }
 
     private void ConfigureBrand()

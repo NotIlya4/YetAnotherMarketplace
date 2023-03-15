@@ -28,7 +28,7 @@ public class DeleteBrandsController : BrandsControllerBase
     [ProducesNoContent]
     public async Task<IActionResult> DeleteBrandByName(string name)
     {
-        await BrandService.DeleteBrandByName(new NotNullString(name));
+        await BrandService.DeleteBrandByName(new Name(name));
         return NoContent();
     }
 }

@@ -30,7 +30,7 @@ public class ProductView
             Description = product.Description.Value,
             Price = product.Price.Value,
             PictureUrl = product.PictureUrl,
-            ProductType = product.ProductType.ToString(),
+            ProductType = product.ProductType.Name.Value,
             BrandName = product.Brand.Name.Value,
             BrandWebsite = product.Brand.Website
         };

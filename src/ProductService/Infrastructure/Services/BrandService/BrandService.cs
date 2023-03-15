@@ -20,7 +20,7 @@ public class BrandService : IBrandService
         return await _brandRepository.GetBrandById(brandId);
     }
 
-    public async Task<Brand> GetBrandByName(NotNullString brandName)
+    public async Task<Brand> GetBrandByName(Name brandName)
     {
         return await _brandRepository.GetBrandByName(brandName);
     }
@@ -30,9 +30,9 @@ public class BrandService : IBrandService
         return await _brandRepository.GetBrands(pagination, brandSortingInfo);
     }
 
-    public async Task<Brand> CreateNewBrand(CreateBrandDto createBrandDto)
+    public async Task<Brand> CreateNewBrand(CreateBrandCommand createBrandCommand)
     {
-        Brand brand = createBrandDto.ToDomain(Guid.NewGuid());
+        Brand brand = createBrandCommand.ToDomain(Guid.NewGuid());
 
         await _brandRepository.Insert(brand);
 
@@ -45,7 +45,7 @@ public class BrandService : IBrandService
         await _brandRepository.Delete(brand);
     }
 
-    public async Task DeleteBrandByName(NotNullString brandName)
+    public async Task DeleteBrandByName(Name brandName)
     {
         Brand brand = await _brandRepository.GetBrandByName(brandName);
         await _brandRepository.Delete(brand);

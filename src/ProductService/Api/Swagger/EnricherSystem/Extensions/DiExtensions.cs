@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-using Api.Swagger.EnricherSystem.CreateOwnEnrichers;
-using Api.Swagger.EnricherSystem.Filters;
+﻿using Api.Swagger.EnricherSystem.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Api.Swagger.EnricherSystem.Extensions;

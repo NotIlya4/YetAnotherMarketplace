@@ -3,9 +3,9 @@ using Domain.Primitives;
 
 namespace Infrastructure.Services.BrandService;
 
-public record CreateBrandDto
+public record CreateBrandCommand
 {
-    public required NotNullString Name { get; set; }
+    public required Name Name { get; set; }
     public required Uri Website { get; set; }
 
     public Brand ToDomain(Guid brandId)

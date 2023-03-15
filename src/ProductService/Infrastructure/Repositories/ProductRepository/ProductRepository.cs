@@ -27,7 +27,7 @@ public class ProductRepository : IProductRepository
             .FirstAsyncOrThrow<ProductRepository, Product>(p => p.Id.Equals(productId));
     }
 
-    public async Task<Product> GetProductByName(NotNullString name)
+    public async Task<Product> GetProductByName(Name name)
     {
         return await _dbContext
             .Products

@@ -11,11 +11,11 @@ public class CreateBrandCommandView
     [BrandWebsite]
     public required Uri Website { get; init; }
 
-    public CreateBrandDto ToCreateBrandDto()
+    public CreateBrandCommand ToCreateBrandDto()
     {
-        return new CreateBrandDto()
+        return new CreateBrandCommand()
         {
-            Name = new NotNullString(Name),
+            Name = new Name(Name),
             Website = Website
         };
     }

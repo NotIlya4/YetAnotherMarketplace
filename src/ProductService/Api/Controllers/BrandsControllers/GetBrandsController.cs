@@ -7,7 +7,6 @@ using Infrastructure.Services.BrandService;
 using Infrastructure.SortingSystem.Models;
 using Infrastructure.SortingSystem.SortingInfoProviders;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
 
 namespace Api.Controllers.BrandsControllers;
 
@@ -54,7 +53,7 @@ public class GetBrandsController : BrandsControllerBase
     [ProducesBrandNotFound]
     public async Task<ActionResult<BrandView>> GetBrandByName(string name)
     {
-        Brand brand = await BrandService.GetBrandByName(new NotNullString(name));
+        Brand brand = await BrandService.GetBrandByName(new Name(name));
         BrandView brandView = BrandView.FromGetBrandDto(brand);
         return Ok(brandView);
     }

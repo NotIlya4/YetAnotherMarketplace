@@ -4,7 +4,11 @@ namespace Domain.Entities;
 
 public class Brand
 {
-    public Brand(Guid id, NotNullString name, Uri website)
+    public Guid Id { get; set; }
+    public Name Name { get; set; }
+    public Uri Website { get; set; }
+
+    public Brand(Guid id, Name name, Uri website)
     {
         Id = id;
         Name = name;
@@ -15,8 +19,4 @@ public class Brand
     {
         Website = null!;
     }
-
-    public Guid Id { get; set; }
-    public NotNullString Name { get; set; }
-    public Uri Website { get; set; }
 }

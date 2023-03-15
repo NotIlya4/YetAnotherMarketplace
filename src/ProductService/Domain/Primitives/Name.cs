@@ -1,16 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Domain.Exceptions;
 
 namespace Domain.Primitives;
 
-public record struct NotNullString
+public record struct Name
 {
     public string Value { get; private set; }
 
-    public NotNullString(string? value)
+    public Name(string? value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            throw new ValidationException("String must contain at least 1 char");
+            throw new ValidationException("Name must have at least 1 char");
         }
 
         Value = value;

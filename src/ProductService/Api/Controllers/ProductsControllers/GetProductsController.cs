@@ -53,7 +53,7 @@ public class GetProductsController : ProductsControllerBase
     [ProducesProductNotFound]
     public async Task<ActionResult<ProductView>> GetProductByName(string name)
     {
-        Product productDto = await ProductService.GetProductByName(new NotNullString(name));
+        Product productDto = await ProductService.GetProductByName(new Name(name));
         ProductView productView = ProductView.FromGetProductDto(productDto);
         return Ok(productView);
     }

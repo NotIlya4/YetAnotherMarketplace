@@ -12,6 +12,7 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<Product> Products { get; set; } = null!;
     public DbSet<Brand> Brands { get; set; } = null!;
+    public DbSet<ProductType> ProductTypes { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

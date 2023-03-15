@@ -24,7 +24,7 @@ public class BrandRepository : IBrandRepository
         return await _dbContext.Brands.FirstAsyncOrThrow<BrandRepository, Brand>(b => b.Id.Equals(brandId));
     }
 
-    public async Task<Brand> GetBrandByName(NotNullString brandName)
+    public async Task<Brand> GetBrandByName(Name brandName)
     {
         return await _dbContext.Brands.FirstAsyncOrThrow<BrandRepository, Brand>(b => b.Name.Equals(brandName));
     }

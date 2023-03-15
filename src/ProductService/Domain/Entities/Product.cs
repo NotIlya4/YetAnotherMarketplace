@@ -4,7 +4,15 @@ namespace Domain.Entities;
 
 public class Product
 {
-    public Product(Guid id, NotNullString name, NotNullString description, Price price, Uri pictureUrl, ProductType productType, Brand brand)
+    public Guid Id { get; set; }
+    public Name Name { get; set; }
+    public Description Description { get; set; }
+    public Price Price { get; set; }
+    public Uri PictureUrl { get; set; }
+    public ProductType ProductType { get; set; }
+    public Brand Brand { get; set; }
+
+    public Product(Guid id, Name name, Description description, Price price, Uri pictureUrl, ProductType productType, Brand brand)
     {
         Id = id;
         Name = name;
@@ -19,13 +27,6 @@ public class Product
     {
         PictureUrl = null!;
         Brand = null!;
+        ProductType = null!;
     }
-
-    public Guid Id { get; set; }
-    public NotNullString Name { get; set; }
-    public NotNullString Description { get; set; }
-    public Price Price { get; set; }
-    public Uri PictureUrl { get; set; }
-    public ProductType ProductType { get; set; }
-    public Brand Brand { get; set; }
 }

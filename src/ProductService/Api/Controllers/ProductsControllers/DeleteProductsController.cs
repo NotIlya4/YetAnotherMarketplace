@@ -1,6 +1,5 @@
 ﻿using Api.Controllers.Attributes;
 using Domain.Primitives;
-using Infrastructure.Services.BrandService;
 using Infrastructure.Services.ProductService;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,7 +28,7 @@ public class DeleteProductsController : ProductsControllerBase
     [ProducesNoContent]
     public async Task<IActionResult> DeleteProductById(string name)
     {
-        await ProductService.DeleteProductByName(new NotNullString(name));
+        await ProductService.DeleteProductByName(new Name(name));
         return NoContent();
     }
 }

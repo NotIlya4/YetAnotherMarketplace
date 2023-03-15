@@ -8,9 +8,9 @@ namespace Infrastructure.Services.BrandService;
 public interface IBrandService
 {
     public Task<Brand> GetBrandById(Guid brandId);
-    public Task<Brand> GetBrandByName(NotNullString brandName);
+    public Task<Brand> GetBrandByName(Name brandName);
     public Task<List<Brand>> GetBrands(Pagination pagination, BrandSortingInfo brandSortingInfo);
-    public Task<Brand> CreateNewBrand(CreateBrandDto createBrandDto);
+    public Task<Brand> CreateNewBrand(CreateBrandCommand createBrandCommand);
     public Task DeleteBrandById(Guid brandId);
-    public Task DeleteBrandByName(NotNullString brandName);
+    public Task DeleteBrandByName(Name brandName);
 }

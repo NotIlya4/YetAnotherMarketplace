@@ -1,4 +1,5 @@
-﻿using Domain.Primitives;
+﻿using Domain.Entities;
+using Domain.Primitives;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.EntityFramework.Configurations;
@@ -12,11 +13,18 @@ public static class ConvertersProvider
             str => Guid.Parse(str));
     }
 
-    public static ValueConverter<NotNullString, string> GetHandsomeStringConverter()
+    public static ValueConverter<Name, string> GetNameConverter()
     {
-        return new ValueConverter<NotNullString, string>(
+        return new ValueConverter<Name, string>(
             hs => hs.ToString(),
-            str => new NotNullString(str));
+            str => new Name(str));
+    }
+    
+    public static ValueConverter<Description, string> GetDescriptionConverter()
+    {
+        return new ValueConverter<Description, string>(
+            hs => hs.ToString(),
+            str => new Description(str));
     }
 
     public static ValueConverter<Uri, string> GetUriConverter()
@@ -31,12 +39,5 @@ public static class ConvertersProvider
         return new ValueConverter<Price, decimal>(
             price => price.Value,
             dec => new Price(dec));
-    }
-
-    public static ValueConverter<ProductType, string> GetProductTypeConverter()
-    {
-        return new ValueConverter<ProductType, string>(
-            pt => pt.ToString(),
-            str => Enum.Parse<ProductType>(str));
     }
 }

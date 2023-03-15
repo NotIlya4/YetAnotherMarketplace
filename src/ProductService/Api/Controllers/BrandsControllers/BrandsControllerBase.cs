@@ -1,5 +1,4 @@
 ﻿using Api.Controllers.Attributes;
-using Domain.Entities;
 using Infrastructure.Services.BrandService;
 using Microsoft.AspNetCore.Mvc;
 

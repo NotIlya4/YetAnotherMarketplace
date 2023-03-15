@@ -23,12 +23,12 @@ public class CreateProductCommandView
     {
         return new CreateProductCommand()
         {
-            Name = new NotNullString(Name),
-            Description = new NotNullString(Description),
+            Name = new Name(Name),
+            Description = new Description(Description),
             Price = new Price(Price),
             PictureUrl = PictureUrl,
-            ProductType = Enum.Parse<ProductType>(ProductType),
-            BrandName = new NotNullString(BrandName)
+            ProductType = new Name(ProductType),
+            BrandName = new Name(BrandName)
         };
     }
 }
