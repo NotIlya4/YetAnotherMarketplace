@@ -1,5 +1,4 @@
 ﻿using Domain.Entities;
-using Infrastructure.EntityFramework.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.EntityFramework;
@@ -16,6 +15,6 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProductConfiguration).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(InfrastructureAssemblyReference).Assembly);
     }
 }

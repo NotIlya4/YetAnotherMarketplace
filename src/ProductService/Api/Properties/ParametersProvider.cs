@@ -1,4 +1,4 @@
-﻿using Infrastructure;
+using Infrastructure;
 
 namespace Api.Properties;
 
@@ -13,13 +13,44 @@ public class ParametersProvider
     
     public string GetConnectionString()
     {
-        string connectionStringName =
-            _configuration.GetSection("ConnectionStringName").Value ?? "local";
-        return _configuration.GetConnectionString(connectionStringName) ?? throw new NullReferenceException();
+        string server = GetRequiredParameter<string>("ConnectionString:Server");
+        string database = GetRequiredParameter<string>("ConnectionString:Database");
+        string userId = GetRequiredParameter<string>("ConnectionString:User Id");
+        string password = GetRequiredParameter<string>("ConnectionString:Password");
+
+        string connectionString =
+            $"Server={server};Database={database};User Id={userId};Password={password};MultipleActiveResultSets=true;TrustServerCertificate=true";
+
+        return connectionString;
     }
 
-    public bool IsAutoMigrationsApply()
+    public bool AutoApplyMigrations()
     {
-        return !_configuration.GetSection("DisableAutoApplyMigrations").Value.EqualsIgnoreCase("true");
+        string? parameter = GetParameter<string>("AutoApplyMigrations");
+        bool isApply = true;
+
+        if (parameter is not null)
+        {
+            try
+            {
+                isApply = bool.Parse(parameter);
+            }
+            catch (FormatException e)
+            {
+                
+            }
+        }
+
+        return isApply;
+    }
+
+    private T GetRequiredParameter<T>(string parameterName)
+    {
+        return _configuration.GetSection(parameterName).Get<T>() ?? throw new ParameterNotFoundException(parameterName);
+    }
+    
+    private T? GetParameter<T>(string parameterName)
+    {
+        return _configuration.GetSection(parameterName).Get<T>();
     }
 }

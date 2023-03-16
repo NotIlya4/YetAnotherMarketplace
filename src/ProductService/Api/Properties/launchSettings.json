@@ -28,7 +28,7 @@
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ConnectionStringName": "local"
+        "ConnectionString:Server": "localhost,1433"
       }
     },
     "IIS Express": {

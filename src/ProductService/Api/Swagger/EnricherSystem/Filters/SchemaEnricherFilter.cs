@@ -7,12 +7,7 @@ namespace Api.Swagger.EnricherSystem.Filters;
 
 public class SchemaEnricherFilter : ISchemaFilter
 {
-    private readonly ISchemaEnricherProvider _enricherProvider;
-
-    public SchemaEnricherFilter()
-    {
-        _enricherProvider = new EnricherProvider(new AttributeExtractor());
-    }
+    private readonly ISchemaEnricherProvider _enricherProvider = new EnricherProvider();
     
     public void Apply(OpenApiSchema schema, SchemaFilterContext context)
     {

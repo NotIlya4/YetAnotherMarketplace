@@ -10,24 +10,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="ExceptionCatcherMiddleware" Version="1.0.3" />
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.3" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.3" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.3">
-          <PrivateAssets>all</PrivateAssets>
+        <PackageReference Include="ExceptionCatcherMiddleware" Version="1.0.3" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.4" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.4" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.4" />
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.5" PrivateAssets="All" />
+        <PackageReference Include="Roslynator.Analyzers" Version="4.2.0" PrivateAssets="All">
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        
-        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.4" />
-        
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-        
-        <PackageReference Include="Roslynator.Analyzers" Version="4.2.0">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-        <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" PrivateAssets="All" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" PrivateAssets="All" />
     </ItemGroup>
 
     <ItemGroup>

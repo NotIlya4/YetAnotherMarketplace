@@ -7,12 +7,7 @@ namespace Api.Swagger.EnricherSystem.Filters;
 
 public class ParameterEnricherFilter : IParameterFilter
 {
-    private readonly IParameterEnricherProvider _enricherProvider;
-
-    public ParameterEnricherFilter()
-    {
-        _enricherProvider = new EnricherProvider(new AttributeExtractor());
-    }
+    private readonly IParameterEnricherProvider _enricherProvider = new EnricherProvider();
     
     public void Apply(OpenApiParameter parameter, ParameterFilterContext context)
     {

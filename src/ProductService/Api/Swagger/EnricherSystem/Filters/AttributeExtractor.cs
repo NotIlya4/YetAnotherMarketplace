@@ -4,7 +4,7 @@ namespace Api.Swagger.EnricherSystem.Filters;
 
 public class AttributeExtractor
 {
-    public List<TAttribute> GetAttributesAssignableToGeneric<TAttribute>(ICustomAttributeProvider attributeProvider) 
+    private List<TAttribute> GetAttributesAssignableToGeneric<TAttribute>(ICustomAttributeProvider attributeProvider) 
         where TAttribute : class
     {
         return attributeProvider
@@ -14,10 +14,10 @@ public class AttributeExtractor
             .ToList();
     }
     
-    public TAttribute? GetAttributeAssignableToGeneric<TAttribute>(ICustomAttributeProvider attributeProvider) 
-        where TAttribute : class
+    public TAssignableTo? GetAttributeAssignableTo<TAssignableTo>(ICustomAttributeProvider attributeProvider) 
+        where TAssignableTo : class
     {
-        List<TAttribute> attributes = GetAttributesAssignableToGeneric<TAttribute>(attributeProvider);
+        List<TAssignableTo> attributes = GetAttributesAssignableToGeneric<TAssignableTo>(attributeProvider);
         if (attributes.Count == 0) return null;
 
         return attributes[0];

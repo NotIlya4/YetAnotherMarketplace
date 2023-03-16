@@ -22,7 +22,7 @@ services.AddConfiguredSwaggerGen();
 
 var app = builder.Build();
 
-if (parametersProvider.IsAutoMigrationsApply())
+if (parametersProvider.AutoApplyMigrations())
 {
     app.UpdateDb();
 }
