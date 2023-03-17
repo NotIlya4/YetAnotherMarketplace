@@ -6,22 +6,29 @@ namespace UnitTests.Api.Properties;
 
 public class ParametersProviderTests
 {
-    public string ExpectedConnectionString => "Server=a;Database=b;User Id=c;Password=d;MultipleActiveResultSets=true;TrustServerCertificate=true";
-
     [Fact]
     void GetConnectionString_ValidConfiguration_ExpectedConnectionString()
     {
-        ParametersProvider parametersProvider = new(ConfigurationWithConnectionStringBuilder("a", "b", "c", "d"));
+        string expectedConnectionString =
+            "Server=a;Database=b;User Id=c;Password=d;MultipleActiveResultSets=true;TrustServerCertificate=true";
+        ConfigurationManager configuration = new();
+        configuration["ConnectionString:Server"] = "a";
+        configuration["ConnectionString:Database"] = "b";
+        configuration["ConnectionString:User Id"] = "c";
+        configuration["ConnectionString:Password"] = "d";
+        ParametersProvider parametersProvider = new(configuration);
 
         string result = parametersProvider.GetConnectionString();
         
-        Assert.Equal(ExpectedConnectionString, result);
+        Assert.Equal(expectedConnectionString, result);
     }
     
     [Fact]
     void GetConnectionString_SomeParametersDiscarded_ThrowParameterNotFoundException()
     {
-        ParametersProvider parametersProvider = new(ConfigurationWithConnectionStringBuilder("a"));
+        ConfigurationManager configuration = new();
+        configuration["ConnectionString:Server"] = "a";
+        ParametersProvider parametersProvider = new(configuration);
 
         Assert.Throws<ParameterNotFoundException>(() => parametersProvider.GetConnectionString());
     }
@@ -52,16 +59,5 @@ public class ParametersProviderTests
         bool result = parametersProvider.AutoApplyMigrations();
         
         Assert.Equal(true, result);
-    }
-
-    private IConfiguration ConfigurationWithConnectionStringBuilder(string? server = null, 
-        string? database = null, string? userId = null, string? password = null)
-    {
-        ConfigurationManager configuration = new();
-        configuration["ConnectionString:Server"] = server;
-        configuration["ConnectionString:Database"] = database;
-        configuration["ConnectionString:User Id"] = userId;
-        configuration["ConnectionString:Password"] = password;
-        return configuration;
     }
 }
