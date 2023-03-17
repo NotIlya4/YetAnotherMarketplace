@@ -7,7 +7,6 @@ using ExceptionCatcherMiddleware.Extensions;
 using ExceptionCatcherMiddleware.Options;
 using Infrastructure.EntityFramework;
 using Infrastructure.ExceptionCatching;
-using Infrastructure.PropertySystem;
 using Infrastructure.Repositories;
 using Infrastructure.Repositories.BrandRepository;
 using Infrastructure.Repositories.Exceptions;
@@ -59,16 +58,9 @@ public static class DiExtensions
         serviceCollection.AddScoped<SortingInfoParser<Brand>>();
     }
 
-    public static void AddPropertyLambdaBuilders(this IServiceCollection serviceCollection)
-    {
-        serviceCollection.AddScoped<IPropertyLambdaBuilder<Product, object>, PropertyLambdaBuilder<Product, object>>();
-        serviceCollection.AddScoped<IPropertyLambdaBuilder<Brand, object>, PropertyLambdaBuilder<Brand, object>>();
-    }
-
     public static void AddSortingAppliers(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddScoped<SortingApplier<Product>>();
-        serviceCollection.AddScoped<SortingApplier<Brand>>();
     }
 
     public static void AddConfiguredSwaggerGen(this IServiceCollection serviceCollection)

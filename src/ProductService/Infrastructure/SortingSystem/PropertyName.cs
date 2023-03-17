@@ -1,6 +1,6 @@
 ﻿using Domain.Exceptions;
 
-namespace Infrastructure.PropertySystem;
+namespace Infrastructure.SortingSystem;
 
 public readonly record struct PropertyName<TClass>
 {

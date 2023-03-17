@@ -3,7 +3,7 @@ using Domain.Entities;
 
 namespace Api.Controllers.ProductsControllers.Views;
 
-public class ProductView
+public record ProductView
 {
     public required Guid Id { get; init; }
     [ProductName]
@@ -21,7 +21,7 @@ public class ProductView
     [ProductBrandWebsite]
     public required Uri BrandWebsite { get; init; }
 
-    public static ProductView FromGetProductDto(Product product)
+    public static ProductView FromProduct(Product product)
     {
         return new ProductView()
         {
@@ -36,8 +36,8 @@ public class ProductView
         };
     }
 
-    public static List<ProductView> FromGetProductDto(IEnumerable<Product> product)
+    public static List<ProductView> FromProducts(IEnumerable<Product> product)
     {
-        return product.Select(FromGetProductDto).ToList();
+        return product.Select(FromProduct).ToList();
     }
 }

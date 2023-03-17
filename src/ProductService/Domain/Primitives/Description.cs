@@ -2,7 +2,7 @@
 
 namespace Domain.Primitives;
 
-public record struct Description
+public record struct Description : IComparable<Description>
 {
     public string Value { get; private set; }
     
@@ -27,5 +27,10 @@ public record struct Description
     public override string ToString()
     {
         return Value;
+    }
+
+    public int CompareTo(Description other)
+    {
+        return string.Compare(Value, other.Value, StringComparison.Ordinal);
     }
 }

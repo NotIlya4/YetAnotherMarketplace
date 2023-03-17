@@ -11,9 +11,9 @@ namespace Infrastructure.Repositories.ProductRepository;
 public class ProductRepository : IProductRepository
 {
     private readonly ApplicationDbContext _dbContext;
-    private readonly SortingApplier<Product> _sortingApplier;
+    private readonly ISortingApplier<Product> _sortingApplier;
 
-    public ProductRepository(ApplicationDbContext dbContext, SortingApplier<Product> sortingApplier)
+    public ProductRepository(ApplicationDbContext dbContext, ISortingApplier<Product> sortingApplier)
     {
         _dbContext = dbContext;
         _sortingApplier = sortingApplier;
@@ -41,7 +41,7 @@ public class ProductRepository : IProductRepository
             .Products
             .IncludeProductDependencies();
         
-        IQueryable<Product> sortedQuery = _sortingApplier.ApplySorting(query, sortingInfoProvider);
+        IQueryable<Product> sortedQuery = _sortingApplier.ApplySorting(query, sortingInfoProvider.PrimarySorting, sortingInfoProvider.SecondarySortings);
         
         return await sortedQuery
             .ApplyPagination(pagination)

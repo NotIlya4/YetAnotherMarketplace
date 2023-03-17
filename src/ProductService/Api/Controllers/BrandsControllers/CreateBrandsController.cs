@@ -20,6 +20,6 @@ public class CreateBrandsController : BrandsControllerBase
         Brand brand = await BrandService.CreateNewBrand(createBrandCommandView.ToCreateBrandDto());
         BrandView brandView = BrandView.FromGetBrandDto(brand);
         
-        return CreatedAtRoute(nameof(GetBrandsController.GetBrandById), new { Id = brandView.Id }, brandView);
+        return CreatedAtRoute(nameof(GetBrandsController.GetBrandByName), new { Name = brandView.Name }, brandView);
     }
 }

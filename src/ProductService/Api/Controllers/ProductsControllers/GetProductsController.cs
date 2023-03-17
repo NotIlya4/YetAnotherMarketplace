@@ -32,7 +32,7 @@ public class GetProductsController : ProductsControllerBase
 
         List<Product> products = await ProductService.GetProducts(pagination, productSortingInfo);
         
-        List<ProductView> productViews = ProductView.FromGetProductDto(products);
+        List<ProductView> productViews = ProductView.FromProducts(products);
         return Ok(productViews);
     }
 
@@ -43,7 +43,7 @@ public class GetProductsController : ProductsControllerBase
     public async Task<ActionResult<ProductView>> GetProductById(Guid id)
     {
         Product product = await ProductService.GetProductById(id);
-        ProductView productView = ProductView.FromGetProductDto(product);
+        ProductView productView = ProductView.FromProduct(product);
         return Ok(productView);
     }
 
@@ -54,7 +54,7 @@ public class GetProductsController : ProductsControllerBase
     public async Task<ActionResult<ProductView>> GetProductByName(string name)
     {
         Product productDto = await ProductService.GetProductByName(new Name(name));
-        ProductView productView = ProductView.FromGetProductDto(productDto);
+        ProductView productView = ProductView.FromProduct(productDto);
         return Ok(productView);
     }
 }

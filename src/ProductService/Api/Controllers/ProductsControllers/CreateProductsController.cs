@@ -17,7 +17,7 @@ public class CreateProductsController : ProductsControllerBase
     public async Task<ActionResult<ProductView>> CreateProduct(CreateProductCommandView createProductCommandDto)
     {
         Product product = await ProductService.CreateNewProduct(createProductCommandDto.ToCreateProductDto());
-        ProductView productView = ProductView.FromGetProductDto(product);
+        ProductView productView = ProductView.FromProduct(product);
         return CreatedAtRoute(nameof(GetProductsController.GetProductById), new {Id = product.Id}, productView);
     }
 }

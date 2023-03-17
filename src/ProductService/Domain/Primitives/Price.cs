@@ -2,7 +2,7 @@
 
 namespace Domain.Primitives;
 
-public struct Price
+public record struct Price : IComparable<Price>
 {
     public decimal Value { get; private set; }
     
@@ -14,5 +14,10 @@ public struct Price
         }
 
         Value = value;
+    }
+
+    public int CompareTo(Price other)
+    {
+        return Value.CompareTo(other.Value);
     }
 }

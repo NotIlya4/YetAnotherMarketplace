@@ -11,16 +11,6 @@ public class DeleteBrandsController : BrandsControllerBase
     public DeleteBrandsController(IBrandService brandService) : base(brandService)
     {
     }
-
-    [HttpDelete]
-    [Route("id/{id}")]
-    [ProducesBrandNotFound]
-    [ProducesNoContent]
-    public async Task<IActionResult> DeleteBrandById(Guid id)
-    {
-        await BrandService.DeleteBrandById(id);
-        return NoContent();
-    }
     
     [HttpDelete]
     [Route("name/{name}")]

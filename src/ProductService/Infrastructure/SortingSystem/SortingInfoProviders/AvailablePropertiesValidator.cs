@@ -1,5 +1,4 @@
 ﻿using Domain.Exceptions;
-using Infrastructure.PropertySystem;
 using Infrastructure.SortingSystem.Models;
 
 namespace Infrastructure.SortingSystem.SortingInfoProviders;

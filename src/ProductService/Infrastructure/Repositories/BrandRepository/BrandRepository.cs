@@ -11,17 +11,10 @@ namespace Infrastructure.Repositories.BrandRepository;
 public class BrandRepository : IBrandRepository
 {
     private readonly ApplicationDbContext _dbContext;
-    private readonly SortingApplier<Brand> _sortingApplier;
 
-    public BrandRepository(ApplicationDbContext dbContext, SortingApplier<Brand> sortingApplier)
+    public BrandRepository(ApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
-        _sortingApplier = sortingApplier;
-    }
-
-    public async Task<Brand> GetBrandById(Guid brandId)
-    {
-        return await _dbContext.Brands.FirstAsyncOrThrow<BrandRepository, Brand>(b => b.Id.Equals(brandId));
     }
 
     public async Task<Brand> GetBrandByName(Name brandName)
@@ -29,16 +22,10 @@ public class BrandRepository : IBrandRepository
         return await _dbContext.Brands.FirstAsyncOrThrow<BrandRepository, Brand>(b => b.Name.Equals(brandName));
     }
 
-    public async Task<List<Brand>> GetBrands(Pagination pagination, ISortingInfoProvider<Brand> sortingInfoProvider)
+    public async Task<List<Brand>> GetBrands()
     {
-        IQueryable<Brand> query = _dbContext
-            .Brands;
-        
-        IQueryable<Brand> sortedQuery = _sortingApplier
-            .ApplySorting(query, sortingInfoProvider);
-        
-        return await sortedQuery
-            .ApplyPagination(pagination)
+        return await _dbContext
+            .Brands
             .ToListAsync();
     }
 

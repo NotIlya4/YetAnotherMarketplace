@@ -13,42 +13,21 @@ namespace Api.Controllers.BrandsControllers;
 [Tags("Brands")]
 public class GetBrandsController : BrandsControllerBase
 {
-    private readonly SortingInfoParser<Brand> _sortingInfoParser;
-
-    public GetBrandsController(IBrandService brandService, SortingInfoParser<Brand> sortingInfoParser) : base(brandService)
+    public GetBrandsController(IBrandService brandService) : base(brandService)
     {
-        _sortingInfoParser = sortingInfoParser;
     }
     
     [HttpGet]
     [ProducesOk]
-    public async Task<ActionResult<IEnumerable<BrandView>>> GetBrands([FromQuery] GetBrandsQueryView getBrandsQueryView)
+    public async Task<ActionResult<IEnumerable<BrandView>>> GetBrands()
     {
-        Pagination pagination = getBrandsQueryView.ToPagination();
-
-        List<SortingInfo<Brand>> parsedPropertySortingInfos =
-            _sortingInfoParser.Parse(getBrandsQueryView.Sorting);
-        BrandSortingInfo brandSortingInfo = new(parsedPropertySortingInfos);
-        
-        List<Brand> brands = await BrandService.GetBrands(pagination, brandSortingInfo);
-        
+        List<Brand> brands = await BrandService.GetBrands();
         List<BrandView> brandViews = brands.Select(BrandView.FromGetBrandDto).ToList();
         return Ok(brandViews);
     }
-    
+
     [HttpGet]
-    [Route("id/{id}", Name = nameof(GetBrandById))]
-    [ProducesOk]
-    [ProducesBrandNotFound]
-    public async Task<ActionResult<BrandView>> GetBrandById(Guid id)
-    {
-        Brand brand = await BrandService.GetBrandById(id);
-        BrandView brandView = BrandView.FromGetBrandDto(brand);
-        return Ok(brandView);
-    }
-    
-    [HttpGet]
-    [Route("name/{name}")]
+    [Route("name/{name}", Name = nameof(GetBrandByName))]
     [ProducesOk]
     [ProducesBrandNotFound]
     public async Task<ActionResult<BrandView>> GetBrandByName(string name)

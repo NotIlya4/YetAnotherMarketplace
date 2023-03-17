@@ -9,7 +9,6 @@ ParametersProvider parametersProvider = new ParametersProvider(configuration);
 
 services.AddServices();
 services.AddSortingInfoParsers();
-services.AddPropertyLambdaBuilders();
 services.AddSortingAppliers();
 services.AddRepositories();
 services.AddAppDbContext(parametersProvider.GetConnectionString());

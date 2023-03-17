@@ -1,5 +1,4 @@
-﻿using Infrastructure.PropertySystem;
-using Infrastructure.SortingSystem.Models;
+﻿using Infrastructure.SortingSystem.Models;
 
 namespace Api.Controllers;
 
@@ -10,7 +9,7 @@ public class SortingInfoParser<TEntity>
         SortingSide sortingSide = GetSortingSide(rawPropertySortingInfo);
         string rawPropertyName = RemoveSortingSideFromString(rawPropertySortingInfo);
 
-        return new SortingInfo<TEntity>(new PropertyName<TEntity>(rawPropertyName), sortingSide);
+        return new SortingInfo<TEntity>(rawPropertyName, sortingSide);
     }
 
     public List<SortingInfo<TEntity>> Parse(IEnumerable<string> rawPropertySortingInfos)
