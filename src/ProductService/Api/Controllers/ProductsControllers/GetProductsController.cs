@@ -26,8 +26,8 @@ public class GetProductsController : ProductsControllerBase
     {
         Pagination pagination = getProductsQueryView.ToPagination();
 
-        List<ISortingInfo> parsedPropertySortingInfos =
-            _sortingInfoParser.Parse(getProductsQueryView.Sorting);
+        List<SortingInfo<Product>> parsedPropertySortingInfos =
+            _sortingInfoParser.Parse<Product>(getProductsQueryView.Sorting);
         ProductSortingInfo productSortingInfo = new(parsedPropertySortingInfos);
 
         List<Product> products = await ProductService.GetProducts(pagination, productSortingInfo);

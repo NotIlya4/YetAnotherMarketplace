@@ -20,10 +20,10 @@ public class ProductTypesController : ControllerBase
 
     [HttpGet]
     [ProducesOk]
-    public async Task<ActionResult<IEnumerable<string>>> GetProductTypes()
+    public async Task<ActionResult<IEnumerable<ProductTypeView>>> GetProductTypes()
     {
         List<ProductType> productTypes = await _productTypeService.GetProductTypes();
-        List<string> productTypeNames = productTypes.Select(p => p.Name.Value).ToList();
+        List<ProductTypeView> productTypeNames = productTypes.Select(ProductTypeView.FromDomain).ToList();
         return Ok(productTypeNames);
     }
 }

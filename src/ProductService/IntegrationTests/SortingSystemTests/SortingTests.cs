@@ -48,12 +48,12 @@ public class SortingTests : IClassFixture<SortingDbFixture>
         
         IQueryable<TestEntity> query = SortingApplier.ApplySorting(
             query: StartQuery, 
-            primarySorting: new SortingInfo(nameof(TestEntity.Property1), sortingSide),
-            secondarySortings: new List<ISortingInfo>
+            primarySorting: new SortingInfo<TestEntity>(nameof(TestEntity.Property1), sortingSide),
+            secondarySortings: new List<SortingInfo<TestEntity>>
             {
-                new SortingInfo(nameof(TestEntity.Property2), sortingSide),
-                new SortingInfo(nameof(TestEntity.Property3), sortingSide),
-                new SortingInfo(nameof(TestEntity.Property4), sortingSide),
+                new(nameof(TestEntity.Property2), sortingSide),
+                new(nameof(TestEntity.Property3), sortingSide),
+                new(nameof(TestEntity.Property4), sortingSide),
             });
         
         List<TestEntity> result = await query.ToListAsync();
@@ -66,12 +66,12 @@ public class SortingTests : IClassFixture<SortingDbFixture>
     {
         IQueryable<TestEntity> query = SortingApplier.ApplySorting(
             query: StartQuery, 
-            primarySorting: new SortingInfo(nameof(TestEntity.Property2), SortingSide.Asc),
-            secondarySortings: new List<ISortingInfo>
+            primarySorting: new SortingInfo<TestEntity>(nameof(TestEntity.Property2), SortingSide.Asc),
+            secondarySortings: new List<SortingInfo<TestEntity>>
             {
-                new SortingInfo(nameof(TestEntity.Property4), SortingSide.Desc),
-                new SortingInfo(nameof(TestEntity.Property1), SortingSide.Asc),
-                new SortingInfo(nameof(TestEntity.Property3), SortingSide.Asc),
+                new(nameof(TestEntity.Property4), SortingSide.Desc),
+                new(nameof(TestEntity.Property1), SortingSide.Asc),
+                new(nameof(TestEntity.Property3), SortingSide.Asc),
             });
 
         List<TestEntity> expectedOrder = EntityList.Entities
@@ -90,12 +90,12 @@ public class SortingTests : IClassFixture<SortingDbFixture>
     {
         IQueryable<TestEntity> query = SortingApplier.ApplySorting(
             query: StartQuery, 
-            primarySorting: new SortingInfo(nameof(TestEntity.Property4), SortingSide.Desc),
-            secondarySortings: new List<ISortingInfo>
+            primarySorting: new SortingInfo<TestEntity>(nameof(TestEntity.Property4), SortingSide.Desc),
+            secondarySortings: new List<SortingInfo<TestEntity>>
             {
-                new SortingInfo(nameof(TestEntity.Property2), SortingSide.Asc),
-                new SortingInfo(nameof(TestEntity.Property3), SortingSide.Asc),
-                new SortingInfo(nameof(TestEntity.Property1), SortingSide.Asc),
+                new(nameof(TestEntity.Property2), SortingSide.Asc),
+                new(nameof(TestEntity.Property3), SortingSide.Asc),
+                new(nameof(TestEntity.Property1), SortingSide.Asc),
             });
 
         List<TestEntity> expectedOrder = EntityList.Entities

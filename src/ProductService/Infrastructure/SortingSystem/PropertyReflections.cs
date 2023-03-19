@@ -19,7 +19,7 @@ public class PropertyReflections
 
         if (property is null)
         {
-            throw new ValidationException($"{type.Name} does not have property with name {propertyName}");
+            throw new ValidationException($"{type.Name} does not have property {propertyName}");
         }
 
         return property;

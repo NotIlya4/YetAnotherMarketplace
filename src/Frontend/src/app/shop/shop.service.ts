@@ -6,12 +6,16 @@ import {IBrand} from "../shared/models/brand";
 import {IProductType} from "../shared/models/productType";
 import {BrandMocker} from "./mockers/brand-mocker";
 import {ProductTypeMocker} from "./mockers/productType-mocker";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShopService {
-  constructor(private productMocker: ProductMocker, private brandMocker: BrandMocker, private productTypeMocker: ProductTypeMocker) {
+  baseUrl = 'http://localhost:5000/'
+
+  constructor(private productMocker: ProductMocker, private brandMocker: BrandMocker, private productTypeMocker: ProductTypeMocker,
+              private httpClient: HttpClient) {
   }
 
   getProducts(): Observable<IProduct[]>{
@@ -23,18 +27,10 @@ export class ShopService {
   }
 
   getProductTypes(): Observable<IProductType[]>{
-    return new Observable<IProductType[]>(
-      subscriber => {
-        subscriber.next(this.productTypeMocker.getProductTypes())
-      }
-    )
+    return this.httpClient.get<IProductType[]>(this.baseUrl + 'api/product-types');
   }
 
   getBrands(): Observable<IBrand[]>{
-    return new Observable<IBrand[]>(
-      subscriber => {
-        subscriber.next(this.brandMocker.getBrands())
-      }
-    )
+    return this.httpClient.get<IBrand[]>(this.baseUrl + 'api/brands');
   }
 }

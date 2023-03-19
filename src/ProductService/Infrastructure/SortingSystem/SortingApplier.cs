@@ -13,8 +13,8 @@ public class SortingApplier
         _propertyReflections = propertyReflections;
     }
     
-    public IQueryable<TEntity> ApplySorting<TEntity>(IQueryable<TEntity> query, ISortingInfo primarySorting,
-        IEnumerable<ISortingInfo>? secondarySortings = null)
+    public IQueryable<TEntity> ApplySorting<TEntity>(IQueryable<TEntity> query, SortingInfo<TEntity> primarySorting,
+        IEnumerable<SortingInfo<TEntity>>? secondarySortings = null)
     {
         MethodCallExpression expression = ApplyOrderBy(query, primarySorting);
         
@@ -22,29 +22,29 @@ public class SortingApplier
         {
             foreach (var secondarySorting in secondarySortings)
             {
-                expression = ApplyThenBy<TEntity>(expression, secondarySorting);
+                expression = ApplyThenBy(expression, secondarySorting);
             }
         }
 
         return query.Provider.CreateQuery<TEntity>(expression);
     }
 
-    private MethodCallExpression ApplyOrderBy<TClass>(IQueryable<TClass> query, ISortingInfo sortingInfo)
+    private MethodCallExpression ApplyOrderBy<TClass>(IQueryable<TClass> query, SortingInfo<TClass> sortingInfo)
     {
         string queryableMethodName = sortingInfo.SortingSide == SortingSide.Asc
             ? nameof(Queryable.OrderBy)
             : nameof(Queryable.OrderByDescending);
 
-        return ApplyQueryableMethod<TClass>(query.Expression, queryableMethodName, sortingInfo.PropertyName);
+        return ApplyQueryableMethod<TClass>(query.Expression, queryableMethodName, sortingInfo.PropertyName.Value);
     }
 
-    private MethodCallExpression ApplyThenBy<TClass>(MethodCallExpression parent, ISortingInfo sortingInfo)
+    private MethodCallExpression ApplyThenBy<TClass>(MethodCallExpression parent, SortingInfo<TClass> sortingInfo)
     {
         string queryableMethodName = sortingInfo.SortingSide == SortingSide.Asc
             ? nameof(Queryable.ThenBy)
             : nameof(Queryable.ThenByDescending);
 
-        return ApplyQueryableMethod<TClass>(parent, queryableMethodName, sortingInfo.PropertyName);
+        return ApplyQueryableMethod<TClass>(parent, queryableMethodName, sortingInfo.PropertyName.Value);
     }
 
     private MethodCallExpression ApplyQueryableMethod<TClass>(Expression queryExpression, string queryableMethodName, string propertyName)

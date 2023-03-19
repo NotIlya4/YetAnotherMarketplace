@@ -16,5 +16,6 @@ public class ProductSortingAttribute : BaseAttribute, IParameterEnricher
     public void Enrich(OpenApiParameter parameter)
     {
         _sortingEnricher.Enrich(parameter);
+        parameter.Required = false;
     }
 }

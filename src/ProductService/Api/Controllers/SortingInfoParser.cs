@@ -4,17 +4,21 @@ namespace Api.Controllers;
 
 public class SortingInfoParser
 {
-    public ISortingInfo Parse(string rawPropertySortingInfo)
+    public SortingInfo<TEntity> Parse<TEntity>(string rawPropertySortingInfo)
     {
         SortingSide sortingSide = GetSortingSide(rawPropertySortingInfo);
         string rawPropertyName = RemoveSortingSideFromString(rawPropertySortingInfo);
 
-        return new SortingInfo(rawPropertyName, sortingSide);
+        return new SortingInfo<TEntity>(rawPropertyName, sortingSide);
     }
 
-    public List<ISortingInfo> Parse(IEnumerable<string> rawPropertySortingInfos)
+    public List<SortingInfo<TEntity>> Parse<TEntity>(IEnumerable<string>? rawPropertySortingInfos)
     {
-        return rawPropertySortingInfos.Select(Parse).ToList();
+        if (rawPropertySortingInfos is null)
+        {
+            return new List<SortingInfo<TEntity>>();
+        }
+        return rawPropertySortingInfos.Select(Parse<TEntity>).ToList();
     }
     
     private SortingSide GetSortingSide(string rawSortingField)

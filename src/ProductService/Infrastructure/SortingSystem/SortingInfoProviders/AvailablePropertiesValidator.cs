@@ -3,13 +3,19 @@ using Infrastructure.SortingSystem.Models;
 
 namespace Infrastructure.SortingSystem.SortingInfoProviders;
 
-public class AvailablePropertiesValidator
+public class AvailablePropertiesValidator<TEntity>
 {
     private readonly List<string> _availablePropertyStrings;
 
-    public AvailablePropertiesValidator(List<string> availableProperties)
+    public AvailablePropertiesValidator(List<string> rawAvailableProperties) 
+        : this(rawAvailableProperties.Select(p => new PropertyName<TEntity>(p)).ToList())
     {
-        _availablePropertyStrings = availableProperties;
+        
+    }
+    
+    public AvailablePropertiesValidator(List<PropertyName<TEntity>> availableProperties)
+    {
+        _availablePropertyStrings = availableProperties.Select(p => p.Value).ToList();
     }
 
     public void Validate(string propertyName)
@@ -21,11 +27,11 @@ public class AvailablePropertiesValidator
         }
     }
 
-    public void Validate(IEnumerable<ISortingInfo> sortingInfos)
+    public void Validate(IEnumerable<SortingInfo<TEntity>> sortingInfos)
     {
         foreach (var sortingInfo in sortingInfos)
         {
-            Validate(sortingInfo.PropertyName);
+            Validate(sortingInfo.PropertyName.Value);
         }
     }
 }

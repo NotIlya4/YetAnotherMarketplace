@@ -1,11 +1,17 @@
 ﻿namespace Infrastructure.SortingSystem.Models;
 
-public record struct SortingInfo : ISortingInfo
+public readonly record struct SortingInfo<TEntity>
 {
-    public string PropertyName { get; }
+    public PropertyName<TEntity> PropertyName { get; }
     public SortingSide SortingSide { get; }
 
-    public SortingInfo(string propertyName, SortingSide sortingSide)
+    public SortingInfo(string rawPropertyName, SortingSide sortingSide) 
+        : this(new PropertyName<TEntity>(rawPropertyName), sortingSide)
+    {
+        
+    }
+
+    public SortingInfo(PropertyName<TEntity> propertyName, SortingSide sortingSide)
     {
         PropertyName = propertyName;
         SortingSide = sortingSide;

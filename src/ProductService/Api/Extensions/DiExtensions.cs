@@ -61,8 +61,8 @@ public static class DiExtensions
         serviceCollection.AddSwaggerGen(options =>
         {
             options.DescribeAllParametersInCamelCase();
-            options.AddEnricherFilters();
             options.AddNullableFilters();
+            options.AddEnricherFilters();
             options.EnableAnnotations();
         });
     }

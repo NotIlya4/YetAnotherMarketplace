@@ -20,10 +20,10 @@ public class BrandsController : ControllerBase
     
     [HttpGet]
     [ProducesOk]
-    public async Task<ActionResult<IEnumerable<string>>> GetBrands()
+    public async Task<ActionResult<IEnumerable<BrandView>>> GetBrands()
     {
         List<Brand> brands = await _brandService.GetBrands();
-        List<string> brandNames = brands.Select(b => b.Name.Value).ToList();
+        List<BrandView> brandNames = brands.Select(BrandView.FromDomain).ToList();
         return Ok(brandNames);
     }
 }

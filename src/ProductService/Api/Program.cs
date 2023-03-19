@@ -15,6 +15,15 @@ services.AddControllers()
     .AddXmlDataContractSerializerFormatters();
 services.AddEndpointsApiExplorer();
 services.AddConfiguredSwaggerGen();
+services.AddCors(options =>
+{
+    options.AddPolicy("all", policyBuilder =>
+    {
+        policyBuilder.AllowAnyHeader();
+        policyBuilder.AllowAnyMethod();
+        policyBuilder.AllowAnyOrigin();
+    });
+});
 
 
 var app = builder.Build();
@@ -24,6 +33,7 @@ if (parametersProvider.AutoApplyMigrations())
     app.UpdateDb();
 }
 
+app.UseCors("all");
 app.UseExceptionCatcherMiddleware();
 app.UseSwagger();
 app.UseSwaggerUI();
