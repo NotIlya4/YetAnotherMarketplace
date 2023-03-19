@@ -1,19 +1,19 @@
 ﻿using Api.Controllers;
 using Api.Swagger.EnricherSystem.Extensions;
 using Api.Swagger.NullableSystem;
-using Domain.Entities;
 using Domain.Exceptions;
 using ExceptionCatcherMiddleware.Extensions;
 using ExceptionCatcherMiddleware.Options;
 using Infrastructure.EntityFramework;
 using Infrastructure.ExceptionCatching;
-using Infrastructure.Repositories;
 using Infrastructure.Repositories.BrandRepository;
 using Infrastructure.Repositories.Exceptions;
 using Infrastructure.Repositories.ProductRepository;
 using Infrastructure.Repositories.ProductTypeRepository;
 using Infrastructure.Services.BrandService;
 using Infrastructure.Services.ProductService;
+using Infrastructure.Services.ProductTypeService;
+using Infrastructure.SortingSystem;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Extensions;
@@ -24,6 +24,8 @@ public static class DiExtensions
     {
         serviceCollection.AddScoped<IProductService, ProductService>();
         serviceCollection.AddScoped<IBrandService, BrandService>();
+        serviceCollection.AddScoped<IProductTypeService, ProductTypeService>();
+        serviceCollection.AddScoped<SortingInfoParser>();
     }
     
     public static void AddRepositories(this IServiceCollection serviceCollection)
@@ -31,6 +33,8 @@ public static class DiExtensions
         serviceCollection.AddScoped<IProductRepository, ProductRepository>();
         serviceCollection.AddScoped<IBrandRepository, BrandRepository>();
         serviceCollection.AddScoped<IProductTypeRepository, ProductTypeRepository>();
+        serviceCollection.AddScoped<SortingApplier>();
+        serviceCollection.AddScoped<PropertyReflections>();
     }
 
     public static void AddAppDbContext(this IServiceCollection serviceCollection, string connectionString)
@@ -50,17 +54,6 @@ public static class DiExtensions
             optionsBuilder.RegisterExceptionMapper<EntityNotFoundException, EntityNotFoundExceptionMapper>();
             optionsBuilder.RegisterExceptionMapper<ValidationException, ValidationExceptionMapper>();
         });
-    }
-
-    public static void AddSortingInfoParsers(this IServiceCollection serviceCollection)
-    {
-        serviceCollection.AddScoped<SortingInfoParser<Product>>();
-        serviceCollection.AddScoped<SortingInfoParser<Brand>>();
-    }
-
-    public static void AddSortingAppliers(this IServiceCollection serviceCollection)
-    {
-        serviceCollection.AddScoped<SortingApplier<Product>>();
     }
 
     public static void AddConfiguredSwaggerGen(this IServiceCollection serviceCollection)

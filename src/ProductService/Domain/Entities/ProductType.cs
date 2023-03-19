@@ -13,8 +13,8 @@ public class ProductType
         Name = name;
     }
 
-    private ProductType()
+    public ProductType(Name name)
     {
-        
+        Name = name;
     }
 }

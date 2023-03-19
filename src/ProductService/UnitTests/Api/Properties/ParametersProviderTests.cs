@@ -1,5 +1,4 @@
-﻿using System.Configuration;
-using Api.Properties;
+﻿using Api.Properties;
 using Microsoft.Extensions.Configuration;
 
 namespace UnitTests.Api.Properties;

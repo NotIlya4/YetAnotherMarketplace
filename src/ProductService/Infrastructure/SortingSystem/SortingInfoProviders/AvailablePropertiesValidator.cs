@@ -3,40 +3,29 @@ using Infrastructure.SortingSystem.Models;
 
 namespace Infrastructure.SortingSystem.SortingInfoProviders;
 
-public class AvailablePropertiesValidator<TEntity>
+public class AvailablePropertiesValidator
 {
     private readonly List<string> _availablePropertyStrings;
 
-    public AvailablePropertiesValidator(List<string> rawAvailableProperties) 
-        : this(rawAvailableProperties.Select(s => new PropertyName<TEntity>(s)).ToList())
+    public AvailablePropertiesValidator(List<string> availableProperties)
     {
-        
+        _availablePropertyStrings = availableProperties;
     }
 
-    public AvailablePropertiesValidator(List<PropertyName<TEntity>> availableProperties)
+    public void Validate(string propertyName)
     {
-        _availablePropertyStrings = availableProperties.Select(ap => ap.Value).ToList();
-    }
-
-    public void Validate(PropertyName<TEntity> propertyName)
-    {
-        if (!_availablePropertyStrings.Contains(propertyName.Value, StringComparer.OrdinalIgnoreCase))
+        if (!_availablePropertyStrings.Contains(propertyName, StringComparer.OrdinalIgnoreCase))
         {
             throw new ValidationException(
-                $"{propertyName.Value} property isn't available, available are: {_availablePropertyStrings.ToReadableString()}");
+                $"{propertyName} property isn't available, available are: {_availablePropertyStrings.ToReadableString()}");
         }
     }
-    
-    public void Validate(SortingInfo<TEntity> sortingInfo)
-    {
-        Validate(sortingInfo.PropertyName);
-    }
 
-    public void Validate(IEnumerable<SortingInfo<TEntity>> sortingInfos)
+    public void Validate(IEnumerable<ISortingInfo> sortingInfos)
     {
         foreach (var sortingInfo in sortingInfos)
         {
-            Validate(sortingInfo);
+            Validate(sortingInfo.PropertyName);
         }
     }
 }

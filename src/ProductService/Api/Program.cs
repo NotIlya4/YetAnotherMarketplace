@@ -8,8 +8,6 @@ IConfiguration configuration = builder.Configuration;
 ParametersProvider parametersProvider = new ParametersProvider(configuration);
 
 services.AddServices();
-services.AddSortingInfoParsers();
-services.AddSortingAppliers();
 services.AddRepositories();
 services.AddAppDbContext(parametersProvider.GetConnectionString());
 services.AddExceptionCatcherMiddlewareServicesConfigured();

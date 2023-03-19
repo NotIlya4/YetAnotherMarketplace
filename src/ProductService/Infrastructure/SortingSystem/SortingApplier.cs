@@ -1,14 +1,20 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
-using Infrastructure.SortingSystem;
 using Infrastructure.SortingSystem.Models;
 
-namespace Infrastructure.Repositories;
+namespace Infrastructure.SortingSystem;
 
-public class SortingApplier<TEntity> : ISortingApplier<TEntity>
+public class SortingApplier
 {
-    public IQueryable<TEntity> ApplySorting(IQueryable<TEntity> query, SortingInfo<TEntity> primarySorting,
-        IEnumerable<SortingInfo<TEntity>>? secondarySortings = null)
+    private readonly PropertyReflections _propertyReflections;
+
+    public SortingApplier(PropertyReflections propertyReflections)
+    {
+        _propertyReflections = propertyReflections;
+    }
+    
+    public IQueryable<TEntity> ApplySorting<TEntity>(IQueryable<TEntity> query, ISortingInfo primarySorting,
+        IEnumerable<ISortingInfo>? secondarySortings = null)
     {
         MethodCallExpression expression = ApplyOrderBy(query, primarySorting);
         
@@ -16,48 +22,38 @@ public class SortingApplier<TEntity> : ISortingApplier<TEntity>
         {
             foreach (var secondarySorting in secondarySortings)
             {
-                expression = ApplyThenBy(expression, secondarySorting);
+                expression = ApplyThenBy<TEntity>(expression, secondarySorting);
             }
         }
 
         return query.Provider.CreateQuery<TEntity>(expression);
     }
 
-    private MethodCallExpression ApplyOrderBy(IQueryable<TEntity> query, SortingInfo<TEntity> sortingInfo)
+    private MethodCallExpression ApplyOrderBy<TClass>(IQueryable<TClass> query, ISortingInfo sortingInfo)
     {
-        string orderingMethodName = sortingInfo.SortingSide == SortingSide.Asc
+        string queryableMethodName = sortingInfo.SortingSide == SortingSide.Asc
             ? nameof(Queryable.OrderBy)
             : nameof(Queryable.OrderByDescending);
-        
-        PropertyInfo sortingProperty = typeof(TEntity).GetProperty(sortingInfo.PropertyName.Value)!;
-        
-        Type[] queryableGenericTypes =
-        {
-            typeof(TEntity),
-            sortingProperty.PropertyType
-        };
 
-        Expression queryAsExpression = query.Expression;
-        
-        return Expression.Call(
-            typeof(Queryable), 
-            orderingMethodName,
-            queryableGenericTypes, 
-            queryAsExpression,
-            GetPropertyLambda(sortingInfo.PropertyName));
+        return ApplyQueryableMethod<TClass>(query.Expression, queryableMethodName, sortingInfo.PropertyName);
     }
 
-    private MethodCallExpression ApplyThenBy(MethodCallExpression parent, SortingInfo<TEntity> sortingInfo)
+    private MethodCallExpression ApplyThenBy<TClass>(MethodCallExpression parent, ISortingInfo sortingInfo)
     {
         string queryableMethodName = sortingInfo.SortingSide == SortingSide.Asc
             ? nameof(Queryable.ThenBy)
             : nameof(Queryable.ThenByDescending);
-        
-        PropertyInfo sortingProperty = typeof(TEntity).GetProperty(sortingInfo.PropertyName.Value)!;
+
+        return ApplyQueryableMethod<TClass>(parent, queryableMethodName, sortingInfo.PropertyName);
+    }
+
+    private MethodCallExpression ApplyQueryableMethod<TClass>(Expression queryExpression, string queryableMethodName, string propertyName)
+    {
+        PropertyInfo sortingProperty = _propertyReflections.GetProperty(typeof(TClass), propertyName);
 
         Type[] queryableGenericTypes =
         {
-            typeof(TEntity),
+            typeof(TClass),
             sortingProperty.PropertyType
         };
         
@@ -65,15 +61,7 @@ public class SortingApplier<TEntity> : ISortingApplier<TEntity>
             typeof(Queryable),
             queryableMethodName,
             queryableGenericTypes,
-            parent,
-            GetPropertyLambda(sortingInfo.PropertyName));
-    }
-
-    private LambdaExpression GetPropertyLambda(PropertyName<TEntity> propertyName)
-    {
-        ParameterExpression parameter = Expression.Parameter(typeof(TEntity), "entity");
-        PropertyInfo sortingProperty = typeof(TEntity).GetProperty(propertyName.Value)!;
-        Expression getPropertyFromEntity = Expression.MakeMemberAccess(parameter, sortingProperty);
-        return Expression.Lambda(getPropertyFromEntity, parameter);
+            queryExpression,
+            _propertyReflections.GetPropertyLambda(typeof(TClass), propertyName));
     }
 }

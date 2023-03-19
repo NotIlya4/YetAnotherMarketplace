@@ -9,7 +9,7 @@ public class CreateProductCommand
     public required Description Description { get; set; }
     public required Price Price { get; set; }
     public required Uri PictureUrl { get; set; }
-    public required Name ProductType { get; set; }
+    public required Name ProductTypeName { get; set; }
     public required Name BrandName { get; set; }
 
     public Product ToDomain(Guid productId, Brand brand, ProductType productType)

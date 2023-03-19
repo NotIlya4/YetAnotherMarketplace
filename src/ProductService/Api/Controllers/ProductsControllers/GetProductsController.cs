@@ -13,9 +13,9 @@ namespace Api.Controllers.ProductsControllers;
 [Tags("Products")]
 public class GetProductsController : ProductsControllerBase
 {
-    private readonly SortingInfoParser<Product> _sortingInfoParser;
+    private readonly SortingInfoParser _sortingInfoParser;
 
-    public GetProductsController(IProductService productService, SortingInfoParser<Product> sortingInfoParser) : base(productService)
+    public GetProductsController(IProductService productService, SortingInfoParser sortingInfoParser) : base(productService)
     {
         _sortingInfoParser = sortingInfoParser;
     }
@@ -26,7 +26,7 @@ public class GetProductsController : ProductsControllerBase
     {
         Pagination pagination = getProductsQueryView.ToPagination();
 
-        List<SortingInfo<Product>> parsedPropertySortingInfos =
+        List<ISortingInfo> parsedPropertySortingInfos =
             _sortingInfoParser.Parse(getProductsQueryView.Sorting);
         ProductSortingInfo productSortingInfo = new(parsedPropertySortingInfos);
 
@@ -34,17 +34,6 @@ public class GetProductsController : ProductsControllerBase
         
         List<ProductView> productViews = ProductView.FromProducts(products);
         return Ok(productViews);
-    }
-
-    [HttpGet]
-    [Route("id/{id}", Name = nameof(GetProductById))]
-    [ProducesOk]
-    [ProducesProductNotFound]
-    public async Task<ActionResult<ProductView>> GetProductById(Guid id)
-    {
-        Product product = await ProductService.GetProductById(id);
-        ProductView productView = ProductView.FromProduct(product);
-        return Ok(productView);
     }
 
     [HttpGet]

@@ -1,9 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Primitives;
 using Infrastructure.EntityFramework;
-using Infrastructure.FilteringSystem;
 using Infrastructure.Repositories.Extensions;
-using Infrastructure.SortingSystem.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.BrandRepository;
@@ -17,16 +15,14 @@ public class BrandRepository : IBrandRepository
         _dbContext = dbContext;
     }
 
-    public async Task<Brand> GetBrandByName(Name brandName)
+    public async Task<List<Brand>> GetAll()
     {
-        return await _dbContext.Brands.FirstAsyncOrThrow<BrandRepository, Brand>(b => b.Name.Equals(brandName));
+        return await _dbContext.Brands.ToListAsync();
     }
 
-    public async Task<List<Brand>> GetBrands()
+    public Task<Brand> GetBrandByName(Name name)
     {
-        return await _dbContext
-            .Brands
-            .ToListAsync();
+        return _dbContext.Brands.FirstAsyncOrThrow(b => b.Name.Equals(name));
     }
 
     public async Task Insert(Brand brand)
@@ -37,7 +33,7 @@ public class BrandRepository : IBrandRepository
 
     public async Task Delete(Brand brand)
     {
-        _dbContext.Remove(brand);
+        _dbContext.Brands.Remove(brand);
         await _dbContext.SaveChangesAsync();
     }
 }

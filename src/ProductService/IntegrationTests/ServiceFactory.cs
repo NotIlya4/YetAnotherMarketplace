@@ -1,8 +1,6 @@
-﻿using Infrastructure.EntityFramework;
-using Infrastructure.Repositories.BrandRepository;
+﻿using Infrastructure.Repositories.BrandRepository;
 using Infrastructure.Repositories.ProductRepository;
 using Infrastructure.Repositories.ProductTypeRepository;
-using Infrastructure.Services.BrandService;
 using Infrastructure.Services.ProductService;
 
 namespace IntegrationTests;

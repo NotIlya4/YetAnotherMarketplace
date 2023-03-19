@@ -12,6 +12,6 @@ public class EntityNotFoundDetailAttribute : BaseAttribute, ISchemaEnricher
     
     public void Enrich(OpenApiSchema schema)
     {
-        schema.Example = new OpenApiString(new EntityNotFoundException(EntityName, RepositoryName).Message);
+        schema.Example = new OpenApiString(new EntityNotFoundException(EntityName).Message);
     }
 }

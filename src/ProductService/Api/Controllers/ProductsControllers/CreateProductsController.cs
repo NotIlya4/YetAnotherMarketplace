@@ -18,6 +18,6 @@ public class CreateProductsController : ProductsControllerBase
     {
         Product product = await ProductService.CreateNewProduct(createProductCommandDto.ToCreateProductDto());
         ProductView productView = ProductView.FromProduct(product);
-        return CreatedAtRoute(nameof(GetProductsController.GetProductById), new {Id = product.Id}, productView);
+        return CreatedAtRoute(nameof(GetProductsController.GetProductByName), new {Name = product.Name.Value}, productView);
     }
 }

@@ -1,9 +1,8 @@
-﻿using Domain.Entities;
-using Infrastructure.EntityFramework;
-using Infrastructure.Repositories;
+﻿using Infrastructure.EntityFramework;
 using Infrastructure.Repositories.BrandRepository;
 using Infrastructure.Repositories.ProductRepository;
 using Infrastructure.Repositories.ProductTypeRepository;
+using Infrastructure.SortingSystem;
 using IntegrationTests.EntityFactories;
 using Microsoft.EntityFrameworkCore;
 
@@ -56,7 +55,7 @@ public class DatabaseProvider : IAsyncLifetime
 
     private ProductRepository CreateProductRepository()
     {
-        ISortingApplier<Product> sortingApplier = new SortingApplier<Product>();
+        SortingApplier sortingApplier = new(new PropertyReflections());
         
         return new ProductRepository(DbContext, sortingApplier);
     }

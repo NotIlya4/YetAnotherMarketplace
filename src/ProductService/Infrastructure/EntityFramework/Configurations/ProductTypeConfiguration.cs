@@ -7,15 +7,15 @@ namespace Infrastructure.EntityFramework.Configurations;
 public class ProductTypeConfiguration : IEntityTypeConfiguration<ProductType>
 {
     public EntityTypeBuilder<ProductType> Builder { get; set; } = null!;
-
+    
     public void Configure(EntityTypeBuilder<ProductType> builder)
     {
         Builder = builder;
-
+        
         ConfigureId();
         ConfigureName();
     }
-
+    
     private void ConfigureId()
     {
         Builder

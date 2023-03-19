@@ -1,5 +1,3 @@
-using Infrastructure;
-
 namespace Api.Properties;
 
 public class ParametersProvider
@@ -35,7 +33,7 @@ public class ParametersProvider
             {
                 isApply = bool.Parse(parameter);
             }
-            catch (FormatException e)
+            catch (FormatException)
             {
                 
             }

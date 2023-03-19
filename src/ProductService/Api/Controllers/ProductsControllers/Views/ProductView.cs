@@ -3,7 +3,7 @@ using Domain.Entities;
 
 namespace Api.Controllers.ProductsControllers.Views;
 
-public record ProductView
+public class ProductView
 {
     public required Guid Id { get; init; }
     [ProductName]
@@ -17,9 +17,7 @@ public record ProductView
     [ProductType]
     public required string ProductType { get; init; }
     [ProductBrandName]
-    public required string BrandName { get; init; }
-    [ProductBrandWebsite]
-    public required Uri BrandWebsite { get; init; }
+    public required string Brand { get; init; }
 
     public static ProductView FromProduct(Product product)
     {
@@ -31,8 +29,7 @@ public record ProductView
             Price = product.Price.Value,
             PictureUrl = product.PictureUrl,
             ProductType = product.ProductType.Name.Value,
-            BrandName = product.Brand.Name.Value,
-            BrandWebsite = product.Brand.Website
+            Brand = product.Brand.Name.Value,
         };
     }
 

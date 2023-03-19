@@ -3,7 +3,8 @@ using Domain.Primitives;
 using Infrastructure.EntityFramework;
 using Infrastructure.FilteringSystem;
 using Infrastructure.Repositories.Extensions;
-using Infrastructure.SortingSystem.Models;
+using Infrastructure.SortingSystem;
+using Infrastructure.SortingSystem.SortingInfoProviders;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.ProductRepository;
@@ -11,9 +12,9 @@ namespace Infrastructure.Repositories.ProductRepository;
 public class ProductRepository : IProductRepository
 {
     private readonly ApplicationDbContext _dbContext;
-    private readonly ISortingApplier<Product> _sortingApplier;
+    private readonly SortingApplier _sortingApplier;
 
-    public ProductRepository(ApplicationDbContext dbContext, ISortingApplier<Product> sortingApplier)
+    public ProductRepository(ApplicationDbContext dbContext, SortingApplier sortingApplier)
     {
         _dbContext = dbContext;
         _sortingApplier = sortingApplier;
@@ -24,7 +25,7 @@ public class ProductRepository : IProductRepository
         return await _dbContext
             .Products
             .IncludeProductDependencies()
-            .FirstAsyncOrThrow<ProductRepository, Product>(p => p.Id.Equals(productId));
+            .FirstAsyncOrThrow(p => p.Id.Equals(productId));
     }
 
     public async Task<Product> GetProductByName(Name name)
@@ -32,16 +33,17 @@ public class ProductRepository : IProductRepository
         return await _dbContext
             .Products
             .IncludeProductDependencies()
-            .FirstAsyncOrThrow<ProductRepository, Product>(p => p.Name.Equals(name));
+            .FirstAsyncOrThrow(p => p.Name.Equals(name));
     }
 
-    public async Task<List<Product>> GetProducts(Pagination pagination, ISortingInfoProvider<Product> sortingInfoProvider)
+    public async Task<List<Product>> GetProducts(Pagination pagination, ProductSortingInfo productSortingInfo)
     {
         IQueryable<Product> query = _dbContext
             .Products
             .IncludeProductDependencies();
-        
-        IQueryable<Product> sortedQuery = _sortingApplier.ApplySorting(query, sortingInfoProvider.PrimarySorting, sortingInfoProvider.SecondarySortings);
+
+        IQueryable<Product> sortedQuery = _sortingApplier.ApplySorting(query, productSortingInfo.PrimarySorting,
+            productSortingInfo.SecondarySortings);
         
         return await sortedQuery
             .ApplyPagination(pagination)
@@ -56,7 +58,7 @@ public class ProductRepository : IProductRepository
 
     public async Task Delete(Product product)
     {
-        _dbContext.Remove(product);
+        _dbContext.Products.Remove(product);
         await _dbContext.SaveChangesAsync();
     }
 }

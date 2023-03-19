@@ -1,4 +1,4 @@
-﻿using Infrastructure.Repositories;
+﻿using Infrastructure.SortingSystem;
 using Infrastructure.SortingSystem.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,13 +7,13 @@ namespace IntegrationTests.SortingSystemTests;
 public class SortingTests : IClassFixture<SortingDbFixture>
 {
     public SortingDbContext DbContext { get; }
-    public ISortingApplier<TestEntity> SortingApplier { get; }
+    public SortingApplier SortingApplier { get; }
     public TestEntityList EntityList { get; }
     public IQueryable<TestEntity> StartQuery { get; }
 
     public SortingTests(SortingDbFixture fixture)
     {
-        SortingApplier = new SortingApplier<TestEntity>();
+        SortingApplier = new SortingApplier(new PropertyReflections());
         EntityList = new TestEntityList();
         DbContext = fixture.DbContext;
         StartQuery = DbContext
@@ -48,12 +48,12 @@ public class SortingTests : IClassFixture<SortingDbFixture>
         
         IQueryable<TestEntity> query = SortingApplier.ApplySorting(
             query: StartQuery, 
-            primarySorting: new SortingInfo<TestEntity>(nameof(TestEntity.Property1), sortingSide),
-            secondarySortings: new []
+            primarySorting: new SortingInfo(nameof(TestEntity.Property1), sortingSide),
+            secondarySortings: new List<ISortingInfo>
             {
-                new SortingInfo<TestEntity>(nameof(TestEntity.Property2), sortingSide),
-                new SortingInfo<TestEntity>(nameof(TestEntity.Property3), sortingSide),
-                new SortingInfo<TestEntity>(nameof(TestEntity.Property4), sortingSide),
+                new SortingInfo(nameof(TestEntity.Property2), sortingSide),
+                new SortingInfo(nameof(TestEntity.Property3), sortingSide),
+                new SortingInfo(nameof(TestEntity.Property4), sortingSide),
             });
         
         List<TestEntity> result = await query.ToListAsync();
@@ -66,12 +66,12 @@ public class SortingTests : IClassFixture<SortingDbFixture>
     {
         IQueryable<TestEntity> query = SortingApplier.ApplySorting(
             query: StartQuery, 
-            primarySorting: new SortingInfo<TestEntity>(nameof(TestEntity.Property2), SortingSide.Asc),
-            secondarySortings: new []
+            primarySorting: new SortingInfo(nameof(TestEntity.Property2), SortingSide.Asc),
+            secondarySortings: new List<ISortingInfo>
             {
-                new SortingInfo<TestEntity>(nameof(TestEntity.Property4), SortingSide.Desc),
-                new SortingInfo<TestEntity>(nameof(TestEntity.Property1), SortingSide.Asc),
-                new SortingInfo<TestEntity>(nameof(TestEntity.Property3), SortingSide.Asc),
+                new SortingInfo(nameof(TestEntity.Property4), SortingSide.Desc),
+                new SortingInfo(nameof(TestEntity.Property1), SortingSide.Asc),
+                new SortingInfo(nameof(TestEntity.Property3), SortingSide.Asc),
             });
 
         List<TestEntity> expectedOrder = EntityList.Entities
@@ -90,12 +90,12 @@ public class SortingTests : IClassFixture<SortingDbFixture>
     {
         IQueryable<TestEntity> query = SortingApplier.ApplySorting(
             query: StartQuery, 
-            primarySorting: new SortingInfo<TestEntity>(nameof(TestEntity.Property4), SortingSide.Desc),
-            secondarySortings: new []
+            primarySorting: new SortingInfo(nameof(TestEntity.Property4), SortingSide.Desc),
+            secondarySortings: new List<ISortingInfo>
             {
-                new SortingInfo<TestEntity>(nameof(TestEntity.Property2), SortingSide.Asc),
-                new SortingInfo<TestEntity>(nameof(TestEntity.Property3), SortingSide.Asc),
-                new SortingInfo<TestEntity>(nameof(TestEntity.Property1), SortingSide.Asc),
+                new SortingInfo(nameof(TestEntity.Property2), SortingSide.Asc),
+                new SortingInfo(nameof(TestEntity.Property3), SortingSide.Asc),
+                new SortingInfo(nameof(TestEntity.Property1), SortingSide.Asc),
             });
 
         List<TestEntity> expectedOrder = EntityList.Entities

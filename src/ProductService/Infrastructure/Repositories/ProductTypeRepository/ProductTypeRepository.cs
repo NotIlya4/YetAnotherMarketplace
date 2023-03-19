@@ -14,16 +14,26 @@ public class ProductTypeRepository : IProductTypeRepository
     {
         _dbContext = dbContext;
     }
-    
-    public async Task<List<ProductType>> GetProductTypes()
+
+    public async Task<List<ProductType>> GetAll()
     {
         return await _dbContext.ProductTypes.ToListAsync();
     }
 
-    public async Task<ProductType> GetProductTypeByName(Name productType)
+    public async Task<ProductType> GetProductTypeByName(Name name)
     {
-        return await _dbContext
-            .ProductTypes
-            .FirstAsyncOrThrow<ProductTypeRepository, ProductType>(p => p.Name == productType);
+        return await _dbContext.ProductTypes.FirstAsyncOrThrow(pt => pt.Name.Equals(name));
+    }
+
+    public async Task Insert(ProductType productType)
+    {
+        await _dbContext.ProductTypes.AddAsync(productType);
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task Delete(ProductType productType)
+    {
+        _dbContext.ProductTypes.Remove(productType);
+        await _dbContext.SaveChangesAsync();
     }
 }

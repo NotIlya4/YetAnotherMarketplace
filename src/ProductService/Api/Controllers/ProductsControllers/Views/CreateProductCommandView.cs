@@ -27,7 +27,7 @@ public class CreateProductCommandView
             Description = new Description(Description),
             Price = new Price(Price),
             PictureUrl = PictureUrl,
-            ProductType = new Name(ProductType),
+            ProductTypeName = new Name(ProductType),
             BrandName = new Name(BrandName)
         };
     }

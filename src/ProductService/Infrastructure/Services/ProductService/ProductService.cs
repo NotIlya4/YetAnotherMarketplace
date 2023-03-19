@@ -22,36 +22,26 @@ public class ProductService : IProductService
         _productTypeRepository = productTypeRepository;
     }
 
-    public async Task<Product> GetProductById(Guid productId)
-    {
-        return await _productRepository.GetProductById(productId);
-    }
-
     public async Task<Product> GetProductByName(Name productName)
     {
         return await _productRepository.GetProductByName(productName);
     }
 
-    public async Task<List<Product>> GetProducts(Pagination pagination, ProductSortingInfo productSortingInfo)
-    {
-        return await _productRepository.GetProducts(pagination, productSortingInfo);
-    }
-
     public async Task<Product> CreateNewProduct(CreateProductCommand createProductCommand)
     {
+        ProductType productType = await _productTypeRepository.GetProductTypeByName(createProductCommand.ProductTypeName);
         Brand brand = await _brandRepository.GetBrandByName(createProductCommand.BrandName);
-        ProductType productType = await _productTypeRepository.GetProductTypeByName(createProductCommand.ProductType);
-        
+
         Product product = createProductCommand.ToDomain(Guid.NewGuid(), brand, productType);
+
         await _productRepository.Insert(product);
 
         return product;
     }
 
-    public async Task DeleteProductById(Guid productId)
+    public async Task<List<Product>> GetProducts(Pagination pagination, ProductSortingInfo productSortingInfo)
     {
-        Product product = await _productRepository.GetProductById(productId);
-        await _productRepository.Delete(product);
+        return await _productRepository.GetProducts(pagination, productSortingInfo);
     }
 
     public async Task DeleteProductByName(Name productName)

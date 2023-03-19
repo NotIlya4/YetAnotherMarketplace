@@ -26,7 +26,7 @@ public class Product
     private Product()
     {
         PictureUrl = null!;
-        Brand = null!;
         ProductType = null!;
+        Brand = null!;
     }
 }

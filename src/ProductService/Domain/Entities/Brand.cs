@@ -6,17 +6,15 @@ public class Brand
 {
     public Guid Id { get; set; }
     public Name Name { get; set; }
-    public Uri Website { get; set; }
 
-    public Brand(Guid id, Name name, Uri website)
+    public Brand(Guid id, Name name)
     {
         Id = id;
         Name = name;
-        Website = website;
     }
 
     private Brand()
     {
-        Website = null!;
+        
     }
 }

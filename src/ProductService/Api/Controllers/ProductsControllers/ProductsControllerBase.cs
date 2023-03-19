@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers.ProductsControllers;
 
 [ApiController]
-[Route("api/Products")]
+[Route("api/products")]
 [ProducesInternalException]
 public class ProductsControllerBase : ControllerBase
 {
