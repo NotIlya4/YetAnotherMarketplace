@@ -24,22 +24,7 @@ public class ParametersProvider
 
     public bool AutoApplyMigrations()
     {
-        string? parameter = GetParameter<string>("AutoApplyMigrations");
-        bool isApply = true;
-
-        if (parameter is not null)
-        {
-            try
-            {
-                isApply = bool.Parse(parameter);
-            }
-            catch (FormatException)
-            {
-                
-            }
-        }
-
-        return isApply;
+        return GetRequiredParameter<bool>("AutoApplyMigrations");
     }
 
     private T GetRequiredParameter<T>(string parameterName)

@@ -7,7 +7,6 @@ services:
     restart: on-failure
     environment:
       - ConnectionString:Server=sql-server,1433
-      - AutoApplyMigrations=false
   sql-server:
     image: mcr.microsoft.com/mssql/server
     container_name: sql-server
