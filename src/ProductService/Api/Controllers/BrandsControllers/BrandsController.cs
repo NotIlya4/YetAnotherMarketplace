@@ -1,5 +1,6 @@
 ﻿using Api.Controllers.Attributes;
 using Domain.Entities;
+using Domain.Primitives;
 using Infrastructure.Services.BrandService;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,5 +26,21 @@ public class BrandsController : ControllerBase
         List<Brand> brands = await _brandService.GetBrands();
         List<BrandView> brandNames = brands.Select(BrandView.FromDomain).ToList();
         return Ok(brandNames);
+    }
+
+    [HttpPost]
+    [ProducesOk]
+    public async Task<ActionResult<BrandView>> AddBrand(string brandName)
+    {
+        Brand brand = await _brandService.Add(new Name(brandName));
+        return Ok(BrandView.FromDomain(brand));
+    }
+
+    [HttpDelete]
+    [ProducesNoContent]
+    public async Task<ActionResult> DeleteBrand(string brandName)
+    {
+        await _brandService.Delete(new Name(brandName));
+        return NoContent();
     }
 }

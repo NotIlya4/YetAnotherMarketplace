@@ -14,6 +14,5 @@ RUN dotnet publish "Api.csproj" -c Release -o /app/publish
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS final
 EXPOSE 80
 WORKDIR /app
-ENV ConnectionStringName docker-compose
 COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "Api.dll"]

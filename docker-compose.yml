@@ -2,20 +2,26 @@ services:
   product-service:
     build: ./src/ProductService/
     container_name: product-service
-    ports:
-      - "5000:80"
     depends_on:
       - sql-server
     restart: on-failure
+    environment:
+      - ConnectionString:Server=sql-server,1433
+      - AutoApplyMigrations=false
   sql-server:
-    image: "mcr.microsoft.com/mssql/server"
+    image: mcr.microsoft.com/mssql/server
     container_name: sql-server
     ports:
-      - "1433:1433"
+      - 1433:1433
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=A&VeryComplex123Password
     volumes:
       - sql-server-volume:/var/opt/mssql
+  nginx:
+    build: ./src/nginx/
+    container_name: nginx
+    ports:
+      - 5000:80
 volumes:
   sql-server-volume:
