@@ -30,7 +30,7 @@ var app = builder.Build();
 
 if (parametersProvider.AutoApplyMigrations())
 {
-    app.UpdateDb();
+    app.ApplyMigrations();
 }
 
 app.UseCors("all");

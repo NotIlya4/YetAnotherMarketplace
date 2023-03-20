@@ -1,5 +1,4 @@
-﻿using Api.Swagger.Enrichers.Product;
-using Infrastructure.FilteringSystem;
+﻿using Api.Swagger.Enrichers.GetProductsQueryView;
 
 namespace Api.Controllers.ProductsControllers.Views;
 
@@ -8,10 +7,9 @@ public class GetProductsQueryView
     public required int Offset { get; init; }
     public required int Limit { get; init; }
     [ProductSorting]
-    public required IEnumerable<string>? Sorting { get; init; }
-
-    public Pagination ToPagination()
-    {
-        return new Pagination(Offset, Limit);
-    }
+    public IEnumerable<string>? Sorting { get; init; }
+    [GetProductsProductTypeName]
+    public string? ProductTypeName { get; init; }
+    [GetProductsBrandName]
+    public string? BrandName { get; init; }
 }

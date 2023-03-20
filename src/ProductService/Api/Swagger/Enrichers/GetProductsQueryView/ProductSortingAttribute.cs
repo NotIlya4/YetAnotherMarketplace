@@ -2,7 +2,7 @@
 using Infrastructure.SortingSystem.SortingInfoProviders;
 using Microsoft.OpenApi.Models;
 
-namespace Api.Swagger.Enrichers.Product;
+namespace Api.Swagger.Enrichers.GetProductsQueryView;
 
 public class ProductSortingAttribute : BaseAttribute, IParameterEnricher
 {

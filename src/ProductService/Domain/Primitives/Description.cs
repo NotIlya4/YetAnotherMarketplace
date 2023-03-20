@@ -7,7 +7,7 @@ public record struct Description : IComparable<Description>
     public string Value { get; private set; }
     
     public const int DescriptionMinLength = 10;
-    public const int DescriptionMaxLength = 150;
+    public const int DescriptionMaxLength = 500;
 
     public Description(string? value)
     {

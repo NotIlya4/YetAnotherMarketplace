@@ -1,10 +1,9 @@
 ﻿using Domain.Entities;
 using Domain.Primitives;
 using Infrastructure.EntityFramework;
-using Infrastructure.FilteringSystem;
 using Infrastructure.Repositories.Extensions;
+using Infrastructure.Services.ProductService;
 using Infrastructure.SortingSystem;
-using Infrastructure.SortingSystem.SortingInfoProviders;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.ProductRepository;
@@ -36,17 +35,27 @@ public class ProductRepository : IProductRepository
             .FirstAsyncOrThrow(p => p.Name.Equals(name));
     }
 
-    public async Task<List<Product>> GetProducts(Pagination pagination, ProductSortingInfo productSortingInfo)
+    public async Task<List<Product>> GetProducts(GetProductsQuery getProductsQuery)
     {
         IQueryable<Product> query = _dbContext
             .Products
             .IncludeProductDependencies();
 
-        IQueryable<Product> sortedQuery = _sortingApplier.ApplySorting(query, productSortingInfo.PrimarySorting,
-            productSortingInfo.SecondarySortings);
+        IQueryable<Product> sortedQuery = _sortingApplier.ApplySorting(query, getProductsQuery.ProductSortingInfo.PrimarySorting,
+            getProductsQuery.ProductSortingInfo.SecondarySortings);
+
+        if (getProductsQuery.ProductTypeName is not null)
+        {
+            sortedQuery = sortedQuery.Where(p => p.ProductType.Name.Equals(getProductsQuery.ProductTypeName));
+        }
+        
+        if (getProductsQuery.BrandName is not null)
+        {
+            sortedQuery = sortedQuery.Where(p => p.Brand.Name.Equals(getProductsQuery.BrandName));
+        }
         
         return await sortedQuery
-            .ApplyPagination(pagination)
+            .ApplyPagination(getProductsQuery.Pagination)
             .ToListAsync();
     }
 

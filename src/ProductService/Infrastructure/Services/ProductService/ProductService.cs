@@ -1,10 +1,8 @@
 ﻿using Domain.Entities;
 using Domain.Primitives;
-using Infrastructure.FilteringSystem;
 using Infrastructure.Repositories.BrandRepository;
 using Infrastructure.Repositories.ProductRepository;
 using Infrastructure.Repositories.ProductTypeRepository;
-using Infrastructure.SortingSystem.SortingInfoProviders;
 
 namespace Infrastructure.Services.ProductService;
 
@@ -39,9 +37,9 @@ public class ProductService : IProductService
         return product;
     }
 
-    public async Task<List<Product>> GetProducts(Pagination pagination, ProductSortingInfo productSortingInfo)
+    public async Task<List<Product>> GetProducts(GetProductsQuery query)
     {
-        return await _productRepository.GetProducts(pagination, productSortingInfo);
+        return await _productRepository.GetProducts(query);
     }
 
     public async Task DeleteProductByName(Name productName)

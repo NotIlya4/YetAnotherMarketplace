@@ -5,7 +5,7 @@ namespace Api.Extensions;
 
 public static class WebApplicationExtensions
 {
-    public static void UpdateDb(this WebApplication applicationBuilder)
+    public static void ApplyMigrations(this WebApplication applicationBuilder)
     {
         var logger = applicationBuilder.Services.GetRequiredService<ILogger<WebApplication>>();
 

@@ -4,7 +4,6 @@ using Domain.Entities;
 using Domain.Primitives;
 using Infrastructure.FilteringSystem;
 using Infrastructure.Services.ProductService;
-using Infrastructure.SortingSystem.Models;
 using Infrastructure.SortingSystem.SortingInfoProviders;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,22 +21,24 @@ public class GetProductsController : ProductsControllerBase
 
     [HttpGet]
     [ProducesOk]
-    public async Task<ActionResult<List<ProductView>>> GetProducts([FromQuery] GetProductsQueryView getProductsQueryView)
+    public async Task<ActionResult<List<ProductView>>> GetProducts([FromQuery] GetProductsQueryView queryView)
     {
-        Pagination pagination = getProductsQueryView.ToPagination();
+        GetProductsQuery query = new()
+        {
+            Pagination = new Pagination(offset: queryView.Offset, limit: queryView.Limit),
+            ProductSortingInfo = new ProductSortingInfo(_sortingInfoParser.Parse<Product>(queryView.Sorting)),
+            BrandName = queryView.BrandName is null ? null : new Name(queryView.BrandName),
+            ProductTypeName = queryView.ProductTypeName is null ? null : new Name(queryView.ProductTypeName)
+        };
 
-        List<SortingInfo<Product>> parsedPropertySortingInfos =
-            _sortingInfoParser.Parse<Product>(getProductsQueryView.Sorting);
-        ProductSortingInfo productSortingInfo = new(parsedPropertySortingInfos);
-
-        List<Product> products = await ProductService.GetProducts(pagination, productSortingInfo);
+        List<Product> products = await ProductService.GetProducts(query);
         
         List<ProductView> productViews = ProductView.FromProducts(products);
         return Ok(productViews);
     }
 
     [HttpGet]
-    [Route("name/{name}")]
+    [Route("name/{name}", Name = nameof(GetProductByName))]
     [ProducesOk]
     [ProducesProductNotFound]
     public async Task<ActionResult<ProductView>> GetProductByName(string name)
