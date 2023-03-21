@@ -7,7 +7,6 @@ namespace Infrastructure.Services.ProductService;
 public class GetProductsQuery
 {
     public required Pagination Pagination { get; init; }
-    public required ProductSortingInfo ProductSortingInfo { get; init; }
-    public Name? ProductTypeName { get; init; }
-    public Name? BrandName { get; init; }
+    public required ProductSortingInfo SortingInfo { get; init; }
+    public required ProductFilteringInfo FilteringInfo { get; init; }
 }

@@ -40,7 +40,7 @@ public class ProductService : IProductService
     public async Task<GetProductsResult> GetProducts(GetProductsQuery query)
     {
         List<Product> products = await _productRepository.GetProducts(query);
-        int total = await _productRepository.GetProductsCount(query.ProductTypeName, query.BrandName);
+        int total = await _productRepository.GetProductsCount(query.FilteringInfo);
         return new GetProductsResult()
         {
             Products = products,

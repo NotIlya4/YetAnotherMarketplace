@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Primitives;
 using Infrastructure.EntityFramework;
+using Infrastructure.FilteringSystem;
 using Infrastructure.Repositories.Extensions;
 using Infrastructure.Services.ProductService;
 using Infrastructure.SortingSystem;
@@ -41,37 +42,37 @@ public class ProductRepository : IProductRepository
             .Products
             .IncludeProductDependencies();
 
-        IQueryable<Product> sortedQuery = _sortingApplier.ApplySorting(query, getProductsQuery.ProductSortingInfo.PrimarySorting,
-            getProductsQuery.ProductSortingInfo.SecondarySortings);
+        IQueryable<Product> sortedQuery = _sortingApplier.ApplySorting(query, getProductsQuery.SortingInfo.PrimarySorting,
+            getProductsQuery.SortingInfo.SecondarySortings);
 
-        sortedQuery = ApplyFiltering(sortedQuery, getProductsQuery.ProductTypeName, getProductsQuery.BrandName);
+        sortedQuery = ApplyFiltering(sortedQuery, getProductsQuery.FilteringInfo);
         
         return await sortedQuery
             .ApplyPagination(getProductsQuery.Pagination)
             .ToListAsync();
     }
 
-    public async Task<int> GetProductsCount(Name? productTypeName, Name? brandName)
+    public async Task<int> GetProductsCount(ProductFilteringInfo filteringInfo)
     {
         IQueryable<Product> query = _dbContext
             .Products
             .IncludeProductDependencies();
 
-        query = ApplyFiltering(query, productTypeName, brandName);
+        query = ApplyFiltering(query, filteringInfo);
 
         return await query.CountAsync();
     }
 
-    private IQueryable<Product> ApplyFiltering(IQueryable<Product> query, Name? productTypeName, Name? brandName)
+    private IQueryable<Product> ApplyFiltering(IQueryable<Product> query, ProductFilteringInfo filteringInfo)
     {
-        if (productTypeName is not null)
+        if (filteringInfo.ProductTypeName is not null)
         {
-            query = query.Where(p => p.ProductType.Name.Equals(productTypeName));
+            query = query.Where(p => p.ProductType.Name.Equals(filteringInfo.ProductTypeName));
         }
         
-        if (brandName is not null)
+        if (filteringInfo.BrandName is not null)
         {
-            query = query.Where(p => p.Brand.Name.Equals(brandName));
+            query = query.Where(p => p.Brand.Name.Equals(filteringInfo.BrandName));
         }
 
         return query;
