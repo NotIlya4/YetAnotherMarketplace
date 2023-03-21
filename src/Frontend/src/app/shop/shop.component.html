@@ -32,12 +32,9 @@
 
     <section class="col-9">
       <div class="d-flex justify-content-between align-items-center pb-2">
-        <header>
-          <span *ngIf="productsTotalCount > 0">Showing <strong>
-            {{getFirstDisplayingNumber()}} - {{getLastDisplayingNumber()}}
-          </strong> of <strong>{{productsTotalCount}}</strong> Results</span>
-          <span *ngIf="!(productsTotalCount > 0)">There are <strong>0</strong> results for this filter</span>
-        </header>
+
+        <app-paging-header [currentPage]="currentPage" [pageSize]="pageSize" [objectsCount]="productsTotalCount"></app-paging-header>
+
         <div class="mt-2">
           <input class="form-control d-inline me-2" style="width: 300px" placeholder="Search" type="text">
           <button class="btn btn-outline-primary my-2 me-2">Search</button>

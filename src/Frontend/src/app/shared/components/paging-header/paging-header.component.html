@@ -1,0 +1,6 @@
+<header>
+          <span *ngIf="objectsCount > 0">Showing <strong>
+            {{getFirstDisplayingNumber()}} - {{getLastDisplayingNumber()}}
+          </strong> of <strong>{{objectsCount}}</strong> Results</span>
+  <span *ngIf="!(objectsCount > 0)">There are <strong>0</strong> results for this filter</span>
+</header>
