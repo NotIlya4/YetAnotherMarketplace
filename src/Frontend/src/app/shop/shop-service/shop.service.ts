@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import {IProduct} from "../shared/models/product";
+import {IProduct} from "../../shared/models/product";
 import {Observable, Subject} from "rxjs";
-import {ProductMocker} from "./mockers/product-mocker";
-import {IBrand} from "../shared/models/brand";
-import {IProductType} from "../shared/models/productType";
-import {BrandMocker} from "./mockers/brand-mocker";
-import {ProductTypeMocker} from "./mockers/productType-mocker";
+import {IBrand} from "../../shared/models/brand";
+import {IProductType} from "../../shared/models/productType";
 import {HttpClient, HttpParams} from "@angular/common/http";
+import {Pagination} from "../../shared/models/Pagination";
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +18,10 @@ export class ShopService {
   constructor(private httpClient: HttpClient) {
   }
 
-  fetchProducts(offset: number, limit: number, sortings?: string[], productTypeName?: string, brandName?: string){
+  fetchProducts(pagination: Pagination, sortings?: string[], productTypeName?: string, brandName?: string){
     let httpParams = new HttpParams();
-    httpParams = httpParams.append('offset', offset);
-    httpParams = httpParams.append('limit', limit);
+    httpParams = httpParams.append('offset', pagination.getOffset());
+    httpParams = httpParams.append('limit', pagination.getLimit());
 
     if (sortings) {
       sortings.forEach((sorting) => {

@@ -6,8 +6,8 @@ public class GetProductsQueryView
 {
     public required int Offset { get; init; }
     public required int Limit { get; init; }
-    [ProductSorting]
-    public IEnumerable<string>? Sorting { get; init; }
+    [ProductSortings]
+    public IEnumerable<string>? Sortings { get; init; }
     [GetProductsProductTypeName]
     public string? ProductTypeName { get; init; }
     [GetProductsBrandName]

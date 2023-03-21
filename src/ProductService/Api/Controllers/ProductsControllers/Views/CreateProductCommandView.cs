@@ -17,7 +17,7 @@ public class CreateProductCommandView
     [ProductType]
     public required string ProductType { get; init; }
     [ProductBrandName]
-    public required string BrandName { get; init; }
+    public required string Brand { get; init; }
     
     public CreateProductCommand ToCreateProductDto()
     {
@@ -28,7 +28,7 @@ public class CreateProductCommandView
             Price = new Price(Price),
             PictureUrl = PictureUrl,
             ProductTypeName = new Name(ProductType),
-            BrandName = new Name(BrandName)
+            BrandName = new Name(Brand)
         };
     }
 }

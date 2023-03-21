@@ -1,3 +1,5 @@
+#!/bin/bash
+
 read -p "Enter Migration Name: " migrationName
 
 echo "Adding migration $migrationName..."

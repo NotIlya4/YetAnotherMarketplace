@@ -26,7 +26,7 @@ public class GetProductsController : ProductsControllerBase
         GetProductsQuery query = new()
         {
             Pagination = new Pagination(offset: queryView.Offset, limit: queryView.Limit),
-            ProductSortingInfo = new ProductSortingInfo(_sortingInfoParser.Parse<Product>(queryView.Sorting)),
+            ProductSortingInfo = new ProductSortingInfo(_sortingInfoParser.Parse<Product>(queryView.Sortings)),
             BrandName = queryView.BrandName is null ? null : new Name(queryView.BrandName),
             ProductTypeName = queryView.ProductTypeName is null ? null : new Name(queryView.ProductTypeName)
         };
