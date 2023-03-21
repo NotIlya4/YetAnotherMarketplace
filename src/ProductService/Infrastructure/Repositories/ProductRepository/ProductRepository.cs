@@ -44,19 +44,37 @@ public class ProductRepository : IProductRepository
         IQueryable<Product> sortedQuery = _sortingApplier.ApplySorting(query, getProductsQuery.ProductSortingInfo.PrimarySorting,
             getProductsQuery.ProductSortingInfo.SecondarySortings);
 
-        if (getProductsQuery.ProductTypeName is not null)
-        {
-            sortedQuery = sortedQuery.Where(p => p.ProductType.Name.Equals(getProductsQuery.ProductTypeName));
-        }
-        
-        if (getProductsQuery.BrandName is not null)
-        {
-            sortedQuery = sortedQuery.Where(p => p.Brand.Name.Equals(getProductsQuery.BrandName));
-        }
+        sortedQuery = ApplyFiltering(sortedQuery, getProductsQuery.ProductTypeName, getProductsQuery.BrandName);
         
         return await sortedQuery
             .ApplyPagination(getProductsQuery.Pagination)
             .ToListAsync();
+    }
+
+    public async Task<int> GetProductsCount(Name? productTypeName, Name? brandName)
+    {
+        IQueryable<Product> query = _dbContext
+            .Products
+            .IncludeProductDependencies();
+
+        query = ApplyFiltering(query, productTypeName, brandName);
+
+        return await query.CountAsync();
+    }
+
+    private IQueryable<Product> ApplyFiltering(IQueryable<Product> query, Name? productTypeName, Name? brandName)
+    {
+        if (productTypeName is not null)
+        {
+            query = query.Where(p => p.ProductType.Name.Equals(productTypeName));
+        }
+        
+        if (brandName is not null)
+        {
+            query = query.Where(p => p.Brand.Name.Equals(brandName));
+        }
+
+        return query;
     }
 
     public async Task Insert(Product product)

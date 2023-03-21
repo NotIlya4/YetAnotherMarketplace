@@ -5,13 +5,14 @@ import {IBrand} from "../../shared/models/brand";
 import {IProductType} from "../../shared/models/productType";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Pagination} from "../../shared/models/Pagination";
+import {IProductInfo} from "./productsInfo";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShopService {
   private baseUrl = 'http://localhost:5000/'
-  private productsSource = new Subject<IProduct[]>;
+  private productsInfoSource = new Subject<IProductInfo>;
   private productTypesSource = new Subject<IProductType[]>;
   private brandsSource = new Subject<IBrand[]>;
 
@@ -37,9 +38,9 @@ export class ShopService {
       httpParams = httpParams.append('brandName', brandName);
     }
 
-    this.httpClient.get<IProduct[]>(this.baseUrl + 'api/products', {params: httpParams})
+    this.httpClient.get<IProductInfo>(this.baseUrl + 'api/products', {params: httpParams})
       .subscribe(value => {
-        this.productsSource.next(value);
+        this.productsInfoSource.next(value);
       });
   }
 
@@ -57,8 +58,8 @@ export class ShopService {
       });
   }
 
-  getProductsSource(): Observable<IProduct[]>{
-    return this.productsSource;
+  getProductsInfoSource(): Observable<IProductInfo>{
+    return this.productsInfoSource;
   }
 
   getProductTypesSource(): Observable<IProductType[]>{

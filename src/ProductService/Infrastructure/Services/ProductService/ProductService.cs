@@ -37,9 +37,15 @@ public class ProductService : IProductService
         return product;
     }
 
-    public async Task<List<Product>> GetProducts(GetProductsQuery query)
+    public async Task<GetProductsResult> GetProducts(GetProductsQuery query)
     {
-        return await _productRepository.GetProducts(query);
+        List<Product> products = await _productRepository.GetProducts(query);
+        int total = await _productRepository.GetProductsCount(query.ProductTypeName, query.BrandName);
+        return new GetProductsResult()
+        {
+            Products = products,
+            Total = total
+        };
     }
 
     public async Task DeleteProductByName(Name productName)

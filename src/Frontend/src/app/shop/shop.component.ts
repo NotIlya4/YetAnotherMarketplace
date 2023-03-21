@@ -12,8 +12,8 @@ import {Pagination} from "../shared/models/Pagination";
   styleUrls: ['./shop.component.scss']
 })
 export class ShopComponent implements OnInit{
-  productsTotalCount = 1000;
-  pageSize = 50;
+  productsTotalCount = 0;
+  pageSize = 5;
   currentPage = 1;
 
   products: IProduct[] = [];
@@ -30,8 +30,10 @@ export class ShopComponent implements OnInit{
   ];
 
   constructor(private shopService: ShopService) {
-    shopService.getProductsSource().subscribe(value => {
-      this.products = value;
+    shopService.getProductsInfoSource().subscribe(value => {
+      console.log(value);
+      this.products = value.products;
+      this.productsTotalCount = value.total;
     });
     shopService.getBrandsSource().subscribe(value => {
       this.brands = [{id: '0', name: 'All'}, ...value];
@@ -74,5 +76,13 @@ export class ShopComponent implements OnInit{
   onPageChanged(newPage: number){
     this.currentPage = newPage;
     this.fetchProducts();
+  }
+
+  getFirstDisplayingNumber(){
+    return (this.currentPage - 1) * this.pageSize + 1;
+  }
+
+  getLastDisplayingNumber(){
+    return Math.min(this.currentPage * this.pageSize, this.productsTotalCount);
   }
 }

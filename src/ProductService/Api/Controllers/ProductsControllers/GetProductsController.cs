@@ -21,7 +21,7 @@ public class GetProductsController : ProductsControllerBase
 
     [HttpGet]
     [ProducesOk]
-    public async Task<ActionResult<List<ProductView>>> GetProducts([FromQuery] GetProductsQueryView queryView)
+    public async Task<ActionResult<GetProductsResultView>> GetProducts([FromQuery] GetProductsQueryView queryView)
     {
         GetProductsQuery query = new()
         {
@@ -31,10 +31,14 @@ public class GetProductsController : ProductsControllerBase
             ProductTypeName = queryView.ProductTypeName is null ? null : new Name(queryView.ProductTypeName)
         };
 
-        List<Product> products = await ProductService.GetProducts(query);
+        GetProductsResult result = await ProductService.GetProducts(query);
+        List<ProductView> productViews = ProductView.FromProducts(result.Products);
         
-        List<ProductView> productViews = ProductView.FromProducts(products);
-        return Ok(productViews);
+        return Ok(new GetProductsResultView()
+        {
+            Products = productViews,
+            Total = result.Total
+        });
     }
 
     [HttpGet]
