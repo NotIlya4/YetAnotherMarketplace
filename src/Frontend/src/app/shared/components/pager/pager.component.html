@@ -1,0 +1,6 @@
+<ngb-pagination
+  [boundaryLinks]="true"
+  [collectionSize]="totalObjects"
+  [maxSize]="maxSize"
+  [pageSize]="pageSize"
+  [(page)]="currentPage" (pageChange)="onPageChanged($event)"/>

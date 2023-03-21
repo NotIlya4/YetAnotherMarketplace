@@ -13,7 +13,7 @@ import {Pagination} from "../shared/models/Pagination";
 })
 export class ShopComponent implements OnInit{
   productsTotalCount = 0;
-  pageSize = 5;
+  pageSize: number = 5;
   currentPage = 1;
 
   products: IProduct[] = [];
@@ -76,13 +76,5 @@ export class ShopComponent implements OnInit{
   onPageChanged(newPage: number){
     this.currentPage = newPage;
     this.fetchProducts();
-  }
-
-  getFirstDisplayingNumber(){
-    return (this.currentPage - 1) * this.pageSize + 1;
-  }
-
-  getLastDisplayingNumber(){
-    return Math.min(this.currentPage * this.pageSize, this.productsTotalCount);
   }
 }
