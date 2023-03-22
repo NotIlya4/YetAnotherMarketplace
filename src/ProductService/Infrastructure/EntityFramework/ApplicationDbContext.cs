@@ -1,5 +1,4 @@
-﻿using Domain.Entities;
-using Infrastructure.EntityFramework.Models;
+﻿using Infrastructure.EntityFramework.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.EntityFramework;

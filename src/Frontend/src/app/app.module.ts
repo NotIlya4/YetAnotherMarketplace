@@ -25,7 +25,6 @@ import {HomeModule} from "./home/home.module";
     NgbCollapseModule,
     HttpClientModule,
     CoreModule,
-    ShopModule,
     HomeModule
   ],
   providers: [],

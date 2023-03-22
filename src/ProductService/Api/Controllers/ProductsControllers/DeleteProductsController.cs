@@ -1,5 +1,4 @@
 ﻿using Api.Controllers.Attributes;
-using Domain.Primitives;
 using Infrastructure.Services.ProductService;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,5 +1,4 @@
 ﻿using Domain.Entities;
-using Domain.Primitives;
 using Infrastructure.Repositories.BrandRepository;
 using Infrastructure.Repositories.ProductRepository;
 using Infrastructure.Repositories.ProductTypeRepository;

@@ -1,5 +1,4 @@
 ﻿using Domain.Entities;
-using Domain.Primitives;
 using Infrastructure.FilteringSystem;
 using Infrastructure.Services.ProductService;
 

@@ -1,5 +1,4 @@
-﻿using Domain.Primitives;
-using Infrastructure.FilteringSystem;
+﻿using Infrastructure.FilteringSystem;
 using Infrastructure.SortingSystem.SortingInfoProviders;
 
 namespace Infrastructure.Services.ProductService;

@@ -1,5 +1,4 @@
 ﻿using Domain.Entities;
-using Domain.Primitives;
 using Infrastructure.EntityFramework;
 using Infrastructure.EntityFramework.Models;
 using Infrastructure.FilteringSystem;
