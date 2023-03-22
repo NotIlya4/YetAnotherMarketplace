@@ -7,8 +7,7 @@ namespace Infrastructure.Repositories.ProductRepository;
 
 public interface IProductRepository
 {
-    public Task<Product> GetProductById(Guid productId);
-    public Task<Product> GetProductByName(Name productName);
+    public Task<Product> GetProductById(Guid id);
     public Task<List<Product>> GetProducts(GetProductsQuery query);
     public Task<int> GetProductsCount(ProductFilteringInfo filteringInfo);
     public Task Insert(Product product);

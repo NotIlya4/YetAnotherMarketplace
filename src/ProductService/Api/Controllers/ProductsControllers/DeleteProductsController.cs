@@ -13,12 +13,12 @@ public class DeleteProductsController : ProductsControllerBase
     }
     
     [HttpDelete]
-    [Route("name/{name}")]
+    [Route("id/{id}")]
     [ProducesProductNotFound]
     [ProducesNoContent]
-    public async Task<IActionResult> DeleteProductById(string name)
+    public async Task<IActionResult> DeleteProductById(string id)
     {
-        await ProductService.DeleteProductByName(new Name(name));
+        await ProductService.DeleteProductById(new Guid(id));
         return NoContent();
     }
 }

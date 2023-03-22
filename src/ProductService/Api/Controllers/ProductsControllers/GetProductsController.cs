@@ -44,12 +44,12 @@ public class GetProductsController : ProductsControllerBase
     }
 
     [HttpGet]
-    [Route("name/{name}", Name = nameof(GetProductByName))]
+    [Route("id/{id}", Name = nameof(GetProductById))]
     [ProducesOk]
     [ProducesProductNotFound]
-    public async Task<ActionResult<ProductView>> GetProductByName(string name)
+    public async Task<ActionResult<ProductView>> GetProductById(string id)
     {
-        Product productDto = await ProductService.GetProductByName(new Name(name));
+        Product productDto = await ProductService.GetProductById(new Guid(id));
         ProductView productView = ProductView.FromProduct(productDto);
         return Ok(productView);
     }

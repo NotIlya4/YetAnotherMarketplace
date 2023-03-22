@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-6">
+    <img src="{{product.pictureUrl}}" alt="{{product.name}}" class="img-fluid w-100">
+  </div>
+  <div class="col-6">
+    <h3>{{product.name}}</h3>
+    <p>{{product.price | currency}}</p>
+    <div class="d-flex">
+      <fa-icon [icon]="minusCircleIcon" class="text-warning my-auto" style="cursor: pointer; font-size: 2em"></fa-icon>
+      <span class="fw-bold mx-3" style="font-size: 1.8em">2</span>
+      <fa-icon [icon]="plusCircleIcon" class="text-warning " style="cursor: pointer; font-size: 2em"></fa-icon>
+      <button class="btn btn-outline-secondary btn-lg ms-4 me-auto">Add to Cart</button>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-12 ms-3">
+      <h4>Description</h4>
+      <p>{{product.description}}</p>
+    </div>
+  </div>
+</div>

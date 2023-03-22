@@ -17,7 +17,7 @@ export class ShopComponent implements OnInit{
   productTypes: IProductType[] = [];
 
   productsTotalCount = 0;
-  pageSize: number = 5;
+  pageSize: number = 2;
   currentPage = 1;
   productSearch?: string;
 
@@ -32,7 +32,6 @@ export class ShopComponent implements OnInit{
 
   constructor(private shopService: ShopService) {
     shopService.getProductsInfoSource().subscribe(value => {
-      console.log(value);
       this.products = value.products;
       this.productsTotalCount = value.total;
     });

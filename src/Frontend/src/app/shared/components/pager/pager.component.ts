@@ -8,11 +8,17 @@ export class PagerComponent {
   @Input() totalObjects!: number;
   @Input() pageSize!: number;
   @Output() pageChanged = new EventEmitter<number>();
-  currentPage = 0;
+  private currentPage = 0;
   maxSize = 10;
 
   onPageChanged(newCurrentPage: number) {
-    this.pageChanged.emit(newCurrentPage);
-    this.currentPage = newCurrentPage;
+    console.log(`new ${newCurrentPage} old ${this.currentPage}`)
+    if (newCurrentPage !== this.currentPage){
+      this.pageChanged.emit(newCurrentPage);
+      this.currentPage = newCurrentPage;
+    }
+
+    // this.pageChanged.emit(newCurrentPage);
+    // this.currentPage = newCurrentPage;
   }
 }

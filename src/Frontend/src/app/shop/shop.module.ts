@@ -4,13 +4,16 @@ import { ShopComponent } from './shop.component';
 import { ProductItemComponent } from './product-item/product-item.component';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {SharedModule} from "../shared/shared.module";
+import { ProductDetailsComponent } from './product-details/product-details.component';
+import {RouterModule} from "@angular/router";
 
 
 
 @NgModule({
     declarations: [
         ShopComponent,
-        ProductItemComponent
+        ProductItemComponent,
+        ProductDetailsComponent
     ],
     exports: [
         ShopComponent
@@ -18,7 +21,8 @@ import {SharedModule} from "../shared/shared.module";
   imports: [
     CommonModule,
     FontAwesomeModule,
-    SharedModule
+    SharedModule,
+    RouterModule
   ]
 })
 export class ShopModule { }

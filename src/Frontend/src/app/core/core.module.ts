@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {NavBarComponent} from "./nav-bar/nav-bar.component";
-import {RouterLink} from "@angular/router";
+import {RouterLink, RouterLinkActive} from "@angular/router";
 import {NgbCollapse} from "@ng-bootstrap/ng-bootstrap";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
@@ -13,7 +13,8 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     CommonModule,
     RouterLink,
     NgbCollapse,
-    FontAwesomeModule
+    FontAwesomeModule,
+    RouterLinkActive
   ],
   exports: [
     NavBarComponent

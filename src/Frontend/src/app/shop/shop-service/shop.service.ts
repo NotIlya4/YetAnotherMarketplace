@@ -6,15 +6,17 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {Pagination} from "../../shared/models/Pagination";
 import {IProductInfo} from "./products-info";
 import {IProductFiltering} from "./product-filtering";
+import {IProduct} from "../../shared/models/product";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShopService {
-  private baseUrl = 'http://localhost:5001/'
-  private productsInfoSource = new Subject<IProductInfo>;
-  private productTypesSource = new Subject<IProductType[]>;
-  private brandsSource = new Subject<IBrand[]>;
+  private baseUrl = 'http://localhost:5000/'
+  private productsInfoSource = new Subject<IProductInfo>();
+  private productSource = new Subject<IProduct>();
+  private productTypesSource = new Subject<IProductType[]>();
+  private brandsSource = new Subject<IBrand[]>();
 
   constructor(private httpClient: HttpClient) {
   }
@@ -48,6 +50,13 @@ export class ShopService {
       });
   }
 
+  fetchProduct(id: string){
+    this.httpClient.get<IProduct>(`${this.baseUrl}api/products/id/${id}`)
+      .subscribe(value => {
+        this.productSource.next(value);
+      });
+  }
+
   fetchProductTypes(){
     this.httpClient.get<IProductType[]>(this.baseUrl + 'api/product-types')
       .subscribe(value => {
@@ -64,6 +73,10 @@ export class ShopService {
 
   getProductsInfoSource(): Observable<IProductInfo>{
     return this.productsInfoSource;
+  }
+
+  getProductSource(): Observable<IProduct>{
+    return this.productSource;
   }
 
   getProductTypesSource(): Observable<IProductType[]>{

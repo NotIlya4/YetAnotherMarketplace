@@ -1,5 +1,6 @@
 <input
   [(ngModel)]="value"
+  (keyup.enter)="onSearchClicked($event)"
   class="form-control d-inline me-2 my-auto"
   style="width: 300px"
   placeholder="Search"

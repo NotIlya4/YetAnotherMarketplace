@@ -30,15 +30,6 @@ public class ProductRepository : IProductRepository
         return productData.ToDomain();
     }
 
-    public async Task<Product> GetProductByName(Name name)
-    {
-        ProductData productData = await _dbContext
-            .Products
-            .IncludeProductDependencies()
-            .FirstAsyncOrThrow(p => p.Name.Equals(name));
-        return productData.ToDomain();
-    }
-
     public async Task<List<Product>> GetProducts(GetProductsQuery getProductsQuery)
     {
         IQueryable<ProductData> query = _dbContext

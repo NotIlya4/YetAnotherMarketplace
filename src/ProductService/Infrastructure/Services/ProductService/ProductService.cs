@@ -20,9 +20,9 @@ public class ProductService : IProductService
         _productTypeRepository = productTypeRepository;
     }
 
-    public async Task<Product> GetProductByName(Name productName)
+    public async Task<Product> GetProductById(Guid id)
     {
-        return await _productRepository.GetProductByName(productName);
+        return await _productRepository.GetProductById(id);
     }
 
     public async Task<Product> CreateNewProduct(CreateProductCommand createProductCommand)
@@ -48,9 +48,9 @@ public class ProductService : IProductService
         };
     }
 
-    public async Task DeleteProductByName(Name productName)
+    public async Task DeleteProductById(Guid id)
     {
-        Product product = await _productRepository.GetProductByName(productName);
+        Product product = await _productRepository.GetProductById(id);
         await _productRepository.Delete(product);
     }
 }
