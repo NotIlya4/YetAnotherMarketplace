@@ -12,9 +12,4 @@ public class ProductType
         Id = id;
         Name = name;
     }
-
-    public ProductType(Name name)
-    {
-        Name = name;
-    }
 }

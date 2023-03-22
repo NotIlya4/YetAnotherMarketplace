@@ -4,8 +4,8 @@ namespace Api.Controllers.BrandsControllers;
 
 public class BrandView
 {
-    public required string Id { get; init; }
-    public required string Name { get; init; }
+    public required string Id { get; set; }
+    public required string Name { get; set; }
 
     public static BrandView FromDomain(Brand brand)
     {

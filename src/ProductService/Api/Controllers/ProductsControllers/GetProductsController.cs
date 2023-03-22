@@ -29,7 +29,8 @@ public class GetProductsController : ProductsControllerBase
             SortingInfo = new ProductSortingInfo(_sortingInfoParser.Parse<Product>(queryView.Sortings)),
             FilteringInfo = new ProductFilteringInfo(
                 productTypeName: queryView.ProductTypeName is null ? null : new Name(queryView.ProductTypeName),
-                brandName: queryView.BrandName is null ? null : new Name(queryView.BrandName))
+                brandName: queryView.BrandName is null ? null : new Name(queryView.BrandName),
+                searching: queryView.Searching is null ? null : new Name(queryView.Searching))
         };
 
         GetProductsResult result = await ProductService.GetProducts(query);

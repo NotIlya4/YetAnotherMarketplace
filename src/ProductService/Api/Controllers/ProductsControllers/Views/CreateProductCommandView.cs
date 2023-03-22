@@ -7,17 +7,17 @@ namespace Api.Controllers.ProductsControllers.Views;
 public class CreateProductCommandView
 {
     [ProductName]
-    public required string Name { get; init; }
+    public required string Name { get; set; }
     [ProductDescription]
-    public required string Description { get; init; }
+    public required string Description { get; set; }
     [ProductPrice]
-    public required decimal Price { get; init; }
+    public required decimal Price { get; set; }
     [ProductPictureUrl]
-    public required Uri PictureUrl { get; init; }
+    public required Uri PictureUrl { get; set; }
     [ProductType]
-    public required string ProductType { get; init; }
+    public required string ProductType { get; set; }
     [ProductBrandName]
-    public required string Brand { get; init; }
+    public required string Brand { get; set; }
     
     public CreateProductCommand ToCreateProductDto()
     {

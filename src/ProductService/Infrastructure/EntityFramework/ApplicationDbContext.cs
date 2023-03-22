@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Infrastructure.EntityFramework.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.EntityFramework;
@@ -9,9 +10,9 @@ public class ApplicationDbContext : DbContext
     {
     }
 
-    public DbSet<Product> Products { get; set; } = null!;
-    public DbSet<Brand> Brands { get; set; } = null!;
-    public DbSet<ProductType> ProductTypes { get; set; } = null!;
+    public DbSet<ProductData> Products { get; set; } = null!;
+    public DbSet<BrandData> Brands { get; set; } = null!;
+    public DbSet<ProductTypeData> ProductTypes { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

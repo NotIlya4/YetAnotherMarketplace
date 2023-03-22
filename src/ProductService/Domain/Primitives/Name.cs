@@ -25,4 +25,9 @@ public record struct Name : IComparable<Name>
     {
         return string.Compare(Value, other.Value, StringComparison.Ordinal);
     }
+
+    public bool Contains(Name value)
+    {
+        return Value.Contains(value.Value);
+    }
 }

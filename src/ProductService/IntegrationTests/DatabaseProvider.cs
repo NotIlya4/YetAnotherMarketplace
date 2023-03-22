@@ -46,9 +46,9 @@ public class DatabaseProvider : IAsyncLifetime
 
     private async Task Seed()
     {
-        await DbContext.ProductTypes.AddRangeAsync(ProductTypeProvider.ProductTypes);
-        await DbContext.Brands.AddRangeAsync(BrandProvider.Brands);
-        await DbContext.Products.AddRangeAsync(ProductProvider.Products);
+        // await DbContext.ProductTypes.AddRangeAsync(ProductTypeProvider.ProductTypes);
+        // await DbContext.Brands.AddRangeAsync(BrandProvider.Brands);
+        // await DbContext.Products.AddRangeAsync(ProductProvider.Products);
         
         await DbContext.SaveChangesAsync();
     }

@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Primitives;
 using Infrastructure.EntityFramework;
+using Infrastructure.EntityFramework.Models;
 using Infrastructure.FilteringSystem;
 using Infrastructure.Repositories.Extensions;
 using Infrastructure.Services.ProductService;
@@ -22,39 +23,43 @@ public class ProductRepository : IProductRepository
 
     public async Task<Product> GetProductById(Guid productId)
     {
-        return await _dbContext
+        ProductData productData = await _dbContext
             .Products
             .IncludeProductDependencies()
-            .FirstAsyncOrThrow(p => p.Id.Equals(productId));
+            .FirstAsyncOrThrow(p => p.Id.Equals(productId.ToString()));
+        return productData.ToDomain();
     }
 
     public async Task<Product> GetProductByName(Name name)
     {
-        return await _dbContext
+        ProductData productData = await _dbContext
             .Products
             .IncludeProductDependencies()
             .FirstAsyncOrThrow(p => p.Name.Equals(name));
+        return productData.ToDomain();
     }
 
     public async Task<List<Product>> GetProducts(GetProductsQuery getProductsQuery)
     {
-        IQueryable<Product> query = _dbContext
+        IQueryable<ProductData> query = _dbContext
             .Products
             .IncludeProductDependencies();
 
-        IQueryable<Product> sortedQuery = _sortingApplier.ApplySorting(query, getProductsQuery.SortingInfo.PrimarySorting,
-            getProductsQuery.SortingInfo.SecondarySortings);
+        ProductDataSortingInfo sortingInfo = ProductDataSortingInfo.FromDomain(getProductsQuery.SortingInfo);
+        IQueryable<ProductData> sortedQuery =
+            _sortingApplier.ApplySorting(query, sortingInfo.PrimarySorting, sortingInfo.SecondarySortings);
 
         sortedQuery = ApplyFiltering(sortedQuery, getProductsQuery.FilteringInfo);
-        
-        return await sortedQuery
+
+        List<ProductData> productDatas = await sortedQuery
             .ApplyPagination(getProductsQuery.Pagination)
             .ToListAsync();
+        return ProductData.ToDomain(productDatas);
     }
 
     public async Task<int> GetProductsCount(ProductFilteringInfo filteringInfo)
     {
-        IQueryable<Product> query = _dbContext
+        IQueryable<ProductData> query = _dbContext
             .Products
             .IncludeProductDependencies();
 
@@ -63,16 +68,21 @@ public class ProductRepository : IProductRepository
         return await query.CountAsync();
     }
 
-    private IQueryable<Product> ApplyFiltering(IQueryable<Product> query, ProductFilteringInfo filteringInfo)
+    private IQueryable<ProductData> ApplyFiltering(IQueryable<ProductData> query, ProductFilteringInfo filteringInfo)
     {
         if (filteringInfo.ProductTypeName is not null)
         {
-            query = query.Where(p => p.ProductType.Name.Equals(filteringInfo.ProductTypeName));
+            query = query.Where(p => p.ProductType.Name.Equals(filteringInfo.ProductTypeName.Value.Value));
         }
         
         if (filteringInfo.BrandName is not null)
         {
-            query = query.Where(p => p.Brand.Name.Equals(filteringInfo.BrandName));
+            query = query.Where(p => p.Brand.Name.Equals(filteringInfo.BrandName.Value.Value));
+        }
+
+        if (filteringInfo.Searching is not null)
+        {
+            query = query.Where(p => p.Name.Contains(filteringInfo.Searching.Value.Value));
         }
 
         return query;
@@ -80,13 +90,13 @@ public class ProductRepository : IProductRepository
 
     public async Task Insert(Product product)
     {
-        await _dbContext.Products.AddAsync(product);
+        await _dbContext.Products.AddAsync(ProductData.FromDomain(product));
         await _dbContext.SaveChangesAsync();
     }
 
     public async Task Delete(Product product)
     {
-        _dbContext.Products.Remove(product);
+        _dbContext.Products.Remove(ProductData.FromDomain(product));
         await _dbContext.SaveChangesAsync();
     }
 }

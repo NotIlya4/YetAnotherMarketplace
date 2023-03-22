@@ -4,8 +4,8 @@ namespace Api.Controllers.ProductTypesController;
 
 public class ProductTypeView
 {
-    public required string Id { get; init; }
-    public required string Name { get; init; }
+    public required string Id { get; set; }
+    public required string Name { get; set; }
 
     public static ProductTypeView FromDomain(ProductType productType)
     {
