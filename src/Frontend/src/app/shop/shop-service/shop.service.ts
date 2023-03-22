@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import {IProduct} from "../../shared/models/product";
 import {Observable, Subject} from "rxjs";
 import {IBrand} from "../../shared/models/brand";
 import {IProductType} from "../../shared/models/productType";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Pagination} from "../../shared/models/Pagination";
-import {IProductInfo} from "./productsInfo";
+import {IProductInfo} from "./products-info";
+import {IProductFiltering} from "./product-filtering";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShopService {
-  private baseUrl = 'http://localhost:5000/'
+  private baseUrl = 'http://localhost:5001/'
   private productsInfoSource = new Subject<IProductInfo>;
   private productTypesSource = new Subject<IProductType[]>;
   private brandsSource = new Subject<IBrand[]>;
@@ -19,7 +19,7 @@ export class ShopService {
   constructor(private httpClient: HttpClient) {
   }
 
-  fetchProducts(pagination: Pagination, sortings?: string[], productTypeName?: string, brandName?: string){
+  fetchProducts(pagination: Pagination, filtering: IProductFiltering, sortings: string[]){
     let httpParams = new HttpParams();
     httpParams = httpParams.append('offset', pagination.getOffset());
     httpParams = httpParams.append('limit', pagination.getLimit());
@@ -30,12 +30,16 @@ export class ShopService {
       });
     }
 
-    if (productTypeName){
-      httpParams = httpParams.append('productTypeName', productTypeName);
+    if (filtering.productTypeName){
+      httpParams = httpParams.append('productTypeName', filtering.productTypeName);
     }
 
-    if (brandName){
-      httpParams = httpParams.append('brandName', brandName);
+    if (filtering.brandName){
+      httpParams = httpParams.append('brandName', filtering.brandName);
+    }
+
+    if (filtering.searching){
+      httpParams = httpParams.append('searching', filtering.searching);
     }
 
     this.httpClient.get<IProductInfo>(this.baseUrl + 'api/products', {params: httpParams})

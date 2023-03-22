@@ -24,7 +24,7 @@ import {ShopModule} from "./shop/shop.module";
     NgbCollapseModule,
     HttpClientModule,
     CoreModule,
-    ShopModule
+    ShopModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -35,10 +35,8 @@
 
         <app-paging-header [currentPage]="currentPage" [pageSize]="pageSize" [objectsCount]="productsTotalCount"></app-paging-header>
 
-        <div class="mt-2">
-          <input class="form-control d-inline me-2" style="width: 300px" placeholder="Search" type="text">
-          <button class="btn btn-outline-primary my-2 me-2">Search</button>
-          <button class="btn btn-outline-success ml-2">Reset</button>
+        <div class="d-flex">
+          <app-search (searchClicked)="onSearchClicked($event)"></app-search>
         </div>
       </div>
 

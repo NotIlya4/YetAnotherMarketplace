@@ -5,8 +5,8 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
   templateUrl: './pager.component.html'
 })
 export class PagerComponent {
-  @Input() totalObjects: number = 0;
-  @Input() pageSize: number = 0;
+  @Input() totalObjects!: number;
+  @Input() pageSize!: number;
   @Output() pageChanged = new EventEmitter<number>();
   currentPage = 0;
   maxSize = 10;

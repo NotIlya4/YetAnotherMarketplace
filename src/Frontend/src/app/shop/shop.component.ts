@@ -3,8 +3,8 @@ import {IProduct} from "../shared/models/product";
 import {ShopService} from "./shop-service/shop.service";
 import {IBrand} from "../shared/models/brand";
 import {IProductType} from "../shared/models/productType";
-import {Observable} from "rxjs";
 import {Pagination} from "../shared/models/Pagination";
+import {IProductFiltering} from "./shop-service/product-filtering";
 
 @Component({
   selector: 'app-shop',
@@ -12,13 +12,14 @@ import {Pagination} from "../shared/models/Pagination";
   styleUrls: ['./shop.component.scss']
 })
 export class ShopComponent implements OnInit{
-  productsTotalCount = 0;
-  pageSize: number = 5;
-  currentPage = 1;
-
   products: IProduct[] = [];
   brands: IBrand[] = [];
   productTypes: IProductType[] = [];
+
+  productsTotalCount = 0;
+  pageSize: number = 5;
+  currentPage = 1;
+  productSearch?: string;
 
   selectedBrand: IBrand = {id: '0', name: 'All'};
   selectedProductType: IProductType = {id: '0', name: 'All'};
@@ -55,7 +56,13 @@ export class ShopComponent implements OnInit{
 
     const pagination: Pagination = Pagination.fromCurrentPagePageSize(this.currentPage, this.pageSize);
 
-    this.shopService.fetchProducts(pagination, [this.selectedSorting], productTypeName, brandName);
+    const filtering: IProductFiltering = {
+      productTypeName,
+      brandName,
+      searching: this.productSearch
+    }
+
+    this.shopService.fetchProducts(pagination, filtering, [this.selectedSorting]);
   }
 
   onBrandSelected(brand: IBrand){
@@ -75,6 +82,11 @@ export class ShopComponent implements OnInit{
 
   onPageChanged(newPage: number){
     this.currentPage = newPage;
+    this.fetchProducts();
+  }
+
+  onSearchClicked(newProductSearch?: string){
+    this.productSearch = newProductSearch;
     this.fetchProducts();
   }
 }

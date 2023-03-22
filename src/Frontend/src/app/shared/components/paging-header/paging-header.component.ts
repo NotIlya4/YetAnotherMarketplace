@@ -6,9 +6,9 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./paging-header.component.scss']
 })
 export class PagingHeaderComponent {
-  @Input() currentPage: number = 0;
-  @Input() pageSize: number = 0;
-  @Input() objectsCount: number = 0;
+  @Input() currentPage!: number;
+  @Input() pageSize!: number;
+  @Input() objectsCount!: number;
 
   getFirstDisplayingNumber(){
     return (this.currentPage - 1) * this.pageSize + 1;
