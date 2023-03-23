@@ -7,12 +7,13 @@ import {Pagination} from "../../shared/models/Pagination";
 import {IProductInfo} from "./products-info";
 import {IProductFiltering} from "./product-filtering";
 import {IProduct} from "../../shared/models/product";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShopService {
-  private baseUrl = 'http://localhost:5000/'
+  private baseUrl: string = environment.productsUri;
   private productsInfoSource = new Subject<IProductInfo>();
   private productSource = new Subject<IProduct>();
   private productTypesSource = new Subject<IProductType[]>();
@@ -44,28 +45,28 @@ export class ShopService {
       httpParams = httpParams.append('searching', filtering.searching);
     }
 
-    this.httpClient.get<IProductInfo>(this.baseUrl + 'api/products', {params: httpParams})
+    this.httpClient.get<IProductInfo>(`${this.baseUrl}products`, {params: httpParams})
       .subscribe(value => {
         this.productsInfoSource.next(value);
       });
   }
 
   fetchProduct(id: string){
-    this.httpClient.get<IProduct>(`${this.baseUrl}api/products/id/${id}`)
+    this.httpClient.get<IProduct>(`${this.baseUrl}products/id/${id}`)
       .subscribe(value => {
         this.productSource.next(value);
       });
   }
 
   fetchProductTypes(){
-    this.httpClient.get<IProductType[]>(this.baseUrl + 'api/product-types')
+    this.httpClient.get<IProductType[]>(`${this.baseUrl}product-types`)
       .subscribe(value => {
         this.productTypesSource.next(value);
       });
   }
 
   fetchBrands(){
-    return this.httpClient.get<IBrand[]>(this.baseUrl + 'api/brands')
+    return this.httpClient.get<IBrand[]>(`${this.baseUrl}brands`)
       .subscribe(value => {
         this.brandsSource.next(value);
       });

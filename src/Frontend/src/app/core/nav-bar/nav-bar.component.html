@@ -2,7 +2,7 @@
   <div class="container-fluid">
 
     <a [routerLink]="'/'">
-      <img class="skinet-image" src="../../assets/logo.png" alt="">
+      <img class="skinet-image" src="{{logoPictureUri}}" alt="">
     </a>
 
     <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">&#9776;</button>
@@ -15,7 +15,7 @@
           <a class="nav-item nav-link mb-2 mb-{{mobileModThreshold}}-0" >About</a>
         </div>
         <div class="nav-item nav-link p-0 m-0 d-flex mb-1 mb-{{mobileModThreshold}}-0 col-auto">
-          <a [routerLink]="'.'" class="d-flex position-relative">
+          <a class="d-flex position-relative">
             <fa-icon [icon]="shoppingCartIcon" class="text-{{colorMode == 'light'? 'dark' : 'light'}} me-1 my-auto icon"/>
             <div class="cart-no">{{cartValue}}</div>
           </a>

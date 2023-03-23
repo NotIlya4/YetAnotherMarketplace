@@ -1,0 +1,22 @@
+<ng-template #info let-detail="detail">
+  <app-base-toast
+    [classInput]="'text-dark'"
+    [detail]="detail"></app-base-toast>
+</ng-template>
+
+<ng-template #warning let-detail="detail">
+  <app-base-toast
+    [classInput]="'bg-danger text-light'"
+    [detail]="detail"></app-base-toast>
+</ng-template>
+
+<ng-template #success let-detail="detail">
+  <app-base-toast
+    [classInput]="'bg-success text-light'"
+    [detail]="detail"></app-base-toast>
+</ng-template>
+
+<div
+  *ngFor="let toast of toastsService.toasts">
+  <div *ngTemplateOutlet="mapTypeToRef(toast.type); context: {detail: toast.title}"></div>
+</div>

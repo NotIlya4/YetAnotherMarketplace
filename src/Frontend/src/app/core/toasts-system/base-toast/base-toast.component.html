@@ -1,0 +1,7 @@
+<ngb-toast
+  class="mb-2 {{classInput}}"
+  [delay]="5000"
+  [autohide]="autohide"
+  (mouseenter)="autohide = false"
+  (mouseleave)="autohide = true"
+>{{detail}}</ngb-toast>

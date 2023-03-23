@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-nav-bar[cartValue]',
@@ -12,4 +13,5 @@ export class NavBarComponent {
   isMenuCollapsed = true;
   mobileModThreshold = "md";
   colorMode = "light";
+  logoPictureUri = `${environment.picturesUri}logo.png`
 }
