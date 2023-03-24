@@ -1,0 +1,15 @@
+<div *ngIf="breadcrumbs$ | async as breadcrumbs" class="parent-div shadow-sm">
+  <div *ngIf="breadcrumbs[breadcrumbs.length - 1].label !== 'Home'"
+       style="margin-top: 60px; height: 80px"
+       class="container">
+    <div class="row f-flex align-items-center h-100">
+      <div class="col">
+        <h5 class="my-auto">{{breadcrumbs[breadcrumbs.length - 1].label}}</h5>
+      </div>
+      <div class="col-auto">
+        <xng-breadcrumb></xng-breadcrumb>
+      </div>
+    </div>
+  </div>
+  <hr class="m-0 p-0">
+</div>

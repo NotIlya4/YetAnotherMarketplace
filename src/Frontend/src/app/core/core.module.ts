@@ -8,6 +8,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ToastsComponent } from './toasts-system/toasts.component';
 import { BaseToastComponent } from './toasts-system/base-toast/base-toast.component';
 import { WarningToastComponent } from './toasts-system/warning-toast/warning-toast.component';
+import { SectionHeaderComponent } from './section-header/section-header.component';
+import {BreadcrumbModule} from "xng-breadcrumb";
 
 
 
@@ -17,18 +19,21 @@ import { WarningToastComponent } from './toasts-system/warning-toast/warning-toa
     NotFoundComponent,
     ToastsComponent,
     BaseToastComponent,
-    WarningToastComponent],
+    WarningToastComponent,
+    SectionHeaderComponent],
   imports: [
     CommonModule,
     RouterLink,
     NgbCollapse,
     FontAwesomeModule,
     RouterLinkActive,
-    NgbToastModule
+    NgbToastModule,
+    BreadcrumbModule
   ],
   exports: [
     NavBarComponent,
-    ToastsComponent
+    ToastsComponent,
+    SectionHeaderComponent
   ]
 })
 export class CoreModule { }

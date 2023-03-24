@@ -1,6 +1,10 @@
-<app-nav-bar [cartValue]="5"></app-nav-bar>
+<div class="big-div">
+  <app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
 
-<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
-<div class="container">
-  <router-outlet></router-outlet>
+  <app-nav-bar [cartValue]="5"></app-nav-bar>
+
+  <app-section-header></app-section-header>
+  <div class="container mb-2 mt-4 main-content">
+    <router-outlet></router-outlet>
+  </div>
 </div>

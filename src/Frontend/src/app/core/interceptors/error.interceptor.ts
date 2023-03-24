@@ -17,8 +17,12 @@ export class ErrorInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       catchError(err => {
-        if (err.status === 400 || this.is5xx(err.status)) {
+        if (err.status === 400 || err.status === 404 || this.is5xx(err.status)) {
           this.toastsService.warning(err.error.title, err.error.detail);
+        }
+
+        if (err.status === 404){
+          this.router.navigateByUrl('not-found');
         }
 
         return throwError(err);

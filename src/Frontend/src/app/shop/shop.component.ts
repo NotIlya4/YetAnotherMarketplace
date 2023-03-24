@@ -17,7 +17,7 @@ export class ShopComponent implements OnInit{
   productTypes: IProductType[] = [];
 
   productsTotalCount = 0;
-  pageSize: number = 2;
+  pageSize: number = 6;
   currentPage = 1;
   productSearch?: string;
 

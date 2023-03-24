@@ -1,28 +1,54 @@
-<nav class="navbar text-uppercase navbar-expand-{{mobileModThreshold}} navbar-{{colorMode}} bg-{{colorMode}} mb-3 shadow-sm fixed-top">
-  <div class="container-fluid">
+<nav class="navbar navbar-expand-{{mobileModThreshold}} navbar-light text-uppercase bg-opacity-100 bg-white m-0 p-0 shadow-sm fixed-top">
 
-    <a [routerLink]="'/'">
-      <img class="skinet-image" src="{{logoPictureUri}}" alt="">
-    </a>
+  <a [routerLink]="'/'" class="ms-2" style="height: 60px">
+    <img class="skinet-image h-100"
+         src="{{logoPictureUri}}"
+         alt="">
+  </a>
 
-    <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">&#9776;</button>
+  <button
+    class="navbar-toggler me-3" type="button"
+    (click)="isMenuCollapsed = !isMenuCollapsed" style="height: 35px">&#9776;</button>
 
-    <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse navbar-nav align-items-center">
-      <div class="container-fluid row justify-content-center">
-        <div class="col-{{mobileModThreshold}} d-{{mobileModThreshold}}-flex justify-content-center text-center">
-          <a class="nav-item nav-link" [routerLink]="'/'" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-          <a class="nav-item nav-link" [routerLink]="'/shop'" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Shop</a>
-          <a class="nav-item nav-link mb-2 mb-{{mobileModThreshold}}-0" >About</a>
-        </div>
-        <div class="nav-item nav-link p-0 m-0 d-flex mb-1 mb-{{mobileModThreshold}}-0 col-auto">
-          <a class="d-flex position-relative">
-            <fa-icon [icon]="shoppingCartIcon" class="text-{{colorMode == 'light'? 'dark' : 'light'}} me-1 my-auto icon"/>
-            <div class="cart-no">{{cartValue}}</div>
-          </a>
-          <button class="btn btn-{{colorMode}} btn-outline-{{colorMode == 'light'? 'dark' : 'light'}} ms-4">Login</button>
-          <button class="btn btn-{{colorMode}} btn-outline-{{colorMode == 'light'? 'dark' : 'light'}} ms-3">Sign Up</button>
-        </div>
-      </div>
+  <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse navbar-nav align-items-center">
+
+    <div class="col-{{mobileModThreshold}} d-{{mobileModThreshold}}-flex justify-content-center text-center">
+
+      <a class="nav-item nav-link"
+         [routerLink]="'/'"
+         routerLinkActive="active"
+         [routerLinkActiveOptions]="{exact: true}"
+         style="height: 40px"
+         (click)="isMenuCollapsed=true">Home</a>
+      <a class="nav-item nav-link"
+         [routerLink]="'/shop'"
+         routerLinkActive="active"
+         [routerLinkActiveOptions]="{exact: true}"
+         style="height: 40px"
+         (click)="isMenuCollapsed=true">Shop</a>
+      <a class="nav-item nav-link mb-2 mb-{{mobileModThreshold}}-0"
+         style="height: 40px"
+         (click)="isMenuCollapsed=true">About</a>
+
+    </div>
+
+    <div class="nav-item align-items-center nav-link p-0 m-0 d-flex mb-3 mb-{{mobileModThreshold}}-0">
+
+      <a class="d-flex position-relative me-3"
+         style="height: 40px;
+         width: 40px"
+         (click)="isMenuCollapsed=true">
+        <fa-icon [icon]="shoppingCartIcon" class="text-dark me-1 my-auto icon"/>
+        <div class="badge position-absolute translate-middle badge rounded-pill bg-primary" style="left: 67%; top: 20%">{{cartValue}}</div>
+      </a>
+
+      <button class="btn btn-outline-primary me-3"
+              style="height: 40px"
+              (click)="isMenuCollapsed=true">Login</button>
+      <button class="btn btn-outline-primary me-3"
+              style="height: 40px"
+              (click)="isMenuCollapsed=true">Sign Up</button>
+
     </div>
   </div>
 </nav>

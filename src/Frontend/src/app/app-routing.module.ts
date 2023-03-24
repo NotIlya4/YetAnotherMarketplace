@@ -4,9 +4,9 @@ import {HomeComponent} from "./home/home.component";
 import {NotFoundComponent} from "./core/not-found/not-found.component";
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'not-found', component: NotFoundComponent},
-  {path: 'shop', loadChildren: () => import('./shop/shop.module').then(mode => mode.ShopModule)},
+  {path: '', component: HomeComponent, data: {breadcrumb: 'Home'}},
+  {path: 'not-found', component: NotFoundComponent, data: {breadcrumb: 'Not Found'}},
+  {path: 'shop', loadChildren: () => import('./shop/shop.module').then(mode => mode.ShopModule), data: {breadcrumb: 'Shop'}},
   {path: '**', redirectTo: '', pathMatch: 'full'},
 ];
 
