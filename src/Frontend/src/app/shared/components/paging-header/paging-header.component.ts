@@ -8,13 +8,25 @@ import {Component, Input} from '@angular/core';
 export class PagingHeaderComponent {
   @Input() currentPage!: number;
   @Input() pageSize!: number;
-  @Input() objectsCount!: number;
+  @Input() objectsCount?: number;
 
-  getFirstDisplayingNumber(){
+  getFirstDisplayingNumber(): number | undefined{
+    if (!this.isInited()){
+      return 0;
+    }
+
     return (this.currentPage - 1) * this.pageSize + 1;
   }
 
-  getLastDisplayingNumber(){
-    return Math.min(this.currentPage * this.pageSize, this.objectsCount);
+  getLastDisplayingNumber(): number{
+    if (!this.isInited()){
+      return 0;
+    }
+
+    return Math.min(this.currentPage * this.pageSize, this.objectsCount!);
+  }
+
+  isInited(): boolean{
+    return this.objectsCount !== undefined;
   }
 }

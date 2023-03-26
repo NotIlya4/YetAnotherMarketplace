@@ -42,12 +42,8 @@
         <div class="badge position-absolute translate-middle badge rounded-pill bg-primary" style="left: 67%; top: 20%">{{cartValue}}</div>
       </a>
 
-      <button class="btn btn-outline-primary me-3"
-              style="height: 40px"
-              (click)="isMenuCollapsed=true">Login</button>
-      <button class="btn btn-outline-primary me-3"
-              style="height: 40px"
-              (click)="isMenuCollapsed=true">Sign Up</button>
+      <app-primary-button class="me-3" (click)="isMenuCollapsed=true">Login</app-primary-button>
+      <app-primary-button class="me-3" (click)="isMenuCollapsed=true">Sign Up</app-primary-button>
 
     </div>
   </div>

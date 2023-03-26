@@ -5,9 +5,9 @@ import {
   HttpEvent,
   HttpInterceptor
 } from '@angular/common/http';
-import {catchError, Observable, throwError} from 'rxjs';
+import {catchError, delay, Observable, throwError} from 'rxjs';
 import {Router} from "@angular/router";
-import {ToastsService} from "../toasts-system/toasts.service";
+import {ToastsService} from "../../toasts/toasts.service";
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -16,6 +16,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
+      delay(100000),
       catchError(err => {
         if (err.status === 400 || err.status === 404 || this.is5xx(err.status)) {
           this.toastsService.warning(err.error.title, err.error.detail);

@@ -1,4 +1,4 @@
-﻿export class Pagination{
+﻿export class Pagination {
   private offset: number;
   private limit: number;
 

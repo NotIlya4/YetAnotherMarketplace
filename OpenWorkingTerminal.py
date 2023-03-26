@@ -1,13 +1,16 @@
 import os
 
-def build_tab(tab_name, path):
+
+def build_tab(tab_name: str, path: str):
     return f"new-tab -p \"Command Prompt\" --title \"{tab_name}\" -d {path}"
 
-def build_query(tabs):
+
+def build_query(tabs: [str]):
     query = "wt "
     for tab in tabs:
         query += f"{tab} ; "
     return query[:-2]
+
 
 PROJECT_FOLDER = "D:\Projects\Programming\cs\skinet"
 FRONTEND_FOLDER = f"{PROJECT_FOLDER}\src\Frontend"

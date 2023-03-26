@@ -75,13 +75,13 @@
               "browserTarget": "Frontend:build:production",
               "sslKey": "../../ssl/server-decrypted.key",
               "sslCert": "../../ssl/server.crt",
-              "ssl": true
+              "ssl": false
             },
             "development": {
               "browserTarget": "Frontend:build:development",
               "sslKey": "../../ssl/server-decrypted.key",
               "sslCert": "../../ssl/server.crt",
-              "ssl": true
+              "ssl": false
             }
           },
           "defaultConfiguration": "development"

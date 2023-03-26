@@ -2,7 +2,7 @@
   <div class="row">
 
     <section class="col-3">
-      <h5 class="text-secondary ml-3">Sort</h5>
+      <h5 class="text-secondary mb-2">Sort</h5>
       <select class="form-select mb-3" (change)="onSortingChanged($event.target)">
         <option
           *ngFor="let sorting of sortingsMapping"
@@ -10,44 +10,36 @@
         >{{sorting.name}}</option>
       </select>
 
-      <h5 class="text-secondary ml-3">Brands</h5>
-      <ul class="list-group my-3">
-        <li class="list-group-item list-group-item-action"
-            *ngFor="let brand of brands"
-            [class.active]="brand.id === this.selectedBrand.id"
-            (click)="onBrandSelected(brand)">
-          {{brand.name}}
-        </li>
-      </ul>
-      <h5 class="text-secondary ml-3">Types</h5>
-      <ul class="list-group my-3">
-        <li class="list-group-item list-group-item-action"
-            *ngFor="let productType of productTypes"
-            [class.active]="productType.id === this.selectedProductType.id"
-            (click)="onProductTypeSelected(productType)">
-          {{productType.name}}
-        </li>
-      </ul>
+      <app-tab
+        tabName="Brands"
+        class="mb-3 d-block"
+        [tabs]="brandFilters"
+        (tabSelected)="onBrandSelected($event)"/>
+
+      <app-tab
+        tabName="Product Types"
+        [tabs]="productTypeFilters"
+        (tabSelected)="onProductTypeSelected($event)"/>
+
     </section>
 
     <section class="col-9">
-      <div class="d-flex justify-content-between align-items-center pb-2" style="height: 50px">
+
+      <div class="d-flex justify-content-between align-items-center mb-3">
 
         <app-paging-header [currentPage]="currentPage" [pageSize]="pageSize" [objectsCount]="productsTotalCount"></app-paging-header>
 
-        <div class="d-flex">
-          <app-search (searchClicked)="onSearchClicked($event)"></app-search>
-        </div>
+        <app-search class="h-100" (searchClicked)="onSearchClicked($event)"></app-search>
+
       </div>
 
-      <div class="d-flex flex-wrap justify-content-center gap-3 mb-3" style="">
-        <app-product-item *ngFor="let product of products" [product]="product" class="align-self-stretch shadow-sm"></app-product-item>
-      </div>
+      <app-product-cards-container class="d-block" [products]="products"></app-product-cards-container>
 
-      <div class="d-flex justify-content-center" *ngIf="productsTotalCount > 0">
+      <div class="d-flex justify-content-center mt-3" *ngIf="productsTotalCount !== undefined && productsTotalCount > 0">
         <app-pager class="" [totalObjects]="productsTotalCount" [pageSize]="pageSize" (pageChanged)="onPageChanged($event)"></app-pager>
       </div>
 
     </section>
+
   </div>
 </div>

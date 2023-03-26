@@ -5,21 +5,15 @@ import {RouterLink, RouterLinkActive} from "@angular/router";
 import {NgbCollapse, NgbToastModule} from "@ng-bootstrap/ng-bootstrap";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import { NotFoundComponent } from './not-found/not-found.component';
-import { ToastsComponent } from './toasts-system/toasts.component';
-import { BaseToastComponent } from './toasts-system/base-toast/base-toast.component';
-import { WarningToastComponent } from './toasts-system/warning-toast/warning-toast.component';
 import { SectionHeaderComponent } from './section-header/section-header.component';
 import {BreadcrumbModule} from "xng-breadcrumb";
-
+import {SharedModule} from "../shared/shared.module";
 
 
 @NgModule({
   declarations: [
     NavBarComponent,
     NotFoundComponent,
-    ToastsComponent,
-    BaseToastComponent,
-    WarningToastComponent,
     SectionHeaderComponent],
   imports: [
     CommonModule,
@@ -28,11 +22,11 @@ import {BreadcrumbModule} from "xng-breadcrumb";
     FontAwesomeModule,
     RouterLinkActive,
     NgbToastModule,
-    BreadcrumbModule
+    BreadcrumbModule,
+    SharedModule
   ],
   exports: [
     NavBarComponent,
-    ToastsComponent,
     SectionHeaderComponent
   ]
 })

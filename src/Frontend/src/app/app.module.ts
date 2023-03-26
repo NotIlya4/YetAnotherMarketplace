@@ -11,6 +11,7 @@ import {CoreModule} from "./core/core.module";
 import {ShopModule} from "./shop/shop.module";
 import {HomeModule} from "./home/home.module";
 import {ErrorInterceptor} from "./core/interceptors/error.interceptor";
+import {ToastsModule} from "./toasts/toasts.module";
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {ErrorInterceptor} from "./core/interceptors/error.interceptor";
     NgbCollapseModule,
     HttpClientModule,
     CoreModule,
-    HomeModule
+    HomeModule,
+    ToastsModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true,}

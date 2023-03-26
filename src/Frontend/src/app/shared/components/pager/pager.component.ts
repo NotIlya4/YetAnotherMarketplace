@@ -5,20 +5,18 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
   templateUrl: './pager.component.html'
 })
 export class PagerComponent {
+  currentPage: number = 1;
+  maxSize: number = 10;
+
   @Input() totalObjects!: number;
   @Input() pageSize!: number;
-  @Output() pageChanged = new EventEmitter<number>();
-  private currentPage = 0;
-  maxSize = 10;
+
+  @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
 
   onPageChanged(newCurrentPage: number) {
-    console.log(`new ${newCurrentPage} old ${this.currentPage}`)
     if (newCurrentPage !== this.currentPage){
-      this.pageChanged.emit(newCurrentPage);
       this.currentPage = newCurrentPage;
+      this.pageChanged.emit(newCurrentPage);
     }
-
-    // this.pageChanged.emit(newCurrentPage);
-    // this.currentPage = newCurrentPage;
   }
 }

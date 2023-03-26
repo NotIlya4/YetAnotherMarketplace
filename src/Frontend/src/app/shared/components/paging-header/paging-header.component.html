@@ -1,6 +1,17 @@
 <header>
-          <span *ngIf="objectsCount > 0">Showing <strong>
-            {{getFirstDisplayingNumber()}} - {{getLastDisplayingNumber()}}
-          </strong> of <strong>{{objectsCount}}</strong> Results</span>
-  <span *ngIf="!(objectsCount > 0)">There are <strong>0</strong> results for this filter</span>
+
+  <ng-container *ngIf="isInited()">
+
+    <span *ngIf="objectsCount! > 0">
+    Showing <strong>{{getFirstDisplayingNumber()}} - {{getLastDisplayingNumber()}}</strong>
+    of <strong>{{objectsCount}}</strong> Results</span>
+
+    <span *ngIf="!(objectsCount! > 0)">There are <strong>0</strong> results for this filter</span>
+
+  </ng-container>
+
+  <ng-container *ngIf="!isInited()">
+    <app-text-placeholder>Showing 1 - 6 of 9 Results</app-text-placeholder>
+  </ng-container>
+
 </header>

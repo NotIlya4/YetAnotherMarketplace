@@ -1,0 +1,32 @@
+<h5 class="text-secondary mb-2">{{tabName}}</h5>
+
+<ul class="list-group">
+
+  <ng-container *ngIf="!tabs">
+    <li class="list-group-item list-group-item-action active">
+      <app-text-auto-placeholder class="d-block" style="width: 60%"></app-text-auto-placeholder>
+    </li>
+    <li class="list-group-item list-group-item-action">
+      <app-text-auto-placeholder class="d-block" style="width: 80%"></app-text-auto-placeholder>
+    </li>
+    <li class="list-group-item list-group-item-action">
+      <app-text-auto-placeholder class="d-block" style="width: 40%"></app-text-auto-placeholder>
+    </li>
+    <li class="list-group-item list-group-item-action">
+      <app-text-auto-placeholder class="d-block" style="width: 90%"></app-text-auto-placeholder>
+    </li>
+    <li class="list-group-item list-group-item-action">
+      <app-text-auto-placeholder class="d-block" style="width: 30%"></app-text-auto-placeholder>
+    </li>
+  </ng-container>
+
+  <ng-container *ngIf="tabs">
+    <li class="list-group-item list-group-item-action"
+        *ngFor="let filter of tabs"
+        [class.active]="filter === this.selectedTab"
+        (click)="onTabSelected(filter)">
+      {{filter}}
+    </li>
+  </ng-container>
+
+</ul>
