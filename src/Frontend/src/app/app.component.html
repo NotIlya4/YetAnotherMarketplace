@@ -1,10 +1,11 @@
-<div class="big-div">
-  <app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
 
-  <app-nav-bar [cartValue]="5"></app-nav-bar>
+<app-nav-bar class="d-block shadow-sm fixed-top h-auto" [cartValue]="5"></app-nav-bar>
 
-  <app-section-header></app-section-header>
-  <div class="container mb-2 mt-4 main-content">
+<div style="margin-top: 64px">
+
+  <div class="my-4">
     <router-outlet></router-outlet>
   </div>
+
 </div>

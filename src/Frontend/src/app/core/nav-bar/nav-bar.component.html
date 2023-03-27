@@ -1,7 +1,8 @@
-<nav class="navbar navbar-expand-{{mobileModThreshold}} navbar-light text-uppercase bg-opacity-100 bg-white m-0 p-0 shadow-sm fixed-top">
+<nav class="navbar navbar-expand-{{mobileModThreshold}} navbar-light text-uppercase bg-opacity-100 bg-white m-0 p-0 h-100">
 
-  <a [routerLink]="'/'" class="ms-2" style="height: 60px">
-    <img class="skinet-image h-100"
+  <a [routerLink]="'/'" class="ms-2">
+    <img class="skinet-image"
+         style="width: 10em; height: auto"
          src="{{logoPictureUri}}"
          alt="">
   </a>
@@ -18,16 +19,13 @@
          [routerLink]="'/'"
          routerLinkActive="active"
          [routerLinkActiveOptions]="{exact: true}"
-         style="height: 40px"
          (click)="isMenuCollapsed=true">Home</a>
       <a class="nav-item nav-link"
          [routerLink]="'/shop'"
          routerLinkActive="active"
          [routerLinkActiveOptions]="{exact: true}"
-         style="height: 40px"
          (click)="isMenuCollapsed=true">Shop</a>
       <a class="nav-item nav-link mb-2 mb-{{mobileModThreshold}}-0"
-         style="height: 40px"
          (click)="isMenuCollapsed=true">About</a>
 
     </div>
@@ -35,10 +33,9 @@
     <div class="nav-item align-items-center nav-link p-0 m-0 d-flex mb-3 mb-{{mobileModThreshold}}-0">
 
       <a class="d-flex position-relative me-3"
-         style="height: 40px;
-         width: 40px"
+         style="aspect-ratio: 1/1; width: 3em;"
          (click)="isMenuCollapsed=true">
-        <fa-icon [icon]="shoppingCartIcon" class="text-dark me-1 my-auto icon"/>
+        <fa-icon style="font-size: 1.3em" [icon]="shoppingCartIcon" class="text-dark me-1 my-auto icon"/>
         <div class="badge position-absolute translate-middle badge rounded-pill bg-primary" style="left: 67%; top: 20%">{{cartValue}}</div>
       </a>
 
@@ -47,4 +44,5 @@
 
     </div>
   </div>
+
 </nav>

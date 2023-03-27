@@ -1,1 +1,11 @@
-<p>home works!</p>
+<ngb-carousel [interval]="5000">
+
+  <ng-template ngbSlide *ngFor="let img of images; index as i">
+
+    <a class="d-block carousel-item">
+      <img class="w-100" [src]="img" alt=""/>
+    </a>
+
+  </ng-template>
+
+</ngb-carousel>

@@ -10,6 +10,7 @@ import {ProductCardComponent} from "./product-card/product-card.component";
 import {ProductCardsContainerComponent} from "./product-cards-container/product-cards-container.component";
 import {ProductCardSkeletonComponent} from "./product-card-skeleton/product-card-skeleton.component";
 import {ToastsModule} from "../toasts/toasts.module";
+import {CoreModule} from "../core/core.module";
 
 
 
@@ -24,13 +25,14 @@ import {ToastsModule} from "../toasts/toasts.module";
   exports: [
 
   ],
-  imports: [
-    CommonModule,
-    FontAwesomeModule,
-    SharedModule,
-    ShopRoutingModule,
-    BreadcrumbModule,
-    ToastsModule
-  ]
+    imports: [
+        CommonModule,
+        FontAwesomeModule,
+        SharedModule,
+        ShopRoutingModule,
+        BreadcrumbModule,
+        ToastsModule,
+        CoreModule
+    ]
 })
 export class ShopModule { }

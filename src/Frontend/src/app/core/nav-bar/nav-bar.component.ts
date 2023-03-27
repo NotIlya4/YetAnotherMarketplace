@@ -12,6 +12,5 @@ export class NavBarComponent {
   shoppingCartIcon = faShoppingCart;
   isMenuCollapsed = true;
   mobileModThreshold = "md";
-  colorMode = "light";
   logoPictureUri = `${environment.picturesUri}logo.png`
 }

@@ -16,7 +16,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
-      delay(100000),
+      delay(0),
       catchError(err => {
         if (err.status === 400 || err.status === 404 || this.is5xx(err.status)) {
           this.toastsService.warning(err.error.title, err.error.detail);
