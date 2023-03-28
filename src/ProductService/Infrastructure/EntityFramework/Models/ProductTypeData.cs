@@ -23,4 +23,9 @@ public class ProductTypeData
             Name = productType.Name.Value
         };
     }
+
+    public static List<ProductTypeData> FromDomain(IEnumerable<ProductType> productTypes)
+    {
+        return productTypes.Select(FromDomain).ToList();
+    }
 }

@@ -23,4 +23,9 @@ public class BrandData
             Name = brand.Name.Value
         };
     }
+
+    public static List<BrandData> FromDomain(IEnumerable<Brand> brands)
+    {
+        return brands.Select(FromDomain).ToList();
+    }
 }

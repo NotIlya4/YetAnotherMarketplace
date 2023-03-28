@@ -43,4 +43,9 @@ public class ProductData
             Brand = BrandData.FromDomain(product.Brand)
         };
     }
+
+    public static List<ProductData> FromDomain(IEnumerable<Product> products)
+    {
+        return products.Select(FromDomain).ToList();
+    }
 }
