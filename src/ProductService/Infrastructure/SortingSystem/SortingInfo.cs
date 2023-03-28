@@ -1,19 +1,13 @@
-﻿using Infrastructure.PropertySystem;
+﻿using Infrastructure.Repositories.Extensions;
 
 namespace Infrastructure.SortingSystem;
 
-public readonly record struct SortingInfo<TEntity>
+public class SortingInfo : ISortingInfo
 {
-    public PropertyName<TEntity> PropertyName { get; }
+    public string PropertyName { get; }
     public SortingSide SortingSide { get; }
 
-    public SortingInfo(string rawPropertyName, SortingSide sortingSide) 
-        : this(new PropertyName<TEntity>(rawPropertyName), sortingSide)
-    {
-        
-    }
-
-    public SortingInfo(PropertyName<TEntity> propertyName, SortingSide sortingSide)
+    public SortingInfo(string propertyName, SortingSide sortingSide)
     {
         PropertyName = propertyName;
         SortingSide = sortingSide;

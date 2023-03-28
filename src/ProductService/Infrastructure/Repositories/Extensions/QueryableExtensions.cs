@@ -13,6 +13,12 @@ public static class QueryableExtensions
     {
         return await query.FirstOrDefaultAsync(predicate) ?? throw new EntityNotFoundException(typeof(TEntity).Name);
     }
+    
+    public static async Task<TEntity> FirstAsyncOrThrow<TEntity>(this IQueryable<TEntity> query, IStrictFilter strictFilter)
+    {
+        query = query.Where("@0 == @1", strictFilter.PropertyName, strictFilter.ExpectedValue);
+        return await query.FirstOrDefaultAsync() ?? throw new EntityNotFoundException(typeof(TEntity).Name);
+    }
 
     public static IQueryable<TEntity> ApplyPagination<TEntity>(this IQueryable<TEntity> query, Pagination pagination)
     {
@@ -21,12 +27,12 @@ public static class QueryableExtensions
             .Take(pagination.Limit);
     }
     
-    public static IQueryable<TEntity> ApplySorting<TEntity>(this IQueryable<TEntity> query, SortingInfo<TEntity> primarySorting,
-        IEnumerable<SortingInfo<TEntity>>? secondarySortings = null)
+    public static IQueryable<TEntity> ApplySorting<TEntity>(this IQueryable<TEntity> query, ISortingInfo primarySorting,
+        IEnumerable<ISortingInfo>? secondarySortings = null)
     {
-        string BuildOrderString(SortingInfo<TEntity> sortingInfo)
+        string BuildOrderString(ISortingInfo sortingInfo)
         {
-            return $"{sortingInfo.PropertyName.Value} {sortingInfo.SortingSide}";
+            return $"{sortingInfo.PropertyName} {sortingInfo.SortingSide}";
         }
         
         IOrderedQueryable<TEntity> orderedQueryable = query.OrderBy(BuildOrderString(primarySorting));

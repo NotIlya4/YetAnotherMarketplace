@@ -1,5 +1,6 @@
 ﻿using Api.Swagger.EnricherSystem.CreateOwnEnrichers;
 using Infrastructure.SortingSystem;
+using Infrastructure.SortingSystem.Product;
 using Microsoft.OpenApi.Models;
 
 namespace Api.Swagger.Enrichers.GetProductsQueryView;
@@ -10,7 +11,7 @@ public class ProductSortingsAttribute : BaseAttribute, IParameterEnricher
 
     public ProductSortingsAttribute()
     {
-        _sortingEnricher = new SortingEnricher(ProductSortingInfo.AvailableSortingProperties);
+        _sortingEnricher = new SortingEnricher(Enum.GetNames<ProductSortingProperty>());
     }
     
     public void Enrich(OpenApiParameter parameter)

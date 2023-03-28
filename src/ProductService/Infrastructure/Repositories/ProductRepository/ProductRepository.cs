@@ -4,6 +4,7 @@ using Infrastructure.EntityFramework.Models;
 using Infrastructure.FilteringSystem;
 using Infrastructure.Repositories.Extensions;
 using Infrastructure.Services.ProductService;
+using Infrastructure.SortingSystem;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.ProductRepository;
@@ -32,8 +33,8 @@ public class ProductRepository : IProductRepository
             .Products
             .IncludeProductDependencies();
 
-        ProductDataSortingInfo sortingInfo = ProductDataSortingInfo.FromDomain(getProductsQuery.SortingInfo);
-        IQueryable<ProductData> sortedQuery = query.ApplySorting(sortingInfo.PrimarySorting, sortingInfo.SecondarySortings);
+        IQueryable<ProductData> sortedQuery = query.ApplySorting(getProductsQuery.SortingInfoCollection.PrimarySorting,
+            getProductsQuery.SortingInfoCollection.SecondarySortings.Select(s => (ISortingInfo)s).ToList());
 
         sortedQuery = ApplyFiltering(sortedQuery, getProductsQuery.FilteringInfo);
 

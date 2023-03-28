@@ -5,6 +5,7 @@ using Domain.Primitives;
 using Infrastructure.FilteringSystem;
 using Infrastructure.Services.ProductService;
 using Infrastructure.SortingSystem;
+using Infrastructure.SortingSystem.Product;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.ProductsControllers;
@@ -26,7 +27,8 @@ public class GetProductsController : ProductsControllerBase
         GetProductsQuery query = new()
         {
             Pagination = new Pagination(offset: queryView.Offset, limit: queryView.Limit),
-            SortingInfo = new ProductSortingInfo(_sortingInfoParser.Parse<Product>(queryView.Sortings)),
+            SortingInfoCollection = 
+                new ProductSortingInfoCollection(_sortingInfoParser.ParseProductSortingInfo(queryView.Sortings ?? new List<string>())),
             FilteringInfo = new ProductFilteringInfo(
                 productTypeName: queryView.ProductTypeName is null ? null : new Name(queryView.ProductTypeName),
                 brandName: queryView.BrandName is null ? null : new Name(queryView.BrandName),
