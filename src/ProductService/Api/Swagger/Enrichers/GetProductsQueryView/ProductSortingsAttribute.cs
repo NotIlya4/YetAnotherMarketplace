@@ -1,5 +1,5 @@
 ﻿using Api.Swagger.EnricherSystem.CreateOwnEnrichers;
-using Infrastructure.SortingSystem.SortingInfoProviders;
+using Infrastructure.SortingSystem;
 using Microsoft.OpenApi.Models;
 
 namespace Api.Swagger.Enrichers.GetProductsQueryView;

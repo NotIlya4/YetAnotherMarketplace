@@ -1,12 +1,12 @@
-﻿namespace IntegrationTests.SortingSystemTests;
+﻿namespace UnitTests.Infrastructure.Repositories.Extensions.QueryableExtensions.DbFixture;
 
-public class TestEntityList
+public class QueryableTestEntityList
 {
-    public List<TestEntity> Entities { get; }
+    public List<QueryableTestEntity> Entities { get; }
 
-    public TestEntityList()
+    public QueryableTestEntityList()
     {
-        Entities = new List<TestEntity>() // ChatGPT THANK YOU VERY MUCH
+        Entities = new List<QueryableTestEntity>() // ChatGPT THANK YOU VERY MUCH
         {
             new() { Id = 1, Property1 = 2, Property2 = "a", Property3 = 0, Property4 = 3 },
             new() { Id = 2, Property1 = 0, Property2 = "b", Property3 = 2, Property4 = 0 },

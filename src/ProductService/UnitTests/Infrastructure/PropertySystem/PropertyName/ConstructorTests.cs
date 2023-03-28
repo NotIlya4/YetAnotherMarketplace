@@ -1,7 +1,7 @@
 ﻿using Domain.Exceptions;
-using Infrastructure.SortingSystem;
+using Infrastructure.PropertySystem;
 
-namespace UnitTests.Infrastructure.SortingSystem.PropertyNameTests;
+namespace UnitTests.Infrastructure.PropertySystem.PropertyName;
 
 public class ConstructorTests
 {

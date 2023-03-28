@@ -31,32 +31,4 @@ public class ParametersProviderTests
 
         Assert.Throws<ParameterNotFoundException>(() => parametersProvider.GetConnectionString());
     }
-
-    [Theory]
-    [InlineData("true", true)]
-    [InlineData("false", false)]
-    void AutoApplyMigrations_ValidConfiguration_ParsedConfiguration(string? configurationValue, bool expectedResult)
-    {
-        ConfigurationManager configuration = new();
-        configuration["AutoApplyMigrations"] = configurationValue;
-        ParametersProvider parametersProvider = new(configuration);
-
-        bool result = parametersProvider.AutoApplyMigrations();
-        
-        Assert.Equal(expectedResult, result);
-    }
-    
-    [Theory]
-    [InlineData(null)]
-    [InlineData("a")]
-    void AutoApplyMigrations_InvalidConfiguration_True(string? configurationValue)
-    {
-        ConfigurationManager configuration = new();
-        configuration["AutoApplyMigrations"] = configurationValue;
-        ParametersProvider parametersProvider = new(configuration);
-
-        bool result = parametersProvider.AutoApplyMigrations();
-        
-        Assert.Equal(true, result);
-    }
 }

@@ -13,7 +13,6 @@ using Infrastructure.Repositories.ProductTypeRepository;
 using Infrastructure.Services.BrandService;
 using Infrastructure.Services.ProductService;
 using Infrastructure.Services.ProductTypeService;
-using Infrastructure.SortingSystem;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Extensions;
@@ -33,8 +32,6 @@ public static class DiExtensions
         serviceCollection.AddScoped<IProductRepository, ProductRepository>();
         serviceCollection.AddScoped<IBrandRepository, BrandRepository>();
         serviceCollection.AddScoped<IProductTypeRepository, ProductTypeRepository>();
-        serviceCollection.AddScoped<SortingApplier>();
-        serviceCollection.AddScoped<PropertyReflections>();
     }
 
     public static void AddAppDbContext(this IServiceCollection serviceCollection, string connectionString)

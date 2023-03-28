@@ -1,6 +1,6 @@
-﻿namespace IntegrationTests.SortingSystemTests;
+﻿namespace UnitTests.Infrastructure.Repositories.Extensions.QueryableExtensions.DbFixture;
 
-public record TestEntity
+public record QueryableTestEntity
 {
     public required int Id { get; set; }
     public required int Property1 { get; set; }

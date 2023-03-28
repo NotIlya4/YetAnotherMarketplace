@@ -1,4 +1,4 @@
-﻿using Infrastructure.SortingSystem.Models;
+﻿using Infrastructure.SortingSystem;
 
 namespace Api.Controllers;
 

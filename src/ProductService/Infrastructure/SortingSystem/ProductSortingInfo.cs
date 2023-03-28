@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
-using Infrastructure.SortingSystem.Models;
+using Infrastructure.PropertySystem;
 
-namespace Infrastructure.SortingSystem.SortingInfoProviders;
+namespace Infrastructure.SortingSystem;
 
 public class ProductSortingInfo
 {

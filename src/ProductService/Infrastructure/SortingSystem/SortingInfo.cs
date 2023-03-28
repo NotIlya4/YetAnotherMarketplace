@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.SortingSystem.Models;
+﻿using Infrastructure.PropertySystem;
+
+namespace Infrastructure.SortingSystem;
 
 public readonly record struct SortingInfo<TEntity>
 {

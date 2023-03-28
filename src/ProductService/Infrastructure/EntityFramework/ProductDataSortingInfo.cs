@@ -1,7 +1,6 @@
 ﻿using Domain.Entities;
 using Infrastructure.EntityFramework.Models;
-using Infrastructure.SortingSystem.Models;
-using Infrastructure.SortingSystem.SortingInfoProviders;
+using Infrastructure.SortingSystem;
 
 namespace Infrastructure.EntityFramework;
 

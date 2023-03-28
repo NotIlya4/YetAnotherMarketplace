@@ -7,7 +7,7 @@ public class Pagination
     public int Offset { get; }
     public int Limit { get; }
 
-    public static int MaxLimit { get; } = 50;
+    public static int MaxLimit => 50;
 
     public Pagination(int offset, int limit)
     {

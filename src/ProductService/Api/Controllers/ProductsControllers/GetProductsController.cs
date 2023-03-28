@@ -4,7 +4,7 @@ using Domain.Entities;
 using Domain.Primitives;
 using Infrastructure.FilteringSystem;
 using Infrastructure.Services.ProductService;
-using Infrastructure.SortingSystem.SortingInfoProviders;
+using Infrastructure.SortingSystem;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.ProductsControllers;

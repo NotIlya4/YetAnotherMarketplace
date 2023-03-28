@@ -1,6 +1,8 @@
-﻿using System.Linq.Expressions;
+﻿using System.Linq.Dynamic.Core;
+using System.Linq.Expressions;
 using Infrastructure.FilteringSystem;
 using Infrastructure.Repositories.Exceptions;
+using Infrastructure.SortingSystem;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.Extensions;
@@ -17,5 +19,29 @@ public static class QueryableExtensions
         return query
             .Skip(pagination.Offset)
             .Take(pagination.Limit);
+    }
+    
+    public static IQueryable<TEntity> ApplySorting<TEntity>(this IQueryable<TEntity> query, SortingInfo<TEntity> primarySorting,
+        IEnumerable<SortingInfo<TEntity>>? secondarySortings = null)
+    {
+        string BuildOrderString(SortingInfo<TEntity> sortingInfo)
+        {
+            return $"{sortingInfo.PropertyName.Value} {sortingInfo.SortingSide}";
+        }
+        
+        IOrderedQueryable<TEntity> orderedQueryable = query.OrderBy(BuildOrderString(primarySorting));
+
+        if (secondarySortings is null)
+        {
+            return orderedQueryable;
+        }
+        
+        foreach (var secondarySorting in secondarySortings)
+        {
+            orderedQueryable =
+                orderedQueryable.ThenBy(BuildOrderString(secondarySorting));
+        }
+
+        return orderedQueryable;
     }
 }

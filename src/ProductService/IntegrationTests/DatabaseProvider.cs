@@ -2,7 +2,6 @@
 using Infrastructure.Repositories.BrandRepository;
 using Infrastructure.Repositories.ProductRepository;
 using Infrastructure.Repositories.ProductTypeRepository;
-using Infrastructure.SortingSystem;
 using IntegrationTests.EntityFactories;
 using Microsoft.EntityFrameworkCore;
 
@@ -55,9 +54,7 @@ public class DatabaseProvider : IAsyncLifetime
 
     private ProductRepository CreateProductRepository()
     {
-        SortingApplier sortingApplier = new(new PropertyReflections());
-        
-        return new ProductRepository(DbContext, sortingApplier);
+        return new ProductRepository(DbContext);
     }
 
     private BrandRepository CreateBrandRepository()

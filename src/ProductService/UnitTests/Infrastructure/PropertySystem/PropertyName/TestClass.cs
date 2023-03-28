@@ -1,4 +1,4 @@
-﻿namespace UnitTests.Infrastructure.SortingSystem.PropertyNameTests;
+﻿namespace UnitTests.Infrastructure.PropertySystem.PropertyName;
 
 public class TestClass
 {

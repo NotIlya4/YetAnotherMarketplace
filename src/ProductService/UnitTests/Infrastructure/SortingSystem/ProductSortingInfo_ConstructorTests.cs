@@ -1,9 +1,8 @@
 ﻿using Domain.Entities;
 using Domain.Exceptions;
-using Infrastructure.SortingSystem.Models;
-using Infrastructure.SortingSystem.SortingInfoProviders;
+using Infrastructure.SortingSystem;
 
-namespace UnitTests.Infrastructure.SortingSystem.SortingInfoProviders;
+namespace UnitTests.Infrastructure.SortingSystem;
 
 public class ProductSortingInfo_ConstructorTests
 {

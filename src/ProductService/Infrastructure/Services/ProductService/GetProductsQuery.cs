@@ -1,5 +1,5 @@
 ﻿using Infrastructure.FilteringSystem;
-using Infrastructure.SortingSystem.SortingInfoProviders;
+using Infrastructure.SortingSystem;
 
 namespace Infrastructure.Services.ProductService;
 
