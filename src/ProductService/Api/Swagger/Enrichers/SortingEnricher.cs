@@ -1,5 +1,4 @@
 ﻿using Api.Swagger.EnricherSystem.CreateOwnEnrichers;
-using Infrastructure;
 using Infrastructure.Extensions;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;

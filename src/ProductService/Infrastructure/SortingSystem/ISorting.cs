@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure.SortingSystem;
 
-public interface ISortingInfo
+public interface ISorting
 {
     public string PropertyName { get; }
     public SortingSide SortingSide { get; }

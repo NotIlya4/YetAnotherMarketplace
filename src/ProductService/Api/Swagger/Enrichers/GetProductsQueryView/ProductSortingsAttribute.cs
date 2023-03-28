@@ -1,5 +1,4 @@
 ﻿using Api.Swagger.EnricherSystem.CreateOwnEnrichers;
-using Infrastructure.SortingSystem;
 using Infrastructure.SortingSystem.Product;
 using Microsoft.OpenApi.Models;
 

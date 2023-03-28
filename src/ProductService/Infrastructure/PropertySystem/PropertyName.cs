@@ -17,4 +17,9 @@ public readonly record struct PropertyName<TClass>
         Value = nameFromType ?? throw new ValidationException(
             $"{typeof(TClass).Name} doesn't contain {propertyName} property");
     }
+
+    public override string ToString()
+    {
+        return Value;
+    }
 }

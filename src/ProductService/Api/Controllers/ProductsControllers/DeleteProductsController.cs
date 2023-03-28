@@ -1,4 +1,5 @@
 ﻿using Api.Controllers.Attributes;
+using Infrastructure.FilteringSystem.Product;
 using Infrastructure.Services.ProductService;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,12 +13,12 @@ public class DeleteProductsController : ProductsControllerBase
     }
     
     [HttpDelete]
-    [Route("id/{id}")]
+    [Route("{propertyName}/{value}")]
     [ProducesProductNotFound]
     [ProducesNoContent]
-    public async Task<IActionResult> DeleteProductById(string id)
+    public async Task<IActionResult> DeleteProductById(string propertyName, string value)
     {
-        await ProductService.DeleteProductById(new Guid(id));
+        await ProductService.DeleteProduct(new ProductStrictFilter(propertyName, value));
         return NoContent();
     }
 }

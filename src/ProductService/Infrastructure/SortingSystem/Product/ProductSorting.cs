@@ -1,17 +1,17 @@
 ﻿namespace Infrastructure.SortingSystem.Product;
 
-public readonly record struct ProductSortingInfo : ISortingInfo
+public readonly record struct ProductSorting : ISorting
 {
     public string PropertyName { get; }
     public SortingSide SortingSide { get; }
 
-    public ProductSortingInfo(ProductSortingProperty property, SortingSide sortingSide)
+    public ProductSorting(ProductSortingProperty property, SortingSide sortingSide)
     {
         PropertyName = property.ToString();
         SortingSide = sortingSide;
     }
 
-    public ProductSortingInfo(string propertyName, SortingSide sortingSide)
+    public ProductSorting(string propertyName, SortingSide sortingSide)
         : this(Enum.Parse<ProductSortingProperty>(propertyName, true), sortingSide)
     {
         

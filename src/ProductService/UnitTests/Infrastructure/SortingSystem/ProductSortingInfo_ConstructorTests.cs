@@ -1,5 +1,4 @@
 ﻿using Domain.Entities;
-using Domain.Exceptions;
 using Infrastructure.SortingSystem;
 using Infrastructure.SortingSystem.Product;
 
@@ -10,24 +9,24 @@ public class ProductSortingInfo_ConstructorTests
     [Fact]
     public void EmptyList_PrimarySortingDefaultValue()
     {
-        ProductSortingInfo defaultSortingInfo = new(ProductSortingProperty.Name, SortingSide.Asc);
-        ProductSortingInfoCollection productSortingInfoCollection = new(new List<ProductSortingInfo>());
+        ProductSorting defaultSorting = new(ProductSortingProperty.Name, SortingSide.Asc);
+        ProductSortingCollection productSortingCollection = new(new List<ProductSorting>());
 
-        ProductSortingInfo sortingInfo = productSortingInfoCollection.PrimarySorting;
+        ProductSorting sorting = productSortingCollection.PrimarySorting;
         
-        Assert.Equal(defaultSortingInfo, sortingInfo);
+        Assert.Equal(defaultSorting, sorting);
     }
 
     [Fact]
     public void ThreeSortingInfos_PrimarySortingInfoMustBeFirstAndRestIsSecondSortingInfos()
     {
-        ProductSortingInfo first = new(nameof(Product.Name), SortingSide.Asc);
-        ProductSortingInfo second = new(nameof(Product.Name), SortingSide.Desc);
-        ProductSortingInfo third = new(nameof(Product.Name), SortingSide.Desc);
-        ProductSortingInfoCollection productSortingInfoCollection = new(new List<ProductSortingInfo>() {first, second, third});
+        ProductSorting first = new(nameof(Product.Name), SortingSide.Asc);
+        ProductSorting second = new(nameof(Product.Name), SortingSide.Desc);
+        ProductSorting third = new(nameof(Product.Name), SortingSide.Desc);
+        ProductSortingCollection productSortingCollection = new(new List<ProductSorting>() {first, second, third});
         
-        Assert.Equal(first, productSortingInfoCollection.PrimarySorting);
-        Assert.Equal(second, productSortingInfoCollection.SecondarySortings[0]);
-        Assert.Equal(third, productSortingInfoCollection.SecondarySortings[1]);
+        Assert.Equal(first, productSortingCollection.PrimarySorting);
+        Assert.Equal(second, productSortingCollection.SecondarySortings[0]);
+        Assert.Equal(third, productSortingCollection.SecondarySortings[1]);
     }
 }

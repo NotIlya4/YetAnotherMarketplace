@@ -1,20 +1,19 @@
-﻿using Infrastructure.Repositories.Extensions;
-using Infrastructure.SortingSystem;
+﻿using Infrastructure.SortingSystem;
 using Infrastructure.SortingSystem.Product;
 
 namespace Api.Controllers;
 
 public class SortingInfoParser
 {
-    public ProductSortingInfo ParseProductSortingInfo(string rawSortingInfo)
+    public ProductSorting ParseProductSortingInfo(string rawSortingInfo)
     {
         SortingSide sortingSide = GetSortingSide(rawSortingInfo);
         string propertyName = RemoveSortingSideFromString(rawSortingInfo);
 
-        return new ProductSortingInfo(propertyName, sortingSide);
+        return new ProductSorting(propertyName, sortingSide);
     }
     
-    public List<ProductSortingInfo> ParseProductSortingInfo(IEnumerable<string> rawSortingInfos)
+    public List<ProductSorting> ParseProductSortingInfo(IEnumerable<string> rawSortingInfos)
     {
         return rawSortingInfos.Select(ParseProductSortingInfo).ToList();
     }

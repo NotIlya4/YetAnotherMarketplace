@@ -47,8 +47,8 @@ public class ApplySortingTests
         }
         
         IQueryable<QueryableTestEntity> query = StartQuery.ApplySorting(
-            primarySorting: new SortingInfo(nameof(QueryableTestEntity.Property1), sortingSide),
-            secondarySortings: new List<SortingInfo>
+            primarySorting: new Sorting(nameof(QueryableTestEntity.Property1), sortingSide),
+            secondarySortings: new List<Sorting>
             {
                 new(nameof(QueryableTestEntity.Property2), sortingSide),
                 new(nameof(QueryableTestEntity.Property3), sortingSide),
@@ -64,8 +64,8 @@ public class ApplySortingTests
     public async Task RandomPropertyOrderAndRandomSortingSide1_SortedEntities()
     {
         IQueryable<QueryableTestEntity> query = StartQuery.ApplySorting(
-            primarySorting: new SortingInfo(nameof(QueryableTestEntity.Property2), SortingSide.Asc),
-            secondarySortings: new List<SortingInfo>
+            primarySorting: new Sorting(nameof(QueryableTestEntity.Property2), SortingSide.Asc),
+            secondarySortings: new List<Sorting>
             {
                 new(nameof(QueryableTestEntity.Property4), SortingSide.Desc),
                 new(nameof(QueryableTestEntity.Property1), SortingSide.Asc),
@@ -87,8 +87,8 @@ public class ApplySortingTests
     public async Task RandomPropertyOrderAndRandomSortingSide2_SortedEntities()
     {
         IQueryable<QueryableTestEntity> query = StartQuery.ApplySorting(
-            primarySorting: new SortingInfo(nameof(QueryableTestEntity.Property4), SortingSide.Desc),
-            secondarySortings: new List<SortingInfo>
+            primarySorting: new Sorting(nameof(QueryableTestEntity.Property4), SortingSide.Desc),
+            secondarySortings: new List<Sorting>
             {
                 new(nameof(QueryableTestEntity.Property2), SortingSide.Asc),
                 new(nameof(QueryableTestEntity.Property3), SortingSide.Asc),

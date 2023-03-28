@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.EntityFramework.Models;
-using Infrastructure.FilteringSystem;
+using Infrastructure.FilteringSystem.Product;
 using Infrastructure.Repositories.Extensions;
 using Infrastructure.Services.ProductService;
 using Infrastructure.SortingSystem;
@@ -18,12 +18,12 @@ public class ProductRepository : IProductRepository
         _dbContext = dbContext;
     }
 
-    public async Task<Product> GetProductById(Guid productId)
+    public async Task<Product> GetProduct(ProductStrictFilter productStrictFilter)
     {
         ProductData productData = await _dbContext
             .Products
             .IncludeProductDependencies()
-            .FirstAsyncOrThrow(p => p.Id.Equals(productId.ToString()));
+            .FirstAsyncOrThrow(productStrictFilter);
         return productData.ToDomain();
     }
 
@@ -33,10 +33,10 @@ public class ProductRepository : IProductRepository
             .Products
             .IncludeProductDependencies();
 
-        IQueryable<ProductData> sortedQuery = query.ApplySorting(getProductsQuery.SortingInfoCollection.PrimarySorting,
-            getProductsQuery.SortingInfoCollection.SecondarySortings.Select(s => (ISortingInfo)s).ToList());
+        IQueryable<ProductData> sortedQuery = query.ApplySorting(getProductsQuery.SortingCollection.PrimarySorting,
+            getProductsQuery.SortingCollection.SecondarySortings.Select(s => (ISorting)s).ToList());
 
-        sortedQuery = ApplyFiltering(sortedQuery, getProductsQuery.FilteringInfo);
+        sortedQuery = ApplyFiltering(sortedQuery, getProductsQuery.FluentFilters);
 
         List<ProductData> productDatas = await sortedQuery
             .ApplyPagination(getProductsQuery.Pagination)
@@ -44,32 +44,32 @@ public class ProductRepository : IProductRepository
         return ProductData.ToDomain(productDatas);
     }
 
-    public async Task<int> GetProductsCount(ProductFilteringInfo filteringInfo)
+    public async Task<int> GetProductsCountForFilters(ProductFluentFilters fluentFilters)
     {
         IQueryable<ProductData> query = _dbContext
             .Products
             .IncludeProductDependencies();
 
-        query = ApplyFiltering(query, filteringInfo);
+        query = ApplyFiltering(query, fluentFilters);
 
         return await query.CountAsync();
     }
 
-    private IQueryable<ProductData> ApplyFiltering(IQueryable<ProductData> query, ProductFilteringInfo filteringInfo)
+    private IQueryable<ProductData> ApplyFiltering(IQueryable<ProductData> query, ProductFluentFilters fluentFilters)
     {
-        if (filteringInfo.ProductTypeName is not null)
+        if (fluentFilters.ProductTypeName is not null)
         {
-            query = query.Where(p => p.ProductType.Name.Equals(filteringInfo.ProductTypeName.Value.Value));
+            query = query.Where(p => p.ProductType.Name.Equals(fluentFilters.ProductTypeName.Value.Value));
         }
         
-        if (filteringInfo.BrandName is not null)
+        if (fluentFilters.BrandName is not null)
         {
-            query = query.Where(p => p.Brand.Name.Equals(filteringInfo.BrandName.Value.Value));
+            query = query.Where(p => p.Brand.Name.Equals(fluentFilters.BrandName.Value.Value));
         }
 
-        if (filteringInfo.Searching is not null)
+        if (fluentFilters.Searching is not null)
         {
-            query = query.Where(p => p.Name.Contains(filteringInfo.Searching.Value.Value));
+            query = query.Where(p => p.Name.Contains(fluentFilters.Searching.Value.Value));
         }
 
         return query;

@@ -1,6 +1,5 @@
 ﻿using Domain.Exceptions;
 using Infrastructure.Extensions;
-using Infrastructure.Repositories.Extensions;
 using Infrastructure.SortingSystem;
 
 namespace Infrastructure.PropertySystem;
@@ -34,12 +33,12 @@ public class AvailablePropertiesValidator<TEntity>
         Validate(new PropertyName<TEntity>(propertyName));
     }
 
-    public void Validate(ISortingInfo sortingInfo)
+    public void Validate(ISorting sorting)
     {
-        Validate(sortingInfo.PropertyName);
+        Validate(sorting.PropertyName);
     }
 
-    public void Validate(IEnumerable<ISortingInfo> sortingInfos)
+    public void Validate(IEnumerable<ISorting> sortingInfos)
     {
         foreach (var sortingInfo in sortingInfos)
         {

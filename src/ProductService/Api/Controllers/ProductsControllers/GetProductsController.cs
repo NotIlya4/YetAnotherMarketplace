@@ -3,8 +3,8 @@ using Api.Controllers.ProductsControllers.Views;
 using Domain.Entities;
 using Domain.Primitives;
 using Infrastructure.FilteringSystem;
+using Infrastructure.FilteringSystem.Product;
 using Infrastructure.Services.ProductService;
-using Infrastructure.SortingSystem;
 using Infrastructure.SortingSystem.Product;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,9 +27,9 @@ public class GetProductsController : ProductsControllerBase
         GetProductsQuery query = new()
         {
             Pagination = new Pagination(offset: queryView.Offset, limit: queryView.Limit),
-            SortingInfoCollection = 
-                new ProductSortingInfoCollection(_sortingInfoParser.ParseProductSortingInfo(queryView.Sortings ?? new List<string>())),
-            FilteringInfo = new ProductFilteringInfo(
+            SortingCollection = 
+                new ProductSortingCollection(_sortingInfoParser.ParseProductSortingInfo(queryView.Sortings ?? new List<string>())),
+            FluentFilters = new ProductFluentFilters(
                 productTypeName: queryView.ProductTypeName is null ? null : new Name(queryView.ProductTypeName),
                 brandName: queryView.BrandName is null ? null : new Name(queryView.BrandName),
                 searching: queryView.Searching is null ? null : new Name(queryView.Searching))
@@ -46,12 +46,12 @@ public class GetProductsController : ProductsControllerBase
     }
 
     [HttpGet]
-    [Route("id/{id}", Name = nameof(GetProductById))]
+    [Route("{propertyName}/{value}", Name = nameof(GetProduct))]
     [ProducesOk]
     [ProducesProductNotFound]
-    public async Task<ActionResult<ProductView>> GetProductById(string id)
+    public async Task<ActionResult<ProductView>> GetProduct(string propertyName, string value)
     {
-        Product productDto = await ProductService.GetProductById(new Guid(id));
+        Product productDto = await ProductService.GetProduct(new ProductStrictFilter(propertyName, value));
         ProductView productView = ProductView.FromProduct(productDto);
         return Ok(productView);
     }

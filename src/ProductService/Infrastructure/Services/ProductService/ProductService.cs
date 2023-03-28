@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Infrastructure.FilteringSystem.Product;
 using Infrastructure.Repositories.BrandRepository;
 using Infrastructure.Repositories.ProductRepository;
 using Infrastructure.Repositories.ProductTypeRepository;
@@ -19,9 +20,9 @@ public class ProductService : IProductService
         _productTypeRepository = productTypeRepository;
     }
 
-    public async Task<Product> GetProductById(Guid id)
+    public async Task<Product> GetProduct(ProductStrictFilter filter)
     {
-        return await _productRepository.GetProductById(id);
+        return await _productRepository.GetProduct(filter);
     }
 
     public async Task<Product> CreateNewProduct(CreateProductCommand createProductCommand)
@@ -39,7 +40,7 @@ public class ProductService : IProductService
     public async Task<GetProductsResult> GetProducts(GetProductsQuery query)
     {
         List<Product> products = await _productRepository.GetProducts(query);
-        int total = await _productRepository.GetProductsCount(query.FilteringInfo);
+        int total = await _productRepository.GetProductsCountForFilters(query.FluentFilters);
         return new GetProductsResult()
         {
             Products = products,
@@ -47,9 +48,9 @@ public class ProductService : IProductService
         };
     }
 
-    public async Task DeleteProductById(Guid id)
+    public async Task DeleteProduct(ProductStrictFilter filter)
     {
-        Product product = await _productRepository.GetProductById(id);
+        Product product = await _productRepository.GetProduct(filter);
         await _productRepository.Delete(product);
     }
 }

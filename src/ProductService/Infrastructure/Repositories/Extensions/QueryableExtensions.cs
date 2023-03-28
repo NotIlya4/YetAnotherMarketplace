@@ -16,7 +16,7 @@ public static class QueryableExtensions
     
     public static async Task<TEntity> FirstAsyncOrThrow<TEntity>(this IQueryable<TEntity> query, IStrictFilter strictFilter)
     {
-        query = query.Where("@0 == @1", strictFilter.PropertyName, strictFilter.ExpectedValue);
+        query = query.Where($"{strictFilter.PropertyName} == @0", strictFilter.ExpectedValue);
         return await query.FirstOrDefaultAsync() ?? throw new EntityNotFoundException(typeof(TEntity).Name);
     }
 
@@ -27,10 +27,10 @@ public static class QueryableExtensions
             .Take(pagination.Limit);
     }
     
-    public static IQueryable<TEntity> ApplySorting<TEntity>(this IQueryable<TEntity> query, ISortingInfo primarySorting,
-        IEnumerable<ISortingInfo>? secondarySortings = null)
+    public static IQueryable<TEntity> ApplySorting<TEntity>(this IQueryable<TEntity> query, ISorting primarySorting,
+        IEnumerable<ISorting>? secondarySortings = null)
     {
-        string BuildOrderString(ISortingInfo sortingInfo)
+        string BuildOrderString(ISorting sortingInfo)
         {
             return $"{sortingInfo.PropertyName} {sortingInfo.SortingSide}";
         }
