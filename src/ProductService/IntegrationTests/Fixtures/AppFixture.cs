@@ -1,17 +1,11 @@
 ﻿using Api.Extensions;
-using Api.Properties;
-using Domain.Entities;
 using Infrastructure.EntityFramework;
-using Infrastructure.EntityFramework.Models;
-using IntegrationTests.Fixtures.Db;
+using IntegrationTests.Fixtures.EntityLists;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace IntegrationTests.Fixtures.App;
+namespace IntegrationTests.Fixtures;
 
 [CollectionDefinition(nameof(AppFixture))]
 public class AppFixture : ICollectionFixture<AppFixture>, IDisposable

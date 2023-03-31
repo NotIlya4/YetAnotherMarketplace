@@ -1,5 +1,4 @@
-﻿using System.Net.Http.Json;
-using Infrastructure.EntityFramework;
+﻿using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
