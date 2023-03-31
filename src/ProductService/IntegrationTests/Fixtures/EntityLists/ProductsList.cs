@@ -1,7 +1,8 @@
 ﻿using Domain.Entities;
 using Domain.Primitives;
+using Infrastructure.EntityFramework.Models;
 
-namespace IntegrationTests.Fixtures.Db;
+namespace IntegrationTests.Fixtures.EntityLists;
 
 public class ProductsList
 {
@@ -10,7 +11,8 @@ public class ProductsList
     public Product BigMac { get; }
     public Product QuerterPounder { get; }
 
-    public List<Product> Products { get; }
+    public IReadOnlyList<Product> Products { get; }
+    public IReadOnlyList<ProductData> ProductDatas { get; }
 
     public ProductsList(BrandsList brandsList, ProductTypesList productTypesList)
     {
@@ -65,12 +67,13 @@ public class ProductsList
             productType: productTypesList.Burger,
             brand: brandsList.McDonalds);
 
-        Products = new()
+        Products = new List<Product>()
         {
             IPhone13,
             IPhone13ProMax,
             BigMac,
             QuerterPounder
         };
+        ProductDatas = Products.Select(ProductData.FromDomain).ToList();
     }
 }
