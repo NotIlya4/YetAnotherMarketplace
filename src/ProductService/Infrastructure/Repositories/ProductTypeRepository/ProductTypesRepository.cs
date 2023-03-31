@@ -7,23 +7,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.ProductTypeRepository;
 
-public class ProductTypeRepository : IProductTypeRepository
+public class ProductTypesRepository : IProductTypesRepository
 {
     private readonly ApplicationDbContext _dbContext;
 
-    public ProductTypeRepository(ApplicationDbContext dbContext)
+    public ProductTypesRepository(ApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
     }
 
-    public async Task<List<ProductType>> GetAll()
+    public async Task<List<ProductType>> GetProductTypes()
     {
-        List<ProductTypeData> productTypeDatas = await _dbContext.ProductTypes.ToListAsync();
+        List<ProductTypeData> productTypeDatas = await _dbContext.ProductTypes.OrderBy(pt => pt.Name).ToListAsync();
         List<ProductType> productTypes = productTypeDatas.Select(p => p.ToDomain()).ToList();
         return productTypes;
     }
 
-    public async Task<ProductType> GetProductTypeByName(Name name)
+    public async Task<ProductType> GetProductType(Name name)
     {
         ProductTypeData productTypeData = await _dbContext.ProductTypes.FirstAsyncOrThrow(pt => pt.Name.Equals(name));
         return productTypeData.ToDomain();

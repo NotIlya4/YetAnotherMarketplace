@@ -4,7 +4,7 @@ using Infrastructure.Services.ProductService;
 
 namespace Infrastructure.Repositories.ProductRepository;
 
-public interface IProductRepository
+public interface IProductsRepository
 {
     public Task<Product> GetProduct(ProductStrictFilter productStrictFilter);
     public Task<List<Product>> GetProducts(GetProductsQuery query);

@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.ProductRepository;
 
-public class ProductRepository : IProductRepository
+public class ProductsRepository : IProductsRepository
 {
     private readonly ApplicationDbContext _dbContext;
 
-    public ProductRepository(ApplicationDbContext dbContext)
+    public ProductsRepository(ApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
     }
@@ -22,6 +22,7 @@ public class ProductRepository : IProductRepository
     {
         ProductData productData = await _dbContext
             .Products
+            .AsNoTracking()
             .IncludeProductDependencies()
             .FirstAsyncOrThrow(productStrictFilter);
         return productData.ToDomain();
@@ -31,6 +32,7 @@ public class ProductRepository : IProductRepository
     {
         IQueryable<ProductData> query = _dbContext
             .Products
+            .AsNoTracking()
             .IncludeProductDependencies();
 
         IQueryable<ProductData> sortedQuery = query.ApplySorting(getProductsQuery.SortingCollection.PrimarySorting,
@@ -48,6 +50,7 @@ public class ProductRepository : IProductRepository
     {
         IQueryable<ProductData> query = _dbContext
             .Products
+            .AsNoTracking()
             .IncludeProductDependencies();
 
         query = ApplyFiltering(query, fluentFilters);
