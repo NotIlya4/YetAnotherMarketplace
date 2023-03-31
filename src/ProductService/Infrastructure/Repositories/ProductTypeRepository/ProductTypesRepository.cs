@@ -18,14 +18,20 @@ public class ProductTypesRepository : IProductTypesRepository
 
     public async Task<List<ProductType>> GetProductTypes()
     {
-        List<ProductTypeData> productTypeDatas = await _dbContext.ProductTypes.OrderBy(pt => pt.Name).ToListAsync();
-        List<ProductType> productTypes = productTypeDatas.Select(p => p.ToDomain()).ToList();
-        return productTypes;
+        List<ProductTypeData> productTypeDatas = await _dbContext
+            .ProductTypes
+            .AsNoTracking()
+            .OrderBy(pt => pt.Name)
+            .ToListAsync();
+        return productTypeDatas.Select(p => p.ToDomain()).ToList();
     }
 
     public async Task<ProductType> GetProductType(Name name)
     {
-        ProductTypeData productTypeData = await _dbContext.ProductTypes.FirstAsyncOrThrow(pt => pt.Name.Equals(name));
+        ProductTypeData productTypeData = await _dbContext
+            .ProductTypes
+            .AsNoTracking()
+            .FirstAsyncOrThrow(pt => pt.Name == name.Value);
         return productTypeData.ToDomain();
     }
 

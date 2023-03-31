@@ -29,6 +29,7 @@ public class ProductTypesController : ControllerBase
     }
 
     [HttpPost]
+    [Route("{productTypeName}")]
     [ProducesOk]
     public async Task<ActionResult<ProductTypeView>> AddProductType(string productTypeName)
     {
@@ -37,6 +38,7 @@ public class ProductTypesController : ControllerBase
     }
 
     [HttpDelete]
+    [Route("{productTypeName}")]
     [ProducesNoContent]
     public async Task<ActionResult> DeleteProductType(string productTypeName)
     {

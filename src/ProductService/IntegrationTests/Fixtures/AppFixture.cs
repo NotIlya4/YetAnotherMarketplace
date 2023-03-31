@@ -11,17 +11,13 @@ namespace IntegrationTests.Fixtures;
 public class AppFixture : ICollectionFixture<AppFixture>, IDisposable
 {
     public HttpClient Client { get; }
-    public BrandsList BrandsList { get; }
-    public ProductTypesList ProductTypesList { get; }
-    public ProductsList ProductsList { get; }
-
     private WebApplicationFactory<Program> WebApplicationFactory { get; }
 
     public AppFixture()
     {
-        BrandsList = new BrandsList();
-        ProductTypesList = new ProductTypesList();
-        ProductsList = new ProductsList(BrandsList, ProductTypesList);
+        BrandsList brandsList = new();
+        ProductTypesList productTypesList = new();
+        ProductsList productsList = new(brandsList, productTypesList);
 
         WebApplicationFactory = new WebApplicationFactory<Program>().WithWebHostBuilder(builder =>
         {
@@ -33,7 +29,7 @@ public class AppFixture : ICollectionFixture<AppFixture>, IDisposable
         dbContext.Database.EnsureDeleted();
         WebApplicationFactory.Services.ApplyMigrations();
         
-        DbSeeder seeder = new(BrandsList.BrandDatas, ProductTypesList.ProductTypeDatas, ProductsList.ProductDatas);
+        DbSeeder seeder = new(brandsList.BrandDatas, productTypesList.ProductTypeDatas, productsList.ProductDatas);
         seeder.Seed(dbContext);
     }
 
