@@ -5,16 +5,16 @@ using Newtonsoft.Json.Linq;
 namespace IntegrationTests.Tests;
 
 [Collection(nameof(AppFixture))]
-public class BrandsControllerTests : IDisposable
+public class BrandsControllerTests
 {
-    public JArray InitialDbBrands { get; }
-    public BrandsClient BrandsClient { get; }
+    public JArray InitialDb { get; }
+    public BrandsClient Client { get; }
 
     public BrandsControllerTests(AppFixture appFixture)
     {
-        BrandsClient = new BrandsClient(appFixture.Client);
+        Client = new BrandsClient(appFixture.Client);
         
-        InitialDbBrands = new JArray()
+        InitialDb = new JArray()
         {
             new JObject()
             {
@@ -32,9 +32,9 @@ public class BrandsControllerTests : IDisposable
     [Fact]
     public async Task GetBrands_ReturnBrands()
     {
-        JArray result = await BrandsClient.GetBrands();
+        JArray result = await Client.GetBrands();
 
-        Assert.Equal(InitialDbBrands, result);
+        Assert.Equal(InitialDb, result);
 
         await AssertBrandsDefault();
     }
@@ -44,16 +44,16 @@ public class BrandsControllerTests : IDisposable
     {
         string newBrand = "Barbie";
 
-        JObject postBrandResponse = await BrandsClient.PostNewBrand(newBrand);
+        JObject postBrandResponse = await Client.PostNewBrand(newBrand);
         Assert.Equal(newBrand, postBrandResponse.String("name"));
 
-        List<JToken> expectBrandsInDb = new JArray(InitialDbBrands).ToList();
+        List<JToken> expectBrandsInDb = new JArray(InitialDb).ToList();
         expectBrandsInDb.Insert(1, postBrandResponse);
         
-        List<JToken> brandsInDb = (await BrandsClient.GetBrands()).ToList();
+        List<JToken> brandsInDb = (await Client.GetBrands()).ToList();
         Assert.Equal(expectBrandsInDb, brandsInDb);
 
-        await BrandsClient.DeleteBrand(newBrand);
+        await Client.DeleteBrand(newBrand);
         
         await AssertBrandsDefault();
     }
@@ -62,31 +62,26 @@ public class BrandsControllerTests : IDisposable
     public async Task DeleteBrand_DeleteBrand()
     {
         string newBrand = "Puma";
-        string? newBrandId = (await BrandsClient.PostNewBrand(newBrand)).String("id");
+        string? newBrandId = (await Client.PostNewBrand(newBrand)).String("id");
         
-        List<JToken> expectBrandsAfterPost = new JArray(InitialDbBrands).ToList();
+        List<JToken> expectBrandsAfterPost = new JArray(InitialDb).ToList();
         expectBrandsAfterPost.Add(new JObject() {["id"] = newBrandId, ["name"] = newBrand});
 
-        List<JToken> brandsAfterPost = (await BrandsClient.GetBrands()).ToList();
+        List<JToken> brandsAfterPost = (await Client.GetBrands()).ToList();
         Assert.Equal(expectBrandsAfterPost, brandsAfterPost);
 
-        await BrandsClient.DeleteBrand(newBrand);
+        await Client.DeleteBrand(newBrand);
         
-        List<JToken> brandsAfterDelete = (await BrandsClient.GetBrands()).ToList();
+        List<JToken> brandsAfterDelete = (await Client.GetBrands()).ToList();
         
-        Assert.Equal(InitialDbBrands, brandsAfterDelete);
+        Assert.Equal(InitialDb, brandsAfterDelete);
         
         await AssertBrandsDefault();
     }
 
-    public void Dispose()
-    {
-        
-    }
-
     private async Task AssertBrandsDefault()
     {
-        JArray brands = await BrandsClient.GetBrands();
-        Assert.Equal(InitialDbBrands, brands);
+        JArray brands = await Client.GetBrands();
+        Assert.Equal(InitialDb, brands);
     }
 }
