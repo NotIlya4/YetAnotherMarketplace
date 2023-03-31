@@ -6,28 +6,28 @@ namespace Infrastructure.Services.ProductTypeService;
 
 public class ProductTypeService : IProductTypeService
 {
-    private readonly IProductTypeRepository _productTypeRepository;
+    private readonly IProductTypesRepository _productTypesRepository;
 
-    public ProductTypeService(IProductTypeRepository productTypeRepository)
+    public ProductTypeService(IProductTypesRepository productTypesRepository)
     {
-        _productTypeRepository = productTypeRepository;
+        _productTypesRepository = productTypesRepository;
     }
     
     public async Task<List<ProductType>> GetProductTypes()
     {
-        return await _productTypeRepository.GetAll();
+        return await _productTypesRepository.GetProductTypes();
     }
 
     public async Task<ProductType> Add(Name productTypeName)
     {
         ProductType productType = new(Guid.NewGuid(), productTypeName);
-        await _productTypeRepository.Insert(productType);
+        await _productTypesRepository.Insert(productType);
         return productType;
     }
 
     public async Task Delete(Name productType)
     {
-        ProductType productTypeToDelete = await _productTypeRepository.GetProductTypeByName(productType);
-        await _productTypeRepository.Delete(productTypeToDelete);
+        ProductType productTypeToDelete = await _productTypesRepository.GetProductType(productType);
+        await _productTypesRepository.Delete(productTypeToDelete);
     }
 }

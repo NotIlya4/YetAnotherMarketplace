@@ -29,14 +29,16 @@ public class BrandsController : ControllerBase
     }
 
     [HttpPost]
+    [Route("{brandName}")]
     [ProducesOk]
-    public async Task<ActionResult<BrandView>> AddBrand(string brandName)
+    public async Task<ActionResult<BrandView>> AddBrand([FromRoute] string brandName)
     {
         Brand brand = await _brandService.Add(new Name(brandName));
         return Ok(BrandView.FromDomain(brand));
     }
 
     [HttpDelete]
+    [Route("{brandName}")]
     [ProducesNoContent]
     public async Task<ActionResult> DeleteBrand(string brandName)
     {

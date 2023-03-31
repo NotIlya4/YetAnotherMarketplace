@@ -6,28 +6,28 @@ namespace Infrastructure.Services.BrandService;
 
 public class BrandService : IBrandService
 {
-    private readonly IBrandRepository _brandRepository;
+    private readonly IBrandsRepository _brandsRepository;
 
-    public BrandService(IBrandRepository brandRepository)
+    public BrandService(IBrandsRepository brandsRepository)
     {
-        _brandRepository = brandRepository;
+        _brandsRepository = brandsRepository;
     }
 
     public async Task<List<Brand>> GetBrands()
     {
-        return await _brandRepository.GetAll();
+        return await _brandsRepository.GetBrands();
     }
 
     public async Task<Brand> Add(Name brandName)
     {
         Brand brand = new Brand(Guid.NewGuid(), brandName);
-        await _brandRepository.Insert(brand);
+        await _brandsRepository.Insert(brand);
         return brand;
     }
 
     public async Task Delete(Name brandName)
     {
-        Brand brandToDelete = await _brandRepository.GetBrandByName(brandName);
-        await _brandRepository.Delete(brandToDelete);
+        Brand brandToDelete = await _brandsRepository.GetBrand(brandName);
+        await _brandsRepository.Delete(brandToDelete);
     }
 }

@@ -8,6 +8,6 @@ public class ProductNotFoundExceptionView
 {
     [EntityNotFoundTitle]
     public required string Title { get; set; }
-    [EntityNotFoundDetail(EntityName = nameof(Product),RepositoryName = nameof(ProductRepository))]
+    [EntityNotFoundDetail(EntityName = nameof(Product),RepositoryName = nameof(ProductsRepository))]
     public required string Detail { get; set; }
 }

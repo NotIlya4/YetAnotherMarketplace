@@ -4,7 +4,6 @@ using Infrastructure.EntityFramework;
 using Infrastructure.EntityFramework.Models;
 using Infrastructure.Repositories.Extensions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Infrastructure.Repositories.BrandRepository;
 

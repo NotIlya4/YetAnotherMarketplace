@@ -8,39 +8,39 @@ namespace Infrastructure.Services.ProductService;
 
 public class ProductService : IProductService
 {
-    private readonly IProductRepository _productRepository;
-    private readonly IBrandRepository _brandRepository;
-    private readonly IProductTypeRepository _productTypeRepository;
+    private readonly IProductsRepository _productsRepository;
+    private readonly IBrandsRepository _brandsRepository;
+    private readonly IProductTypesRepository _productTypesRepository;
 
-    public ProductService(IProductRepository productRepository, IBrandRepository brandRepository,
-        IProductTypeRepository productTypeRepository)
+    public ProductService(IProductsRepository productsRepository, IBrandsRepository brandsRepository,
+        IProductTypesRepository productTypesRepository)
     {
-        _productRepository = productRepository;
-        _brandRepository = brandRepository;
-        _productTypeRepository = productTypeRepository;
+        _productsRepository = productsRepository;
+        _brandsRepository = brandsRepository;
+        _productTypesRepository = productTypesRepository;
     }
 
     public async Task<Product> GetProduct(ProductStrictFilter filter)
     {
-        return await _productRepository.GetProduct(filter);
+        return await _productsRepository.GetProduct(filter);
     }
 
     public async Task<Product> CreateNewProduct(CreateProductCommand createProductCommand)
     {
-        ProductType productType = await _productTypeRepository.GetProductTypeByName(createProductCommand.ProductTypeName);
-        Brand brand = await _brandRepository.GetBrandByName(createProductCommand.BrandName);
+        ProductType productType = await _productTypesRepository.GetProductType(createProductCommand.ProductTypeName);
+        Brand brand = await _brandsRepository.GetBrand(createProductCommand.BrandName);
 
         Product product = createProductCommand.ToDomain(Guid.NewGuid(), brand, productType);
 
-        await _productRepository.Insert(product);
+        await _productsRepository.Insert(product);
 
         return product;
     }
 
     public async Task<GetProductsResult> GetProducts(GetProductsQuery query)
     {
-        List<Product> products = await _productRepository.GetProducts(query);
-        int total = await _productRepository.GetProductsCountForFilters(query.FluentFilters);
+        List<Product> products = await _productsRepository.GetProducts(query);
+        int total = await _productsRepository.GetProductsCountForFilters(query.FluentFilters);
         return new GetProductsResult()
         {
             Products = products,
@@ -50,7 +50,7 @@ public class ProductService : IProductService
 
     public async Task DeleteProduct(ProductStrictFilter filter)
     {
-        Product product = await _productRepository.GetProduct(filter);
-        await _productRepository.Delete(product);
+        Product product = await _productsRepository.GetProduct(filter);
+        await _productsRepository.Delete(product);
     }
 }

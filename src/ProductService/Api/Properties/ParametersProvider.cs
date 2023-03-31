@@ -2,11 +2,11 @@ namespace Api.Properties;
 
 public class ParametersProvider
 {
-    private readonly IConfiguration _configuration;
+    public IConfiguration Configuration { get; }
 
     public ParametersProvider(IConfiguration configuration)
     {
-        _configuration = configuration;
+        Configuration = configuration;
     }
     
     public string GetConnectionString()
@@ -29,11 +29,11 @@ public class ParametersProvider
 
     private T GetRequiredParameter<T>(string parameterName)
     {
-        return _configuration.GetSection(parameterName).Get<T>() ?? throw new ParameterNotFoundException(parameterName);
+        return Configuration.GetSection(parameterName).Get<T>() ?? throw new ParameterNotFoundException(parameterName);
     }
     
     private T? GetParameter<T>(string parameterName)
     {
-        return _configuration.GetSection(parameterName).Get<T>();
+        return Configuration.GetSection(parameterName).Get<T>();
     }
 }
