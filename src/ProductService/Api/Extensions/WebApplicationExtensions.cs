@@ -7,17 +7,14 @@ public static class WebApplicationExtensions
 {
     public static void ApplyMigrations(this WebApplication applicationBuilder)
     {
-        var logger = applicationBuilder.Services.GetRequiredService<ILogger<WebApplication>>();
+        applicationBuilder.Services.ApplyMigrations();
+    }
 
-        using (var scope = applicationBuilder.Services.CreateScope())
+    public static void ApplyMigrations(this IServiceProvider serviceProvider)
+    {
+        using (var scope = serviceProvider.CreateScope())
         {
             var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            var migrations = dbContext.Database.GetPendingMigrations();
-        
-            foreach (var migration in migrations)
-            {
-                logger.LogInformation("{Migration} migration will be applied", migration);
-            }
         
             dbContext.Database.Migrate();
         }

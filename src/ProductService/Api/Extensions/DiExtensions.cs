@@ -29,9 +29,9 @@ public static class DiExtensions
     
     public static void AddRepositories(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddScoped<IProductRepository, ProductRepository>();
-        serviceCollection.AddScoped<IBrandRepository, BrandRepository>();
-        serviceCollection.AddScoped<IProductTypeRepository, ProductTypeRepository>();
+        serviceCollection.AddScoped<IProductsRepository, ProductsRepository>();
+        serviceCollection.AddScoped<IBrandsRepository, BrandsRepository>();
+        serviceCollection.AddScoped<IProductTypesRepository, ProductTypesRepository>();
     }
 
     public static void AddAppDbContext(this IServiceCollection serviceCollection, string connectionString)

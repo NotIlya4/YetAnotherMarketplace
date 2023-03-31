@@ -1,5 +1,6 @@
 ﻿using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using Infrastructure.EntityFramework.Models;
 using Infrastructure.FilteringSystem;
 using Infrastructure.Repositories.Exceptions;
 using Infrastructure.SortingSystem;
@@ -9,6 +10,13 @@ namespace Infrastructure.Repositories.Extensions;
 
 public static class QueryableExtensions
 {
+    public static IQueryable<ProductData> IncludeProductDependencies(this IQueryable<ProductData> dbSet)
+    {
+        return dbSet
+            .Include(p => p.Brand)
+            .Include(p => p.ProductType);
+    }
+    
     public static async Task<TEntity> FirstAsyncOrThrow<TEntity>(this IQueryable<TEntity> query, Expression<Func<TEntity, bool>> predicate)
     {
         return await query.FirstOrDefaultAsync(predicate) ?? throw new EntityNotFoundException(typeof(TEntity).Name);
