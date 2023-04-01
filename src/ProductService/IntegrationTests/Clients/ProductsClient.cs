@@ -36,20 +36,9 @@ public class ProductsClient
             }
         }
 
-        if (getProductsQueryView.ProductTypeName is not null)
-        {
-            queryStringDict.Add(new("productTypeName", getProductsQueryView.ProductTypeName));
-        }
-        
-        if (getProductsQueryView.BrandName is not null)
-        {
-            queryStringDict.Add(new("brandName", getProductsQueryView.BrandName));
-        }
-        
-        if (getProductsQueryView.Searching is not null)
-        {
-            queryStringDict.Add(new("searching", getProductsQueryView.Searching));
-        }
+        queryStringDict.Add(new("productTypeName", getProductsQueryView.ProductTypeName));
+        queryStringDict.Add(new("brandName", getProductsQueryView.BrandName));
+        queryStringDict.Add(new("searching", getProductsQueryView.Searching));
 
         string? queryString = QueryString.Create(queryStringDict).Value;
 
