@@ -1,8 +1,10 @@
-﻿using Domain.Entities;
+﻿using Api.Controllers.ProductTypesController;
+using Domain.Entities;
 using Domain.Primitives;
 using Infrastructure.EntityFramework.Models;
+using Newtonsoft.Json.Linq;
 
-namespace IntegrationTests.Fixtures.EntityLists;
+namespace IntegrationTests.EntityLists;
 
 public class ProductTypesList
 {
@@ -11,6 +13,7 @@ public class ProductTypesList
 
     public IReadOnlyList<ProductType> ProductTypes { get; }
     public IReadOnlyList<ProductTypeData> ProductTypeDatas { get; }
+    public JArray ProductTypesJArray { get; }
 
     public ProductTypesList()
     {
@@ -19,9 +22,13 @@ public class ProductTypesList
 
         ProductTypes = new List<ProductType>()
         {
-            Smartphone,
             Burger,
+            Smartphone,
         };
         ProductTypeDatas = ProductTypes.Select(ProductTypeData.FromDomain).ToList();
+
+        List<ProductTypeView> productTypeViews = ProductTypeView.FromDomain(ProductTypes);
+        JFactory jFactory = new();
+        ProductTypesJArray = jFactory.Create(productTypeViews);
     }
 }

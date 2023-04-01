@@ -1,8 +1,10 @@
-﻿using Domain.Entities;
+﻿using Api.Controllers.BrandsControllers;
+using Domain.Entities;
 using Domain.Primitives;
 using Infrastructure.EntityFramework.Models;
+using Newtonsoft.Json.Linq;
 
-namespace IntegrationTests.Fixtures.EntityLists;
+namespace IntegrationTests.EntityLists;
 
 public class BrandsList
 {
@@ -11,6 +13,7 @@ public class BrandsList
 
     public IReadOnlyList<Brand> Brands { get; }
     public IReadOnlyList<BrandData> BrandDatas { get; }
+    public JArray BrandsJArray { get; }
 
     public BrandsList()
     {
@@ -23,5 +26,9 @@ public class BrandsList
             McDonalds
         };
         BrandDatas = Brands.Select(BrandData.FromDomain).ToList();
+
+        List<BrandView> brandViews = BrandView.FromDomain(Brands);
+        JFactory jFactory = new();
+        BrandsJArray = jFactory.Create(brandViews);
     }
 }

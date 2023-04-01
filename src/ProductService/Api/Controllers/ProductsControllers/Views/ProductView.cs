@@ -19,7 +19,7 @@ public class ProductView
     [ProductBrandName]
     public required string Brand { get; set; }
 
-    public static ProductView FromProduct(Product product)
+    public static ProductView FromDomain(Product product)
     {
         return new ProductView()
         {
@@ -33,8 +33,8 @@ public class ProductView
         };
     }
 
-    public static List<ProductView> FromProducts(IEnumerable<Product> product)
+    public static List<ProductView> FromDomain(IEnumerable<Product> product)
     {
-        return product.Select(FromProduct).ToList();
+        return product.Select(FromDomain).ToList();
     }
 }

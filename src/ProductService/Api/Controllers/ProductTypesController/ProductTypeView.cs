@@ -15,4 +15,9 @@ public class ProductTypeView
             Name = productType.Name.Value
         };
     }
+
+    public static List<ProductTypeView> FromDomain(IEnumerable<ProductType> productTypes)
+    {
+        return productTypes.Select(FromDomain).ToList();
+    }
 }

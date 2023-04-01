@@ -3,7 +3,7 @@ using Domain.Primitives;
 
 namespace Infrastructure.EntityFramework.Models;
 
-public class ProductTypeData
+public class ProductTypeData : IEntity<ProductTypeData>
 {
     public required string Id { get; set; }
     public required string Name { get; set; }
@@ -27,5 +27,10 @@ public class ProductTypeData
     public static List<ProductTypeData> FromDomain(IEnumerable<ProductType> productTypes)
     {
         return productTypes.Select(FromDomain).ToList();
+    }
+
+    public bool EqualId(ProductTypeData entity)
+    {
+        return Id == entity.Id;
     }
 }

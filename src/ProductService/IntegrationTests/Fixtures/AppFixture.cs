@@ -1,6 +1,6 @@
 ﻿using Api.Extensions;
 using Infrastructure.EntityFramework;
-using IntegrationTests.Fixtures.EntityLists;
+using IntegrationTests.EntityLists;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,13 +11,16 @@ namespace IntegrationTests.Fixtures;
 public class AppFixture : ICollectionFixture<AppFixture>, IDisposable
 {
     public HttpClient Client { get; }
-    private WebApplicationFactory<Program> WebApplicationFactory { get; }
+    internal WebApplicationFactory<Program> WebApplicationFactory { get; }
+    public BrandsList BrandsList { get; }
+    public ProductTypesList ProductTypesList { get; }
+    public ProductsList ProductsList { get; }
 
     public AppFixture()
     {
-        BrandsList brandsList = new();
-        ProductTypesList productTypesList = new();
-        ProductsList productsList = new(brandsList, productTypesList);
+        BrandsList = new BrandsList();
+        ProductTypesList = new ProductTypesList();
+        ProductsList = new ProductsList(BrandsList, ProductTypesList);
 
         WebApplicationFactory = new WebApplicationFactory<Program>().WithWebHostBuilder(builder =>
         {
@@ -29,7 +32,7 @@ public class AppFixture : ICollectionFixture<AppFixture>, IDisposable
         dbContext.Database.EnsureDeleted();
         WebApplicationFactory.Services.ApplyMigrations();
         
-        DbSeeder seeder = new(brandsList.BrandDatas, productTypesList.ProductTypeDatas, productsList.ProductDatas);
+        DbSeeder seeder = new(BrandsList.BrandDatas, ProductTypesList.ProductTypeDatas, ProductsList.ProductDatas);
         seeder.Seed(dbContext);
     }
 

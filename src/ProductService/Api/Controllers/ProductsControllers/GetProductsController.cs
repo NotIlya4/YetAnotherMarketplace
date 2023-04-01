@@ -36,7 +36,7 @@ public class GetProductsController : ProductsControllerBase
         };
 
         GetProductsResult result = await ProductService.GetProducts(query);
-        List<ProductView> productViews = ProductView.FromProducts(result.Products);
+        List<ProductView> productViews = ProductView.FromDomain(result.Products);
         
         return Ok(new GetProductsResultView()
         {
@@ -52,7 +52,7 @@ public class GetProductsController : ProductsControllerBase
     public async Task<ActionResult<ProductView>> GetProduct(string propertyName, string value)
     {
         Product productDto = await ProductService.GetProduct(new ProductStrictFilter(propertyName, value));
-        ProductView productView = ProductView.FromProduct(productDto);
+        ProductView productView = ProductView.FromDomain(productDto);
         return Ok(productView);
     }
 }

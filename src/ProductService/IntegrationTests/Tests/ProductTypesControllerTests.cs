@@ -14,19 +14,7 @@ public class ProductTypesControllerTests
     {
         Client = new ProductTypesClient(appFixture.Client);
 
-        InitialDb = new JArray()
-        {
-            new JObject()
-            {
-                ["id"] = "70a4fa45-b9f9-4409-8d13-c55dabfa3169",
-                ["name"] = "Burger"
-            },
-            new JObject()
-            {
-                ["id"] = "f68d9bd6-e7c5-4f50-8147-d5b85b292bcf",
-                ["name"] = "Smartphone"
-            },
-        };
+        InitialDb = appFixture.ProductTypesList.ProductTypesJArray;
     }
     
     [Fact]

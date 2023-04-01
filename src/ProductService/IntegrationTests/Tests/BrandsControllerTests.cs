@@ -13,20 +13,8 @@ public class BrandsControllerTests
     public BrandsControllerTests(AppFixture appFixture)
     {
         Client = new BrandsClient(appFixture.Client);
-        
-        InitialDb = new JArray()
-        {
-            new JObject()
-            {
-                ["id"] = "2d15e347-cf3d-4d8c-bdd7-c65f22e653f4",
-                ["name"] = "Apple"
-            },
-            new JObject()
-            {
-                ["id"] = "aa7fe749-2e4b-45c4-b3f7-49c6f30d7d10",
-                ["name"] = "McDonald's"
-            }
-        };
+
+        InitialDb = appFixture.BrandsList.BrandsJArray;
     }
 
     [Fact]

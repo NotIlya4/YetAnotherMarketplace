@@ -15,4 +15,9 @@ public class BrandView
             Name = brand.Name.Value
         };
     }
+
+    public static List<BrandView> FromDomain(IEnumerable<Brand> brand)
+    {
+        return brand.Select(FromDomain).ToList();
+    }
 }

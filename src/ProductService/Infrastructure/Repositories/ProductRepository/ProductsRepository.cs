@@ -80,7 +80,12 @@ public class ProductsRepository : IProductsRepository
 
     public async Task Insert(Product product)
     {
-        await _dbContext.Products.AddAsync(ProductData.FromDomain(product));
+        ProductData productData = ProductData.FromDomain(product);
+        
+        _dbContext.SetEntry(productData.Brand).State = EntityState.Unchanged;
+        _dbContext.SetEntry(productData.ProductType).State = EntityState.Unchanged;
+
+        await _dbContext.Products.AddAsync(productData);
         await _dbContext.SaveChangesAsync();
     }
 

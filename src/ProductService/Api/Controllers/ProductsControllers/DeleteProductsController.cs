@@ -16,7 +16,7 @@ public class DeleteProductsController : ProductsControllerBase
     [Route("{propertyName}/{value}")]
     [ProducesProductNotFound]
     [ProducesNoContent]
-    public async Task<IActionResult> DeleteProductById(string propertyName, string value)
+    public async Task<IActionResult> DeleteProduct(string propertyName, string value)
     {
         await ProductService.DeleteProduct(new ProductStrictFilter(propertyName, value));
         return NoContent();
