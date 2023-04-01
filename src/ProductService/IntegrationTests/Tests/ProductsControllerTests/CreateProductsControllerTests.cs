@@ -42,7 +42,7 @@ public class CreateProductsControllerTests
         
         Assert.Equal(expectProducts, products);
 
-        await Client.DeleteProduct(newProduct.String("id")!);
+        await Client.DeleteProduct("id", newProduct.String("id")!);
 
         await AssertInitialDb();
     }

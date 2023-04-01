@@ -48,9 +48,9 @@ public class ProductsClient
         return await response.ExtractJObject();
     }
 
-    public async Task DeleteProduct(string id)
+    public async Task DeleteProduct(string propertyName, string id)
     {
-        HttpResponseMessage response = await Client.DeleteAsync($"api/products/id/{id}");
+        HttpResponseMessage response = await Client.DeleteAsync($"api/products/{propertyName}/{id}");
         response.EnsureSuccessStatusCode();
     }
 }
