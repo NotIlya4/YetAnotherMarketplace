@@ -1,6 +1,6 @@
 ﻿using Api.Controllers.ProductsControllers.Views;
-using Domain.Entities;
 using IntegrationTests.Clients;
+using IntegrationTests.EntityLists;
 using IntegrationTests.Fixtures;
 using Newtonsoft.Json.Linq;
 
@@ -11,45 +11,54 @@ public class DeleteProductsControllerTests
 {
     public ProductsClient Client { get; }
     public JArray InitialDb { get; }
-    public JFactory JFactory { get; } = new();
     public AppFixture AppFixture { get; }
+    public ProductsList ProductsList { get; }
     
     public DeleteProductsControllerTests(AppFixture appFixture)
     {
         Client = new ProductsClient(appFixture.Client);
         InitialDb = appFixture.ProductsList.ProductsJArray;
         AppFixture = appFixture;
+        ProductsList = appFixture.ProductsList;
     }
     
     [Fact]
     public async Task DeleteProduct_ByName_DeleteProduct()
     {
-        List<Product> expectProducts = new()
+        JArray expect = new()
         {
-            AppFixture.ProductsList.BigMac,
-            AppFixture.ProductsList.IPhone13ProMax,
-            AppFixture.ProductsList.QuerterPounder,
+            ProductsList.BigMacJObject,
+            ProductsList.IBurgerJObject,
+            ProductsList.IPhone13ProMaxJObject,
+            ProductsList.QuerterPounderJObject,
         };
-        JArray expectJArray = JFactory.Create(ProductView.FromDomain(expectProducts));
-        
+
         await Client.DeleteProduct("name", AppFixture.ProductsList.IPhone13.Name.ToString());
         
-        JObject response = await Client.GetProducts(new GetProductsQueryView() { Offset = 0, Limit = 50 });
-        JArray products = response["products"]?.Value<JArray>()!;
+        JArray products = await Client.GetProducts(new GetProductsQueryView() { Offset = 0, Limit = 50 });
         
-        Assert.Equal(expectJArray, products);
+        Assert.Equal(expect, products);
 
-        JObject deletedProduct = JFactory.Create(ProductView.FromDomain(AppFixture.ProductsList.IPhone13));
-        await Client.CreateProduct(deletedProduct);
-
-        await AssertInitialDb();
+        await AppFixture.ReloadDb();
     }
     
-    public async Task AssertInitialDb()
+    [Fact]
+    public async Task DeleteProduct_ById_DeleteProduct()
     {
-        JObject response = await Client.GetProducts(new() { Limit = 50, Offset = 0 });
-        JArray products = response["products"]?.Value<JArray>()!;
+        JArray expect = new()
+        {
+            ProductsList.BigMacJObject,
+            ProductsList.IBurgerJObject,
+            ProductsList.IPhone13JObject,
+            ProductsList.IPhone13ProMaxJObject,
+        };
+
+        await Client.DeleteProduct("id", AppFixture.ProductsList.QuerterPounder.Id.ToString());
         
-        Assert.Equal(InitialDb, products);
+        JArray products = await Client.GetProducts(new GetProductsQueryView() { Offset = 0, Limit = 50 });
+        
+        Assert.Equal(expect, products);
+
+        await AppFixture.ReloadDb();
     }
 }

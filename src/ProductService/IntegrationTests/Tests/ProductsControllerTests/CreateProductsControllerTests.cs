@@ -9,11 +9,13 @@ public class CreateProductsControllerTests
 {
     public ProductsClient Client { get; }
     public JArray InitialDb { get; }
+    public AppFixture AppFixture { get; }
     
     public CreateProductsControllerTests(AppFixture appFixture)
     {
         InitialDb = appFixture.ProductsList.ProductsJArray;
         Client = new ProductsClient(appFixture.Client);
+        AppFixture = appFixture;
     }
 
     [Fact]
@@ -30,28 +32,19 @@ public class CreateProductsControllerTests
             ["brand"] = "Apple"
         };
         JObject responsePostProduct = await Client.CreateProduct(newProduct);
-        newProduct["id"] = responsePostProduct.String("id")!;
+        newProduct["id"] = responsePostProduct.String("id");
         
         Assert.True(JToken.DeepEquals(newProduct, responsePostProduct));
 
         JArray expectProducts = new JArray(InitialDb);
         expectProducts.Add(responsePostProduct);
 
-        JObject response = await Client.GetProducts(new() { Limit = 50, Offset = 0 });
-        JArray products = response["products"]?.Value<JArray>()!;
+        JArray products = await Client.GetProducts(new() { Limit = 50, Offset = 0 });
         
         Assert.Equal(expectProducts, products);
 
-        await Client.DeleteProduct("id", newProduct.String("id")!);
+        await Client.DeleteProduct("id", newProduct.String("id"));
 
-        await AssertInitialDb();
-    }
-
-    public async Task AssertInitialDb()
-    {
-        JObject response = await Client.GetProducts(new() { Limit = 50, Offset = 0 });
-        JArray products = response["products"]?.Value<JArray>()!;
-        
-        Assert.Equal(InitialDb, products);
+        await AppFixture.ReloadDb();
     }
 }
