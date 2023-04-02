@@ -21,7 +21,7 @@ public class ProductsClient
         return await response.ExtractJObject();
     }
 
-    public async Task<JObject> GetProducts(GetProductsQueryView getProductsQueryView)
+    public async Task<JObject> GetProductsBase(GetProductsQueryView getProductsQueryView)
     {
         List<KeyValuePair<string, string?>> queryStringDict = new();
 
@@ -46,6 +46,23 @@ public class ProductsClient
         response.EnsureSuccessStatusCode();
 
         return await response.ExtractJObject();
+    }
+
+    public async Task<JArray> GetProducts(GetProductsQueryView getProductsQueryView)
+    {
+        JObject response = await GetProductsBase(getProductsQueryView);
+        return response["products"]?.Value<JArray>()!;
+    }
+    
+    public async Task<int> GetProductsTotal(GetProductsQueryView getProductsQueryView)
+    {
+        JObject response = await GetProductsBase(getProductsQueryView);
+        return response.Int("total");
+    }
+
+    public async Task<JObject> GetProduct(string propertyName, string value)
+    {
+        return await Client.GetAsync($"api/products/{propertyName}/{value}").ExtractJObject();
     }
 
     public async Task DeleteProduct(string propertyName, string id)

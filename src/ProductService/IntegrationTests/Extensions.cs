@@ -53,13 +53,13 @@ public static class HttpClientExtensions
 
 public static class JTokenExtensions
 {
-    public static string? String(this JToken jToken, string key)
+    public static string String(this JToken jToken, string key)
     {
-        return jToken[key]?.Value<string>();
+        return jToken[key]!.Value<string>()!;
     }
     
-    public static int? Int(this JToken jToken, string key)
+    public static int Int(this JToken jToken, string key)
     {
-        return jToken[key]?.Value<int>();
+        return jToken[key]!.Value<int>()!;
     }
 }

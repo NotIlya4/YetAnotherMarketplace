@@ -36,6 +36,16 @@ public class AppFixture : ICollectionFixture<AppFixture>, IDisposable
         seeder.Seed(dbContext);
     }
 
+    public async Task ReloadDb()
+    {
+        ApplicationDbContext dbContext = WebApplicationFactory.Services.GetRequiredService<ApplicationDbContext>();
+        await dbContext.Database.EnsureDeletedAsync();
+        WebApplicationFactory.Services.ApplyMigrations();
+        
+        DbSeeder seeder = new(BrandsList.BrandDatas, ProductTypesList.ProductTypeDatas, ProductsList.ProductDatas);
+        seeder.Seed(dbContext);
+    }
+
     public void Dispose()
     {
         ApplicationDbContext dbContext = WebApplicationFactory.Services.GetRequiredService<ApplicationDbContext>();

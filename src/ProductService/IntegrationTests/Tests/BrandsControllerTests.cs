@@ -1,4 +1,5 @@
 ﻿using IntegrationTests.Clients;
+using IntegrationTests.EntityLists;
 using IntegrationTests.Fixtures;
 using Newtonsoft.Json.Linq;
 
@@ -9,12 +10,15 @@ public class BrandsControllerTests
 {
     public JArray InitialDb { get; }
     public BrandsClient Client { get; }
+    public AppFixture AppFixture { get; }
+    public BrandsList BrandsList { get; }
 
     public BrandsControllerTests(AppFixture appFixture)
     {
         Client = new BrandsClient(appFixture.Client);
-
         InitialDb = appFixture.BrandsList.BrandsJArray;
+        AppFixture = appFixture;
+        BrandsList = AppFixture.BrandsList;
     }
 
     [Fact]
@@ -23,8 +27,6 @@ public class BrandsControllerTests
         JArray result = await Client.GetBrands();
 
         Assert.Equal(InitialDb, result);
-
-        await AssertBrandsDefault();
     }
 
     [Fact]
@@ -41,35 +43,18 @@ public class BrandsControllerTests
         List<JToken> brandsInDb = (await Client.GetBrands()).ToList();
         Assert.Equal(expectBrandsInDb, brandsInDb);
 
-        await Client.DeleteBrand(newBrand);
-        
-        await AssertBrandsDefault();
+        await AppFixture.ReloadDb();
     }
 
     [Fact]
     public async Task DeleteBrand_DeleteBrand()
     {
-        string newBrand = "Puma";
-        string? newBrandId = (await Client.PostNewBrand(newBrand)).String("id");
-        
-        List<JToken> expectBrandsAfterPost = new JArray(InitialDb).ToList();
-        expectBrandsAfterPost.Add(new JObject() {["id"] = newBrandId, ["name"] = newBrand});
-
-        List<JToken> brandsAfterPost = (await Client.GetBrands()).ToList();
-        Assert.Equal(expectBrandsAfterPost, brandsAfterPost);
-
-        await Client.DeleteBrand(newBrand);
-        
-        List<JToken> brandsAfterDelete = (await Client.GetBrands()).ToList();
+        await Client.PostNewBrand("Sony");
+        await Client.DeleteBrand("Sony");
+        JArray brandsAfterDelete = await Client.GetBrands();
         
         Assert.Equal(InitialDb, brandsAfterDelete);
-        
-        await AssertBrandsDefault();
-    }
 
-    private async Task AssertBrandsDefault()
-    {
-        JArray brands = await Client.GetBrands();
-        Assert.Equal(InitialDb, brands);
+        await AppFixture.ReloadDb();
     }
 }
