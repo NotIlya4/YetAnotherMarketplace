@@ -22,11 +22,4 @@ public class Product
         ProductType = productType;
         Brand = brand;
     }
-
-    private Product()
-    {
-        PictureUrl = null!;
-        ProductType = null!;
-        Brand = null!;
-    }
 }

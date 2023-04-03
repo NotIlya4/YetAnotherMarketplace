@@ -12,9 +12,4 @@ public class Brand
         Id = id;
         Name = name;
     }
-
-    private Brand()
-    {
-        
-    }
 }
