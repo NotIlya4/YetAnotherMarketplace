@@ -8,7 +8,7 @@ ParametersProvider parameters = new(builder.Configuration);
 
 services.AddControllers();
 services.AddRepositories();
-services.AddExceptionCatcherMiddlewareServices(_ => { });
+services.AddExceptionMappers();
 services.AddRedis(parameters.GetRedisConnectionString());
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
