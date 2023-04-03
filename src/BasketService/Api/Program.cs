@@ -1,11 +1,21 @@
-var builder = WebApplication.CreateBuilder(args);
+using Api.Extensions;
+using Api.Properties;
+using ExceptionCatcherMiddleware.Extensions;
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+IServiceCollection services = builder.Services;
+ParametersProvider parameters = new(builder.Configuration);
+
+services.AddControllers();
+services.AddRepositories();
+services.AddExceptionCatcherMiddlewareServices(_ => { });
+services.AddRedis(parameters.GetRedisConnectionString());
+services.AddEndpointsApiExplorer();
+services.AddSwaggerGen();
 
 WebApplication app = builder.Build();
 
+app.UseExceptionCatcherMiddleware();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
