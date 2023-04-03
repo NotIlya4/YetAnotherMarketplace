@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Infrastructure.Mappers.BasketEntity;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +10,12 @@ namespace Api.Controllers;
 public class BasketController : ControllerBase
 {
     public IBasketRepository BasketRepository { get; }
+    public BasketViewMapper Mapper { get; }
 
-    public BasketController(IBasketRepository basketRepository)
+    public BasketController(IBasketRepository basketRepository, BasketViewMapper mapper)
     {
         BasketRepository = basketRepository;
+        Mapper = mapper;
     }
 
     [HttpGet]
@@ -22,5 +25,24 @@ public class BasketController : ControllerBase
         Basket basket = await BasketRepository.GetBasket(new Guid(id));
 
         return Ok(basket);
+    }
+
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<ActionResult> InsertBasket(BasketView basketView)
+    {
+        await BasketRepository.Insert(Mapper.Map(basketView));
+
+        return NoContent();
+    }
+
+    [HttpDelete]
+    [Route("id/{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<ActionResult> DeleteBasket(string id)
+    {
+        await BasketRepository.Delete(new Guid(id));
+
+        return NoContent();
     }
 }
