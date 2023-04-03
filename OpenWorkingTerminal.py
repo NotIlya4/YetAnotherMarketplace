@@ -17,8 +17,10 @@ FRONTEND_FOLDER = f"{PROJECT_FOLDER}\src\Frontend"
 
 tabs = [
     build_tab("sql-server", PROJECT_FOLDER),
+    build_tab("redis", PROJECT_FOLDER),
     build_tab("nginx", PROJECT_FOLDER),
     build_tab("product-service", PROJECT_FOLDER),
+    build_tab("basket-service", PROJECT_FOLDER),
     build_tab("git", PROJECT_FOLDER),
     build_tab("ng", FRONTEND_FOLDER)
 ]

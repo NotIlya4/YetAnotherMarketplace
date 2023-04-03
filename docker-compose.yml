@@ -4,9 +4,12 @@ services:
     container_name: product-service
     depends_on:
       - sql-server
-    restart: on-failure
+      - nginx
+    restart: always
     environment:
-      - ConnectionString:Server=sql-server,1433
+      - ASPNETCORE_ENVIRONMENT=DockerCompose
+    ports:
+      - 5001:80
   sql-server:
     image: mcr.microsoft.com/mssql/server
     container_name: sql-server
@@ -22,5 +25,26 @@ services:
     container_name: nginx
     ports:
       - 5000:80
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-data:/data
+    command: ["redis-server", "--appendonly", "yes"]
+  basket-service:
+    build: ./src/BasketService/
+    container_name: basket-service
+    environment:
+      - ASPNETCORE_ENVIRONMENT=DockerCompose
+    restart: always
+    depends_on:
+      - redis
+      - nginx
+    ports:
+      - 5002:80
+    
 volumes:
   sql-server-volume:
+  redis-data:

@@ -11,7 +11,14 @@ public class ParametersProvider
     
     public string GetRedisConnectionString()
     {
-        return Configuration.GetSection("RedisConnectionString")["Server"] ??
-                   throw new ConfigurationNotFoundException("RedisConnectionString:Server");
+        string server = GetRequiredConfiguration("RedisConnectionString:Server");
+        string databaseNumber = GetRequiredConfiguration("RedisConnectionString:DatabaseNumber");
+
+        return $"{server},defaultDatabase={databaseNumber}";
+    }
+
+    public string GetRequiredConfiguration(string path)
+    {
+        return Configuration.GetSection(path).Value ?? throw new ConfigurationNotFoundException(path);
     }
 }

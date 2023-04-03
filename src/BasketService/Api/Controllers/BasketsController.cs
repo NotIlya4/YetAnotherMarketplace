@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers;
 
 [ApiController]
-[Route("api/basket")]
-public class BasketController : ControllerBase
+[Route("api/baskets")]
+public class BasketsController : ControllerBase
 {
     public IBasketRepository BasketRepository { get; }
     public BasketViewMapper Mapper { get; }
 
-    public BasketController(IBasketRepository basketRepository, BasketViewMapper mapper)
+    public BasketsController(IBasketRepository basketRepository, BasketViewMapper mapper)
     {
         BasketRepository = basketRepository;
         Mapper = mapper;
