@@ -23,8 +23,9 @@ public class BasketsController : ControllerBase
     public async Task<ActionResult<BasketView>> GetBasket(string id)
     {
         Basket basket = await BasketRepository.GetBasket(new Guid(id));
-
-        return Ok(basket);
+        BasketView basketView = Mapper.Map(basket);
+        
+        return Ok(basketView);
     }
 
     [HttpPost]

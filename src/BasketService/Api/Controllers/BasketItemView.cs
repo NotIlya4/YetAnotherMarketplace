@@ -2,7 +2,6 @@
 
 public class BasketItemView
 {
-    public required string Id { get; set; }
-    public required string ProductId { get; set; }
-    public required int Quantity { get; set; }
+    public required string ProductId { get; init; }
+    public required int Quantity { get; init; }
 }

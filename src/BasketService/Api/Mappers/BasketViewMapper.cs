@@ -16,7 +16,6 @@ public class BasketViewMapper
     public BasketItem Map(BasketItemView basketItemView)
     {
         return new BasketItem(
-            id: new Guid(basketItemView.Id),
             productId: new Guid(basketItemView.ProductId),
             quantity: new Quantity(basketItemView.Quantity));
     }
@@ -39,7 +38,6 @@ public class BasketViewMapper
     {
         return new BasketItemView()
         {
-            Id = basketItem.Id.ToString(),
             ProductId = basketItem.ProductId.ToString(),
             Quantity = basketItem.Quantity.Value
         };

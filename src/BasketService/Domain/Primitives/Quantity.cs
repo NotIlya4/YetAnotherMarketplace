@@ -2,9 +2,9 @@
 
 namespace Domain.Primitives;
 
-public readonly record struct Quantity
+public record struct Quantity
 {
-    public int Value { get; }
+    public int Value { get; private set; }
 
     public Quantity(int value)
     {

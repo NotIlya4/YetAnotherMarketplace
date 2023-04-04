@@ -1,4 +1,4 @@
-﻿using Api.Controllers;
+﻿using System.Net;
 using IntegrationTests.Fixture;
 using Newtonsoft.Json.Linq;
 
@@ -13,24 +13,43 @@ public class BasketControllerTests
     {
         AppFixture = appFixture;
     }
-
+    
     [Fact]
-    public async Task InsertBasket()
+    public async Task PostAndDeleteBasket_FirstlyPersistAndThenDelete()
     {
-        JObject jObject = new()
+        JObject basket = new()
         {
             ["id"] = "4d6cc033-55d2-4097-ac42-0f1ba8dd227b",
             ["items"] = new JArray()
+            {
+                new JObject(){["productId"] = "4d6cc033-55d2-4097-ac42-0f1ba8dd227b", ["quantity"] = 10},
+                new JObject(){["productId"] = "4d6cc033-55d2-4097-ac42-0f1ba8dd227b", ["quantity"] = 20}
+            }
         };
 
-        HttpContent content = new StringContent(jObject.ToString(), System.Text.Encoding.UTF8, "application/json");
+        await AssertCreateBasket(basket);
+        await AssertDeleteBasket(basket);
+    }
+
+    public async Task AssertCreateBasket(JObject basket)
+    {
+        HttpContent content = new StringContent(basket.ToString(), System.Text.Encoding.UTF8, "application/json");
         HttpResponseMessage postResponse = await AppFixture.Client.PostAsync("api/baskets", content);
+        postResponse.EnsureSuccessStatusCode();
 
-        HttpResponseMessage response = await AppFixture.Client.GetAsync($"api/baskets/id/4d6cc033-55d2-4097-ac42-0f1ba8dd227b");
-        JObject basket = JObject.Parse(await response.Content.ReadAsStringAsync());
+        HttpResponseMessage getResponse = await AppFixture.Client.GetAsync($"api/baskets/id/{basket["id"]}");
+        getResponse.EnsureSuccessStatusCode();
+        JObject responseBasket = JObject.Parse(await getResponse.Content.ReadAsStringAsync());
         
-        Assert.Equal(jObject, basket);
+        Assert.Equal(basket, responseBasket);
+    }
 
-        await AppFixture.FlushDb();
+    public async Task AssertDeleteBasket(JObject basket)
+    {
+        HttpResponseMessage deleteResponse = await AppFixture.Client.DeleteAsync($"api/baskets/id/{basket["id"]}");
+        deleteResponse.EnsureSuccessStatusCode();
+
+        HttpResponseMessage getResponse = await AppFixture.Client.GetAsync($"api/baskets/id/{basket["id"]}");
+        Assert.Equal(HttpStatusCode.NotFound, getResponse.StatusCode);
     }
 }
