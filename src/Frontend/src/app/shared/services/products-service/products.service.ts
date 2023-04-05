@@ -11,7 +11,7 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class ProductsService {
-  private baseUrl: string = environment.productsUri;
+  private baseUrl: string = environment.productsUrl;
 
   constructor(private httpClient: HttpClient) {
   }

@@ -1,0 +1,22 @@
+<div class="card p-3">
+  <h5 class="card-title m-0">Order Summary</h5>
+  <p class="mt-3">Shipping costs will be added depending on choices made during checkout</p>
+  <div class="d-flex justify-content-between mt-3">
+    <div>Order subtotal:</div>
+    <div>{{basketTotals.subtotal | currency}}</div>
+  </div>
+  <hr class="mb-3 mt-1">
+  <div class="d-flex justify-content-between">
+    <div>Shipping and handling:</div>
+    <div>{{basketTotals.shipping | currency}}</div>
+  </div>
+  <hr class="mb-3 mt-1">
+  <div class="d-flex justify-content-between">
+    <div>Total:</div>
+    <div>{{basketTotals.total | currency}}</div>
+  </div>
+  <hr class="mb-4 mt-1">
+  <button routerLink="/checkout" class="btn mt-2 btn-outline-primary w-auto d-inline-block mx-auto">
+    Proceed to checkout
+  </button>
+</div>

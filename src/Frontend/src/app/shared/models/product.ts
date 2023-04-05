@@ -1,9 +1,9 @@
 export interface IProduct {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  pictureUrl: string;
-  productType: string;
-  productBrand: string;
+  readonly id: string;
+  readonly name: string;
+  readonly description: string;
+  readonly price: number;
+  readonly pictureUrl: string;
+  readonly productType: string;
+  readonly productBrand: string;
 }

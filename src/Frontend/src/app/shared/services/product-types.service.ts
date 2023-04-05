@@ -7,7 +7,7 @@ import {IBrand} from "../models/brand";
   providedIn: 'root'
 })
 export class ProductTypesService {
-  private baseUrl: string = environment.productsUri;
+  private baseUrl: string = environment.productsUrl;
 
   constructor(private httpClient: HttpClient) {
   }

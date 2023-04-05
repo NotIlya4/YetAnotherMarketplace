@@ -1,0 +1,59 @@
+<div *ngIf="basketItems.length !== 0" class="" style="font-size: 1em">
+  <table class="table-responsive table-hover table">
+    <thead class="text-center">
+    <tr>
+      <th scope="col" class="text-start">
+        Product
+      </th>
+      <th scope="col" class="">
+        Price
+      </th>
+      <th scope="col" class="">
+        Quantity
+      </th>
+      <th scope="col" class="">
+        Total
+      </th>
+      <th scope="col" class="w-auto">
+        Remove
+      </th>
+    </tr>
+    </thead>
+    <tbody class="table-group-divider align-middle text-center">
+    <tr class="" *ngFor="let item of basketItems">
+      <th scope="row" class="text-start">
+        <div class="p-2 d-flex flex-nowrap" style="white-space: nowrap">
+          <img src="{{item.product.pictureUrl}}" alt="{{item.product.name}}"
+               class="img-fluid" style="max-height: 50px;">
+          <div class="ms-3 d-inline-block align-middle">
+            <a routerLink="/shop/{{item.product.id}}" class="text-dark">{{item.product.name}}</a>
+            <div class="text-muted" style="font-size: 0.8em">Type: {{item.product.productType}}</div>
+          </div>
+        </div>
+      </th>
+      <td class="" style="width: 160px">
+        {{item.product.price | currency}}
+      </td>
+      <td class="" style="width: 160px">
+        <div class="d-flex align-items-center justify-content-center">
+          <button class="p-0 invisible">
+            <fa-icon [icon]="minusCircleIcon" (click)="onMinusPressed(item)" class="visible table" style="font-size: 1.2em"></fa-icon>
+          </button>
+          <span class="mx-2" style="">{{item.quantity}}</span>
+          <button class="p-0 invisible">
+            <fa-icon [icon]="plusCircleIcon" (click)="onPlusPressed(item)" class="visible table" style="font-size: 1.2em"></fa-icon>
+          </button>
+        </div>
+      </td>
+      <td class="" style="width: 160px">
+        {{item.product.price * item.quantity | currency}}
+      </td>
+      <td class="" style="width: 1%;">
+        <button class="p-0 invisible">
+          <fa-icon [icon]="trashIcon" (click)="onRemovePressed(item)" class="visible table" style="font-size: 1.2em"></fa-icon>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

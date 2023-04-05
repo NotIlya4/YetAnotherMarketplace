@@ -5,10 +5,11 @@
 
     <section class="col-3">
       <h5 class="text-secondary mb-2">Sort</h5>
-      <select class="form-select mb-3" (change)="onSortingChanged($event.target)">
+      <select class="form-select mb-3" (change)="onSortingChanged($event.target)" style="cursor: pointer">
         <option
           *ngFor="let sorting of sortingsMapping"
           [value]="sorting.value"
+          style="cursor: pointer"
         >{{sorting.name}}</option>
       </select>
 

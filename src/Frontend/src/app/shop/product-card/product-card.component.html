@@ -6,7 +6,7 @@
 
     <div class="hover-overlay">
       <div class="btn-group d-flex align-items-center justify-content-center mx-4 h-100">
-        <button class="btn btn-primary w-50 me-1"><fa-icon [icon]="shoppingCartIcon"/></button>
+        <button class="btn btn-primary w-50 me-1" (click)="onBuyingCardClicked()"><fa-icon [icon]="shoppingCartIcon"/></button>
         <button routerLink="/shop/{{product.id}}" class="btn btn-primary ms-1 w-50">View</button>
       </div>
     </div>

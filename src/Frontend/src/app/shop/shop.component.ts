@@ -63,13 +63,13 @@ export class ShopComponent implements OnInit{
 
   getBrandFilters(){
     this.brandsService.get().subscribe(brands => {
-      this.brandFilters = brands.map<string>(b => b.name);
+      this.brandFilters = ['All', ...brands.map<string>(b => b.name)];
     })
   }
 
   getProductTypeFilters(){
     this.productTypesService.get().subscribe(productTypes => {
-      this.productTypeFilters = productTypes.map<string>(pt => pt.name);
+      this.productTypeFilters = ['All', ...productTypes.map<string>(pt => pt.name)];
     })
   }
 

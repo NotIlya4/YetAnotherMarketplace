@@ -7,6 +7,7 @@ const routes: Routes = [
   {path: '', component: HomeComponent, data: {breadcrumb: 'Home'}},
   {path: 'not-found', component: NotFoundComponent, data: {breadcrumb: 'Not Found'}},
   {path: 'shop', loadChildren: () => import('./shop/shop.module').then(mode => mode.ShopModule), data: {breadcrumb: 'Shop'}},
+  {path: 'basket', loadChildren: () => import('./basket/basket.module').then(mode => mode.BasketModule), data: {breadcrumb: 'Basket'}},
   {path: '**', redirectTo: '', pathMatch: 'full'},
 ];
 
