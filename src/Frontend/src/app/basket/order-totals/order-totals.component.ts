@@ -12,6 +12,8 @@ export class OrderTotalsComponent {
   @Input() basketTotals: IBasketTotals = {shipping: 10, subtotal: 10, total: 10};
 
   constructor(private basketService: BasketService) {
-
+    basketService.basketTotals$.subscribe(value => {
+      this.basketTotals = value;
+    })
   }
 }

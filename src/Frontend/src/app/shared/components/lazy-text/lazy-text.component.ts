@@ -6,6 +6,6 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./lazy-text.component.scss']
 })
 export class LazyTextComponent {
-  @Input() text?: string;
   @Input() placeholderText?: string;
+  @Input() isLoading: boolean = true;
 }

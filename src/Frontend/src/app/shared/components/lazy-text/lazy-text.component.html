@@ -1,6 +1,6 @@
-<ng-container *ngIf="text === undefined">
-  <app-text-placeholder>{{placeholderText ?? 'aaaaaaaaa'}}</app-text-placeholder>
+<ng-container *ngIf="isLoading">
+  <app-text-content-placeholder>{{placeholderText ?? 'aaaaaaaaa'}}</app-text-content-placeholder>
 </ng-container>
-<ng-container *ngIf="text !== undefined">
-  {{text}}
+<ng-container *ngIf="isLoading">
+  <ng-content></ng-content>
 </ng-container>

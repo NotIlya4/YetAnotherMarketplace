@@ -5,6 +5,7 @@ import {IProduct} from "../models/product";
 import {BehaviorSubject, map, Observable, Subject} from "rxjs";
 import {ProductsService} from "./products-service/products.service";
 import { Basket } from '../models/basket';
+import {IBasketTotals} from "../../basket/order-totals/basket-totals";
 
 
 @Injectable({
@@ -15,11 +16,22 @@ export class BasketService {
   private readonly basketSource: BehaviorSubject<Basket> = new BehaviorSubject<Basket>(Basket.empty());
 
   public get totalQuantity$(): Observable<number> {
-    return this.basketSource.asObservable().pipe(map(b => this.calculateTotalQuantity(b)));
+    return this.basketSource.asObservable().pipe(map(b => {
+      return b.items.map(i => i.quantity).reduce((acc, cur) => acc + cur, 0);
+    }));
   }
 
   public get basketItems$(): Observable<ReadonlyArray<IReadonlyBasketItem>> {
     return this.basketSource.asObservable().pipe(map(b => b.items));
+  }
+
+  public get basketTotals$(): Observable<IBasketTotals> {
+    return this.basketSource.asObservable().pipe(map(b => {
+      const subtotal = b.items.map(i => i.product.price * i.quantity).reduce((acc, cur) => acc + cur);
+      const shipping = 10;
+      const total = subtotal + shipping;
+      return {subtotal, shipping, total};
+    }));
   }
 
   constructor() {
@@ -57,9 +69,5 @@ export class BasketService {
     }
 
     return Basket.fromRaw(rawBasket);
-  }
-
-  private calculateTotalQuantity(basket: Basket): number {
-    return basket.items.map(i => i.quantity).reduce((acc, cur) => acc + cur, 0);
   }
 }

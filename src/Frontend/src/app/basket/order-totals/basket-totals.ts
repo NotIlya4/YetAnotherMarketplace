@@ -1,5 +1,5 @@
 export interface IBasketTotals{
-  shipping: number;
-  subtotal: number;
-  total: number;
+  readonly subtotal: number;
+  readonly shipping: number;
+  readonly total: number;
 }

@@ -1,15 +1,13 @@
 import {Component, Input} from '@angular/core';
 import {PlaceholderSize} from "./placeholder-size";
-import {PlaceholderWidthSource} from "./placeholder-width-source";
 
 @Component({
-  selector: 'app-text-placeholder',
-  templateUrl: './text-placeholder.component.html',
-  styleUrls: ['./text-placeholder.component.scss']
+  selector: 'app-text-content-placeholder',
+  templateUrl: './text-content-placeholder.component.html',
+  styleUrls: ['./text-content-placeholder.component.scss']
 })
-export class TextPlaceholderComponent {
+export class TextContentPlaceholderComponent {
   @Input() placeholderSize: PlaceholderSize = PlaceholderSize.Standard;
-  @Input() placeholderWidthSource: PlaceholderWidthSource = PlaceholderWidthSource.NgContent;
 
   getSizeClass(): string {
     if (this.placeholderSize === PlaceholderSize.Big) {
@@ -24,5 +22,4 @@ export class TextPlaceholderComponent {
   }
 
   protected readonly PlaceholderSize = PlaceholderSize;
-  protected readonly PlaceholderWidthSource = PlaceholderWidthSource;
 }

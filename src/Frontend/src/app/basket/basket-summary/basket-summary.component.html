@@ -26,7 +26,7 @@
           <img src="{{item.product.pictureUrl}}" alt="{{item.product.name}}"
                class="img-fluid" style="max-height: 50px;">
           <div class="ms-3 d-inline-block align-middle">
-            <a routerLink="/shop/{{item.product.id}}" class="text-dark">{{item.product.name}}</a>
+            <app-product-link [product]="item.product"></app-product-link>
             <div class="text-muted" style="font-size: 0.8em">Type: {{item.product.productType}}</div>
           </div>
         </div>

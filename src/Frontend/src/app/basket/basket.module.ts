@@ -6,6 +6,7 @@ import {CoreModule} from "../core/core.module";
 import { OrderTotalsComponent } from './order-totals/order-totals.component';
 import { BasketSummaryComponent } from './basket-summary/basket-summary.component';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {SharedModule} from "../shared/shared.module";
 
 
 
@@ -20,7 +21,8 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     CommonModule,
     BasketRoutingModule,
     CoreModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    SharedModule
   ]
 })
 export class BasketModule { }

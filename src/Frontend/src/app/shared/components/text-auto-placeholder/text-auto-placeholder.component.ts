@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {PlaceholderWidthSource} from "../text-placeholder/placeholder-width-source";
-import {PlaceholderSize} from "../text-placeholder/placeholder-size";
+import {PlaceholderSize} from "../text-content-placeholder/placeholder-size";
 
 @Component({
   selector: 'app-text-auto-placeholder',
@@ -10,5 +9,15 @@ import {PlaceholderSize} from "../text-placeholder/placeholder-size";
 export class TextAutoPlaceholderComponent {
   @Input() placeholderSize: PlaceholderSize = PlaceholderSize.Standard;
 
-  protected readonly PlaceholderWidthSource = PlaceholderWidthSource;
+  getSizeClass(): string {
+    if (this.placeholderSize === PlaceholderSize.Big) {
+      return 'placeholder-lg';
+    }
+
+    if (this.placeholderSize === PlaceholderSize.Small) {
+      return 'placeholder-sm';
+    }
+
+    return '';
+  }
 }

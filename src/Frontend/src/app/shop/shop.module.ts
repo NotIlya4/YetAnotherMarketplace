@@ -25,14 +25,14 @@ import {CoreModule} from "../core/core.module";
   exports: [
 
   ],
-    imports: [
-        CommonModule,
-        FontAwesomeModule,
-        SharedModule,
-        ShopRoutingModule,
-        BreadcrumbModule,
-        ToastsModule,
-        CoreModule
-    ]
+  imports: [
+      CommonModule,
+      FontAwesomeModule,
+      SharedModule,
+      ShopRoutingModule,
+      BreadcrumbModule,
+      ToastsModule,
+      CoreModule
+  ]
 })
 export class ShopModule { }
