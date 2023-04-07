@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {PlaceholderSize} from "../text-content-placeholder/placeholder-size";
+import {PlaceholderSize} from "../placeholders/text-content-placeholder/placeholder-size";
 
 @Component({
   selector: 'app-tab',

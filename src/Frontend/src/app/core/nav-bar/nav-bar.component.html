@@ -32,13 +32,12 @@
 
     <div class="nav-item align-items-center nav-link p-0 m-0 d-flex mb-3 mb-{{mobileModThreshold}}-0">
 
-      <a class="d-flex position-relative me-3"
-         style="aspect-ratio: 1/1; width: 3em;"
-         routerLink="basket/"
-         (click)="isMenuCollapsed=true">
-        <fa-icon style="font-size: 1.3em" [icon]="shoppingCartIcon" class="text-dark me-1 my-auto icon"/>
+      <div class="d-flex position-relative me-3"
+           style="aspect-ratio: 1/1; width: 3em;"
+           (click)="isMenuCollapsed=true">
+        <app-shopping-card-icon [routerLink]="linkProvider.basketLink" class="my-auto text-dark pointer"></app-shopping-card-icon>
         <div class="badge position-absolute translate-middle badge rounded-pill bg-primary" style="left: 67%; top: 20%">{{cartValue}}</div>
-      </a>
+      </div>
 
       <app-primary-button class="me-3" (click)="isMenuCollapsed=true">Login</app-primary-button>
       <app-primary-button class="me-3" (click)="isMenuCollapsed=true">Sign Up</app-primary-button>

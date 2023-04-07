@@ -1,15 +1,9 @@
-<ng-container *ngIf="breadcrumbs$ | async as breadcrumbs">
-  <div *ngIf="breadcrumbs[breadcrumbs.length - 1].label !== 'Home'"
-       style="height: 80px"
-       class="container">
-    <div class="row f-flex align-items-center h-100">
-      <div class="col">
-        <h5 class="my-auto">{{breadcrumbs[breadcrumbs.length - 1].label}}</h5>
-      </div>
-      <div class="col-auto">
-        <xng-breadcrumb></xng-breadcrumb>
-      </div>
-    </div>
+<div class="container d-flex justify-content-between align-items-center" style="height: 60px">
+  <div class="">
+    <h5 class="my-auto">{{breadcrumbs[breadcrumbs.length - 1].label}}</h5>
   </div>
-  <hr class="m-0 p-0">
-</ng-container>
+  <div class="">
+    <xng-breadcrumb></xng-breadcrumb>
+  </div>
+</div>
+<hr class="mb-3">

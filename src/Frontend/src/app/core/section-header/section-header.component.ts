@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import {BreadcrumbService} from "xng-breadcrumb";
-import {Observable} from "rxjs";
+import {BreadcrumbDefinition, BreadcrumbService} from "xng-breadcrumb";
 
 @Component({
   selector: 'app-section-header',
@@ -8,10 +7,12 @@ import {Observable} from "rxjs";
   styleUrls: ['./section-header.component.scss']
 })
 export class SectionHeaderComponent {
-  breadcrumbs$: Observable<any>;
+  breadcrumbs: BreadcrumbDefinition[] = [];
 
   constructor(private breadcrumbService: BreadcrumbService) {
-    this.breadcrumbs$ = breadcrumbService.breadcrumbs$;
+    breadcrumbService.breadcrumbs$.subscribe(value => {
+      this.breadcrumbs = value;
+    });
   }
 }
 

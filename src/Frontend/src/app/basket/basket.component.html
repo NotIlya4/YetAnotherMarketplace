@@ -1,25 +1,15 @@
-<app-section-header class="d-block mb-3"></app-section-header>
+<app-section-header></app-section-header>
 
 <div class="container">
-  <div *ngIf="!basketItems">
-    There are no items in your basket
-  </div>
-  <ng-container *ngIf="basketItems">
-    <div class="">
-      <div class="row">
-        <div class="col-9 p-0 pe-4">
-          <app-basket-summary
-            [basketItems]="basketItems"
-            (minusPressed)="onMinusPressed($event)"
-            (plusPressed)="onPlusPressed($event)"
-            (removePressed)="onRemovePressed($event)"
-          ></app-basket-summary>
-        </div>
+  <div class="">
+    <div class="row">
+      <div class="col-9 p-0 pe-4">
+        <app-basket-summary [basketItems]="basketItems"></app-basket-summary>
+      </div>
 
-        <div class="col-3 p-0 ps-4 d-flex" style="flex-flow: column">
-          <app-order-totals></app-order-totals>
-        </div>
+      <div class="col-3 p-0 ps-4">
+        <app-order-totals [basketTotals]="basketTotals"></app-order-totals>
       </div>
     </div>
-  </ng-container>
+  </div>
 </div>

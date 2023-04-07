@@ -5,7 +5,7 @@ import {IProductsFiltering} from "../shared/services/products-service/products-f
 import {ProductsService} from "../shared/services/products-service/products.service";
 import {BrandsService} from "../shared/services/brands.service";
 import {ProductTypesService} from "../shared/services/product-types.service";
-import {PlaceholderSize} from "../shared/components/text-content-placeholder/placeholder-size";
+import {PlaceholderSize} from "../shared/components/placeholders/text-content-placeholder/placeholder-size";
 
 @Component({
   selector: 'app-shop',

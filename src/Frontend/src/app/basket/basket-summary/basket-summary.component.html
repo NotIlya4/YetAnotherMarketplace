@@ -1,5 +1,54 @@
-<div *ngIf="basketItems.length !== 0" class="" style="font-size: 1em">
-  <table class="table-responsive table-hover table">
+<ng-container *ngIf="!basketItems">
+  <table class="table-responsive table">
+    <thead class="text-center">
+    <tr>
+      <th scope="col" class="text-start">
+        <app-text-content-placeholder>Productttttttt</app-text-content-placeholder>
+      </th>
+      <th scope="col" class="">
+        <app-text-content-placeholder>Priceeeee</app-text-content-placeholder>
+      </th>
+      <th scope="col" class="">
+        <app-text-content-placeholder>Quantityyyyy</app-text-content-placeholder>
+      </th>
+      <th scope="col" class="">
+        <app-text-content-placeholder>Totalllllll</app-text-content-placeholder>
+      </th>
+      <th scope="col" class="w-auto">
+        <app-text-content-placeholder>Remove</app-text-content-placeholder>
+      </th>
+    </tr>
+    </thead>
+    <tbody class="table-group-divider align-middle text-center">
+    <tr *ngFor="let a of [1,2,3,4,5,6,7,8,9]">
+      <th class="text-start">
+        <div class="d-flex flex-nowrap">
+          <app-circle-placeholder style="width: 50px; height: 50px"></app-circle-placeholder>
+          <div class="ms-3 d-inline-block align-middle ps-2 d-flex flex-nowrap flex-column justify-content-center">
+            <app-text-content-placeholder>aaaaaaaaaaaaaaaaaaaaaaaaaaa</app-text-content-placeholder>
+            <app-text-content-placeholder class="text-muted" style="font-size: 0.8em">aaaaaaaaaaaaaaaaaaaaaaaaaaa</app-text-content-placeholder>
+          </div>
+        </div>
+      </th>
+      <td>
+        <app-text-content-placeholder>5000.00</app-text-content-placeholder>
+      </td>
+      <td>
+        <app-text-content-placeholder>aaaaaaaa</app-text-content-placeholder>
+      </td>
+      <td>
+        <app-text-content-placeholder>5000.00</app-text-content-placeholder>
+      </td>
+      <td>
+        <app-text-content-placeholder>aaaaa</app-text-content-placeholder>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</ng-container>
+
+<ng-container *ngIf="basketItems">
+  <table class="table-responsive table">
     <thead class="text-center">
     <tr>
       <th scope="col" class="text-start">
@@ -21,13 +70,13 @@
     </thead>
     <tbody class="table-group-divider align-middle text-center">
     <tr class="" *ngFor="let item of basketItems">
-      <th scope="row" class="text-start">
+      <th scope="row" class="text-start fw-normal">
         <div class="p-2 d-flex flex-nowrap" style="white-space: nowrap">
           <img src="{{item.product.pictureUrl}}" alt="{{item.product.name}}"
                class="img-fluid" style="max-height: 50px;">
           <div class="ms-3 d-inline-block align-middle">
-            <app-product-link [product]="item.product"></app-product-link>
-            <div class="text-muted" style="font-size: 0.8em">Type: {{item.product.productType}}</div>
+            <app-link [routerLink]="linkProvider.productDetailsLink(item.product.id)">{{item.product.name}}</app-link>
+            <div class="text-muted">Type: {{item.product.productType}}</div>
           </div>
         </div>
       </th>
@@ -36,24 +85,18 @@
       </td>
       <td class="" style="width: 160px">
         <div class="d-flex align-items-center justify-content-center">
-          <button class="p-0 invisible">
-            <fa-icon [icon]="minusCircleIcon" (click)="onMinusPressed(item)" class="visible table" style="font-size: 1.2em"></fa-icon>
-          </button>
+          <app-minus-icon appDecreaseProductsInBasket [product]="item.product" style="cursor: pointer;"></app-minus-icon>
           <span class="mx-2" style="">{{item.quantity}}</span>
-          <button class="p-0 invisible">
-            <fa-icon [icon]="plusCircleIcon" (click)="onPlusPressed(item)" class="visible table" style="font-size: 1.2em"></fa-icon>
-          </button>
+          <app-plus-icon appIncreaseProductsInBasket [product]="item.product" style="cursor: pointer;"></app-plus-icon>
         </div>
       </td>
       <td class="" style="width: 160px">
         {{item.product.price * item.quantity | currency}}
       </td>
       <td class="" style="width: 1%;">
-        <button class="p-0 invisible">
-          <fa-icon [icon]="trashIcon" (click)="onRemovePressed(item)" class="visible table" style="font-size: 1.2em"></fa-icon>
-        </button>
+        <app-trash-icon appRemoveProductsInBasket [product]="item.product" style="cursor: pointer;"></app-trash-icon>
       </td>
     </tr>
     </tbody>
   </table>
-</div>
+</ng-container>

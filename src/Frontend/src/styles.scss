@@ -16,5 +16,14 @@ table {
   margin-bottom: 0 !important;
 }
 
+hr {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';

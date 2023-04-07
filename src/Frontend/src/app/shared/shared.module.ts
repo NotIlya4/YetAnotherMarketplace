@@ -7,13 +7,19 @@ import { SearchComponent } from './components/search/search.component';
 import {FormsModule} from "@angular/forms";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {RouterLink} from "@angular/router";
-import {WordPlaceholderComponent} from "./components/word-placeholder/word-placeholder.component";
-import { TextContentPlaceholderComponent } from './components/text-content-placeholder/text-content-placeholder.component';
-import { LazyTextComponent } from './components/lazy-text/lazy-text.component';
+import { TextContentPlaceholderComponent } from './components/placeholders/text-content-placeholder/text-content-placeholder.component';
 import {TabComponent} from "./components/tab/tab.component";
 import { PrimaryButtonComponent } from './components/primary-button/primary-button.component';
-import { TextAutoPlaceholderComponent } from './components/text-auto-placeholder/text-auto-placeholder.component';
-import { ProductLinkComponent } from './components/product-link/product-link.component';
+import { TextAutoPlaceholderComponent } from './components/placeholders/text-auto-placeholder/text-auto-placeholder.component';
+import { CirclePlaceholderComponent } from './components/placeholders/circle-placeholder/circle-placeholder.component';
+import { ShoppingCardIconComponent } from './components/icons/shopping-card-icon/shopping-card-icon.component';
+import { LinkComponent } from './components/link/link.component';
+import { PlusIconComponent } from './components/icons/plus-icon/plus-icon.component';
+import { MinusIconComponent } from './components/icons/minus-icon/minus-icon.component';
+import { TrashIconComponent } from './components/icons/trash-icon/trash-icon.component';
+import { IncreaseProductsInBasketDirective } from './directives/increase-products-in-basket.directive';
+import { DecreaseProductsInBasketDirective } from './directives/decrease-products-in-basket.directive';
+import { RemoveProductsInBasketDirective } from './directives/remove-products-in-basket.directive';
 
 
 @NgModule({
@@ -21,33 +27,45 @@ import { ProductLinkComponent } from './components/product-link/product-link.com
     PagingHeaderComponent,
     PagerComponent,
     SearchComponent,
-    WordPlaceholderComponent,
     TextContentPlaceholderComponent,
-    LazyTextComponent,
     TabComponent,
     PrimaryButtonComponent,
     TextAutoPlaceholderComponent,
-    ProductLinkComponent
+    CirclePlaceholderComponent,
+    ShoppingCardIconComponent,
+    LinkComponent,
+    PlusIconComponent,
+    MinusIconComponent,
+    TrashIconComponent,
+    IncreaseProductsInBasketDirective,
+    DecreaseProductsInBasketDirective,
+    RemoveProductsInBasketDirective
   ],
-  imports: [
-    CommonModule,
-    NgbPaginationModule,
-    FormsModule,
-    FontAwesomeModule,
-    RouterLink
-  ],
+    imports: [
+      CommonModule,
+      NgbPaginationModule,
+      FormsModule,
+      FontAwesomeModule,
+      RouterLink,
+    ],
   exports: [
     NgbPaginationModule,
     PagingHeaderComponent,
     PagerComponent,
     SearchComponent,
-    WordPlaceholderComponent,
-    LazyTextComponent,
     TextContentPlaceholderComponent,
     TabComponent,
     PrimaryButtonComponent,
     TextAutoPlaceholderComponent,
-    ProductLinkComponent
+    CirclePlaceholderComponent,
+    ShoppingCardIconComponent,
+    LinkComponent,
+    PlusIconComponent,
+    MinusIconComponent,
+    TrashIconComponent,
+    IncreaseProductsInBasketDirective,
+    DecreaseProductsInBasketDirective,
+    RemoveProductsInBasketDirective
   ]
 })
 export class SharedModule { }
