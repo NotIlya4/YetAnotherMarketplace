@@ -27,11 +27,11 @@ export class Basket {
     return this._items;
   }
 
-  public increaseProduct(product: IProduct): void {
+  public increaseProduct(product: IProduct, amountToIncrease: number = 1): void {
     const index: number = this.findItemIndex(product);
 
     if (index !== -1) {
-      this._items[index].quantity = this._items[index].quantity + 1;
+      this._items[index].quantity = this._items[index].quantity + amountToIncrease;
     } else {
       this._items.push({product, quantity: 1});
     }

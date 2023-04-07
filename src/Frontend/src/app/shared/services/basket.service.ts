@@ -27,7 +27,7 @@ export class BasketService {
 
   public get basketTotals$(): Observable<IBasketTotals> {
     return this.basketSource.asObservable().pipe(map(b => {
-      const subtotal = b.items.map(i => i.product.price * i.quantity).reduce((acc, cur) => acc + cur);
+      const subtotal = b.items.map(i => i.product.price * i.quantity).reduce((acc, cur) => acc + cur, 0);
       const shipping = 10;
       const total = subtotal + shipping;
       return {subtotal, shipping, total};
@@ -39,8 +39,8 @@ export class BasketService {
     this.basketSource.next(this.getBasketFromLocalStorageOrCreateNew());
   }
 
-  public increaseProduct(product: IProduct): void {
-    this.basket.increaseProduct(product);
+  public increaseProduct(product: IProduct, amountToIncrease: number = 1): void {
+    this.basket.increaseProduct(product, amountToIncrease);
     this.setBasketToLocalStorage(this.basket);
   }
 
