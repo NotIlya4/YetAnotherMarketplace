@@ -27,12 +27,12 @@ export class ProductsService {
       });
     }
 
-    if (filtering.productTypeName){
-      httpParams = httpParams.append('productTypeName', filtering.productTypeName);
+    if (filtering.productType){
+      httpParams = httpParams.append('productType', filtering.productType);
     }
 
-    if (filtering.brandName){
-      httpParams = httpParams.append('brandName', filtering.brandName);
+    if (filtering.brand){
+      httpParams = httpParams.append('brand', filtering.brand);
     }
 
     if (filtering.searching){

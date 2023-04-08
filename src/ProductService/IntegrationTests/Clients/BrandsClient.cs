@@ -11,12 +11,10 @@ public class BrandsClient
         Client = client;
     }
     
-    public async Task<JObject> PostNewBrand(string brandName)
+    public async Task Add(string brandName)
     {
         HttpResponseMessage response = await Client.PostAsync($"api/brands/{brandName}");
         response.EnsureSuccessStatusCode();
-        
-        return await response.ExtractJObject();
     }
 
     public async Task<JArray> GetBrands()
@@ -27,7 +25,7 @@ public class BrandsClient
         return await response.ExtractJArray();
     }
     
-    public async Task DeleteBrand(string brandName)
+    public async Task Delete(string brandName)
     {
         HttpResponseMessage response = await Client.DeleteAsync($"api/brands/{brandName}");
         response.EnsureSuccessStatusCode();

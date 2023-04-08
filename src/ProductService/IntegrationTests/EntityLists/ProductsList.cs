@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Primitives;
+using Infrastructure.EntityFramework;
 using Infrastructure.EntityFramework.Models;
 using Newtonsoft.Json.Linq;
 
@@ -8,16 +9,24 @@ namespace IntegrationTests.EntityLists;
 public class ProductsList
 {
     public Product IPhone13 { get; }
+    public ProductData IPhone13Data { get; }
     public JObject IPhone13JObject { get; }
+    
     public Product IPhone13ProMax { get; }
+    public ProductData IPhone13ProMaxData { get; }
     public JObject IPhone13ProMaxJObject { get; }
+    
     public Product BigMac { get; }
+    public ProductData BigMacData { get; }
     public JObject BigMacJObject { get; }
 
     public Product IBurger { get; }
+    public ProductData IBurgerData { get; }
     public JObject IBurgerJObject { get; }
-    public Product QuerterPounder { get; }
-    public JObject QuerterPounderJObject { get; }
+    
+    public Product QuarterPounder { get; }
+    public ProductData QuarterPounderData { get; }
+    public JObject QuarterPounderJObject { get; }
 
     public IReadOnlyList<Product> Products { get; }
     public IReadOnlyList<ProductData> ProductDatas { get; }
@@ -25,6 +34,8 @@ public class ProductsList
 
     public ProductsList(BrandsList brandsList, ProductTypesList productTypesList)
     {
+        DataMapper mapper = new();
+        
         IPhone13 = new Product(
             id: new Guid("08c8d6f4-4441-4b49-8e0b-e9d3f966f4dc"),
             name: new Name("iPhone 13"),
@@ -37,6 +48,7 @@ public class ProductsList
                 "https://www.apple.com/v/iphone-13/a/images/overview/hero/iphone_13_overview_hero__iwjco3lsqxi6_large.jpg"),
             productType: productTypesList.Smartphone,
             brand: brandsList.Apple);
+        IPhone13Data = mapper.MapProduct(IPhone13, productTypesList.SmartphoneData, brandsList.AppleData);
         IPhone13JObject = new JObject()
         {
             ["id"] = "08c8d6f4-4441-4b49-8e0b-e9d3f966f4dc",
@@ -64,6 +76,7 @@ public class ProductsList
             pictureUrl: new Uri("https://www.apple.com/v/iphone-13-pro/a/images/overview/hero/iphone_13_pro_overview_hero__b03xtql92rg6_large.jpg"),
             productType: productTypesList.Smartphone,
             brand: brandsList.Apple);
+        IPhone13ProMaxData = mapper.MapProduct(IPhone13ProMax, productTypesList.SmartphoneData, brandsList.AppleData);
         IPhone13ProMaxJObject = new JObject()
         {
             ["id"] = "8a29718b-2bed-4291-8464-0b928f7c0484",
@@ -91,6 +104,7 @@ public class ProductsList
                 "https://www.mcdonalds.com/is/image/content/dam/usa/nfl/assets/img/menu/hero/hero-our-food-big-mac.jpg"),
             productType: productTypesList.Burger,
             brand: brandsList.McDonalds);
+        BigMacData = mapper.MapProduct(BigMac, productTypesList.BurgerData, brandsList.McDonaldsData);
         BigMacJObject = new JObject()
         {
             ["id"] = "0a946eb1-bdf1-47d7-a675-ec65a3c74715",
@@ -115,6 +129,7 @@ public class ProductsList
             pictureUrl: new Uri("https://www.example.com/iburger.jpg"),
             productType: productTypesList.Burger,
             brand: brandsList.Apple);
+        IBurgerData = mapper.MapProduct(IBurger, productTypesList.BurgerData, brandsList.AppleData);
         IBurgerJObject = new JObject()
         {
             ["id"] = "70f4edc3-5cca-4763-bd5d-1e8e33505405",
@@ -128,7 +143,7 @@ public class ProductsList
         };
 
 
-        QuerterPounder = new Product(
+        QuarterPounder = new Product(
             id: new Guid("3fa33b0e-467a-420e-a479-cb43164fec70"),
             name: new Name("Quarter Pounder with Cheese"),
             description: new Description(
@@ -139,7 +154,8 @@ public class ProductsList
                                 "Cheese-Extra-Value-Meals-Extra-Value-Meals.png?$Product_Desktop$"),
             productType: productTypesList.Burger,
             brand: brandsList.McDonalds);
-        QuerterPounderJObject = new JObject()
+        QuarterPounderData = mapper.MapProduct(QuarterPounder, productTypesList.BurgerData, brandsList.McDonaldsData);
+        QuarterPounderJObject = new JObject()
         {
             ["id"] = "3fa33b0e-467a-420e-a479-cb43164fec70",
             ["name"] = "Quarter Pounder with Cheese",
@@ -159,10 +175,17 @@ public class ProductsList
             IBurger,
             IPhone13,
             IPhone13ProMax,
-            QuerterPounder
+            QuarterPounder
         };
-        
-        ProductDatas = Products.Select(ProductData.FromDomain).ToList();
+
+        ProductDatas = new List<ProductData>()
+        {
+            BigMacData,
+            IBurgerData,
+            IPhone13Data,
+            IPhone13ProMaxData,
+            QuarterPounderData
+        };
 
         ProductsJArray = new JArray()
         {
@@ -170,7 +193,7 @@ public class ProductsList
             IBurgerJObject,
             IPhone13JObject,
             IPhone13ProMaxJObject,
-            QuerterPounderJObject
+            QuarterPounderJObject
         };
     }
 }

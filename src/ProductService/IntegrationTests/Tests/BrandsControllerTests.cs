@@ -34,11 +34,10 @@ public class BrandsControllerTests
     {
         string newBrand = "Barbie";
 
-        JObject postBrandResponse = await Client.PostNewBrand(newBrand);
-        Assert.Equal(newBrand, postBrandResponse.String("name"));
+        await Client.Add(newBrand);
 
         List<JToken> expectBrandsInDb = new JArray(InitialDb).ToList();
-        expectBrandsInDb.Insert(1, postBrandResponse);
+        expectBrandsInDb.Insert(1, newBrand);
         
         List<JToken> brandsInDb = (await Client.GetBrands()).ToList();
         Assert.Equal(expectBrandsInDb, brandsInDb);
@@ -49,8 +48,8 @@ public class BrandsControllerTests
     [Fact]
     public async Task DeleteBrand_DeleteBrand()
     {
-        await Client.PostNewBrand("Sony");
-        await Client.DeleteBrand("Sony");
+        await Client.Add("Sony");
+        await Client.Delete("Sony");
         JArray brandsAfterDelete = await Client.GetBrands();
         
         Assert.Equal(InitialDb, brandsAfterDelete);

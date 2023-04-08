@@ -27,30 +27,17 @@ public class DbSeeder
     {
         dbContext.Brands.AddRange(brandDatas);
         dbContext.SaveChanges();
-        dbContext.ChangeTracker.Clear();
     }
 
     private void SeedProductTypes(ApplicationDbContext dbContext, IEnumerable<ProductTypeData> productTypeDatas)
     {
         dbContext.ProductTypes.AddRange(productTypeDatas);
         dbContext.SaveChanges();
-        dbContext.ChangeTracker.Clear();
     }
 
     private void SeedProducts(ApplicationDbContext dbContext, IEnumerable<ProductData> productDatas)
     {
-        productDatas = productDatas.ToList();
-        foreach (var productData in productDatas)
-        {
-            BrandData brandData = dbContext.Brands.First(b => b.Id == productData.Brand.Id);
-            ProductTypeData productTypeData = dbContext.ProductTypes.First(pt => pt.Id == productData.ProductType.Id);
-        
-            productData.Brand = brandData;
-            productData.ProductType = productTypeData;
-        }
-
         dbContext.Products.AddRange(productDatas);
         dbContext.SaveChanges();
-        dbContext.ChangeTracker.Clear();
     }
 }

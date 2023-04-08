@@ -1,5 +1,5 @@
 ﻿export interface IProductsFiltering {
-  productTypeName?: string,
-  brandName?: string,
+  productType?: string,
+  brand?: string,
   searching?: string
 }

@@ -30,7 +30,7 @@ public class DeleteProductsControllerTests
             ProductsList.BigMacJObject,
             ProductsList.IBurgerJObject,
             ProductsList.IPhone13ProMaxJObject,
-            ProductsList.QuerterPounderJObject,
+            ProductsList.QuarterPounderJObject,
         };
 
         await Client.DeleteProduct("name", AppFixture.ProductsList.IPhone13.Name.ToString());
@@ -53,7 +53,7 @@ public class DeleteProductsControllerTests
             ProductsList.IPhone13ProMaxJObject,
         };
 
-        await Client.DeleteProduct("id", AppFixture.ProductsList.QuerterPounder.Id.ToString());
+        await Client.DeleteProduct("id", AppFixture.ProductsList.QuarterPounder.Id.ToString());
         
         JArray products = await Client.GetProducts(new GetProductsQueryView() { Offset = 0, Limit = 50 });
         

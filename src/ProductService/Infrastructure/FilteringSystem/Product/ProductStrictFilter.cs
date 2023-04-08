@@ -2,12 +2,13 @@
 
 public class ProductStrictFilter : IStrictFilter
 {
-    public string PropertyName { get; }
+    public ProductStrictFilterProperty Property { get; }
+    public string PropertyName => Property.ToString();
     public string ExpectedValue { get; }
 
     public ProductStrictFilter(ProductStrictFilterProperty productProperty, string expectedValue)
     {
-        PropertyName = productProperty.ToString();
+        Property = productProperty;
         ExpectedValue = expectedValue;
     }
 

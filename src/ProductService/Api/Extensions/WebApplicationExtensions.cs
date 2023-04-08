@@ -19,4 +19,9 @@ public static class WebApplicationExtensions
             dbContext.Database.Migrate();
         }
     }
+
+    public static void UseConfiguredCors(this WebApplication applicationBuilder)
+    {
+        applicationBuilder.UseCors("All");
+    }
 }

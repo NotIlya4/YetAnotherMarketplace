@@ -27,23 +27,27 @@ public class AppFixture : ICollectionFixture<AppFixture>, IDisposable
             builder.UseEnvironment("IntegrationTests");
         });
         Client = WebApplicationFactory.CreateClient();
-        
-        ApplicationDbContext dbContext = WebApplicationFactory.Services.GetRequiredService<ApplicationDbContext>();
+
+        var scope = WebApplicationFactory.Services.CreateScope();
+        ApplicationDbContext dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         dbContext.Database.EnsureDeleted();
         WebApplicationFactory.Services.ApplyMigrations();
         
         DbSeeder seeder = new(BrandsList.BrandDatas, ProductTypesList.ProductTypeDatas, ProductsList.ProductDatas);
         seeder.Seed(dbContext);
+        scope.Dispose();
     }
 
     public async Task ReloadDb()
     {
-        ApplicationDbContext dbContext = WebApplicationFactory.Services.GetRequiredService<ApplicationDbContext>();
+        var scope = WebApplicationFactory.Services.CreateScope();
+        ApplicationDbContext dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         await dbContext.Database.EnsureDeletedAsync();
         WebApplicationFactory.Services.ApplyMigrations();
         
         DbSeeder seeder = new(BrandsList.BrandDatas, ProductTypesList.ProductTypeDatas, ProductsList.ProductDatas);
         seeder.Seed(dbContext);
+        scope.Dispose();
     }
 
     public void Dispose()

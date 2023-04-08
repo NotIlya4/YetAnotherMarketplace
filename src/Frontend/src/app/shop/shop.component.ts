@@ -42,14 +42,14 @@ export class ShopComponent implements OnInit{
   }
 
   getProducts(){
-    const productTypeName: undefined | string = this.selectedProductType === 'All' ? undefined : this.selectedProductType;
-    const brandName: undefined | string = this.selectedBrand === 'All' ? undefined : this.selectedBrand;
+    const productType: undefined | string = this.selectedProductType === 'All' ? undefined : this.selectedProductType;
+    const brand: undefined | string = this.selectedBrand === 'All' ? undefined : this.selectedBrand;
 
     const pagination: Pagination = Pagination.fromCurrentPagePageSize(this.currentPage, this.pageSize);
 
     const filtering: IProductsFiltering = {
-      productTypeName,
-      brandName,
+      productType: productType,
+      brand: brand,
       searching: this.productSearch
     };
 

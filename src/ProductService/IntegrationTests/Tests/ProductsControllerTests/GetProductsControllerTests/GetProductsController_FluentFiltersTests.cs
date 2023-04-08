@@ -44,7 +44,7 @@ public class GetProductsController_FluentFiltersTests
             ProductsList.IPhone13ProMaxJObject,
         };
         
-        JArray products = await Client.GetProducts(new GetProductsQueryView() { Offset = 0, Limit = 50, BrandName = "Apple"});
+        JArray products = await Client.GetProducts(new GetProductsQueryView() { Offset = 0, Limit = 50, Brand = "Apple"});
 
         Assert.Equal(expect, products);
     }
@@ -56,10 +56,10 @@ public class GetProductsController_FluentFiltersTests
         {
             ProductsList.BigMacJObject,
             ProductsList.IBurgerJObject,
-            ProductsList.QuerterPounderJObject,
+            ProductsList.QuarterPounderJObject,
         };
 
-        JArray products = await Client.GetProducts(new GetProductsQueryView() { Offset = 0, Limit = 50, ProductTypeName = "Burger"});
+        JArray products = await Client.GetProducts(new GetProductsQueryView() { Offset = 0, Limit = 50, ProductType = "Burger"});
 
         Assert.Equal(expect, products);
     }
@@ -73,7 +73,7 @@ public class GetProductsController_FluentFiltersTests
         };
 
         JArray products = await Client.GetProducts(new GetProductsQueryView()
-            { Offset = 0, Limit = 50, ProductTypeName = "Burger", BrandName = "Apple" });
+            { Offset = 0, Limit = 50, ProductType = "Burger", Brand = "Apple" });
 
         Assert.Equal(expect, products);
     }
@@ -115,7 +115,7 @@ public class GetProductsController_FluentFiltersTests
         };
 
         JArray products = await Client.GetProducts(new GetProductsQueryView()
-            { Offset = 1, Limit = 1, BrandName = "Apple", Searching = "iPhone" });
+            { Offset = 1, Limit = 1, Brand = "Apple", Searching = "iPhone" });
 
         Assert.Equal(expect, products);
     }

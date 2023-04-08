@@ -1,40 +1,20 @@
-﻿using Api.Swagger.Enrichers.Product;
-using Domain.Entities;
+﻿using Api.SwaggerEnrichers.ProductView;
 
 namespace Api.Controllers.ProductsControllers.Views;
 
-public class ProductView
+public record ProductView
 {
-    public required Guid Id { get; set; }
+    public required Guid Id { get; init; }
     [ProductName]
-    public required string Name { get; set; }
+    public required string Name { get; init; }
     [ProductDescription]
-    public required string Description { get; set; }
+    public required string Description { get; init; }
     [ProductPrice]
-    public required decimal Price { get; set; }
+    public required decimal Price { get; init; }
     [ProductPictureUrl]
-    public required Uri PictureUrl { get; set; }
+    public required Uri PictureUrl { get; init; }
     [ProductType]
-    public required string ProductType { get; set; }
+    public required string ProductType { get; init; }
     [ProductBrandName]
-    public required string Brand { get; set; }
-
-    public static ProductView FromDomain(Product product)
-    {
-        return new ProductView()
-        {
-            Id = product.Id,
-            Name = product.Name.Value,
-            Description = product.Description.Value,
-            Price = product.Price.Value,
-            PictureUrl = product.PictureUrl,
-            ProductType = product.ProductType.Name.Value,
-            Brand = product.Brand.Name.Value,
-        };
-    }
-
-    public static List<ProductView> FromDomain(IEnumerable<Product> product)
-    {
-        return product.Select(FromDomain).ToList();
-    }
+    public required string Brand { get; init; }
 }

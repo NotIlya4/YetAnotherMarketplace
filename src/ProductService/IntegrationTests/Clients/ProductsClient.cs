@@ -36,8 +36,8 @@ public class ProductsClient
             }
         }
 
-        queryStringDict.Add(new("productTypeName", getProductsQueryView.ProductTypeName));
-        queryStringDict.Add(new("brandName", getProductsQueryView.BrandName));
+        queryStringDict.Add(new("productType", getProductsQueryView.ProductType));
+        queryStringDict.Add(new("brand", getProductsQueryView.Brand));
         queryStringDict.Add(new("searching", getProductsQueryView.Searching));
 
         string? queryString = QueryString.Create(queryStringDict).Value;

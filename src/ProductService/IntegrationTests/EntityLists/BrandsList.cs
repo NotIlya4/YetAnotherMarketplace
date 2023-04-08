@@ -1,5 +1,4 @@
-﻿using Domain.Entities;
-using Domain.Primitives;
+﻿using Domain.Primitives;
 using Infrastructure.EntityFramework.Models;
 using Newtonsoft.Json.Linq;
 
@@ -7,35 +6,44 @@ namespace IntegrationTests.EntityLists;
 
 public class BrandsList
 {
-    public Brand Apple { get; }
-    public JObject AppleJObject { get; }
-    public Brand McDonalds { get; }
-    public JObject McDonaldsJObject { get; }
+    public Name Apple { get; }
+    public BrandData AppleData { get; }
+    
+    public Name McDonalds { get; }
+    public BrandData McDonaldsData { get; }
 
-    public IReadOnlyList<Brand> Brands { get; }
+    public IReadOnlyList<Name> Brands { get; }
     public IReadOnlyList<BrandData> BrandDatas { get; }
     public JArray BrandsJArray { get; }
 
     public BrandsList()
     {
-        Apple = new(new Guid("2d15e347-cf3d-4d8c-bdd7-c65f22e653f4"), new Name("Apple"));
-        AppleJObject = new JObject() { ["id"] = "2d15e347-cf3d-4d8c-bdd7-c65f22e653f4", ["name"] = "Apple" };
-        
-        McDonalds = new(new Guid("aa7fe749-2e4b-45c4-b3f7-49c6f30d7d10"), new Name("McDonald's"));
-        McDonaldsJObject = new JObject() { ["id"] = "aa7fe749-2e4b-45c4-b3f7-49c6f30d7d10", ["name"] = "McDonald's" };
+        string appleId = "2d15e347-cf3d-4d8c-bdd7-c65f22e653f4";
+        string appleName = "Apple";
+        Apple = new Name(appleName);
+        AppleData = new BrandData() { Id = appleId, Name = appleName };
 
-        Brands = new List<Brand>()
+        string mcDonaldsId = "aa7fe749-2e4b-45c4-b3f7-49c6f30d7d10";
+        string mcDonaldsName = "McDonald's";
+        McDonalds = new Name(mcDonaldsName);
+        McDonaldsData = new BrandData() { Id = mcDonaldsId, Name = mcDonaldsName };
+
+        Brands = new List<Name>()
         {
             Apple,
             McDonalds
         };
-        
-        BrandDatas = Brands.Select(BrandData.FromDomain).ToList();
+
+        BrandDatas = new List<BrandData>()
+        {
+            AppleData,
+            McDonaldsData
+        };
 
         BrandsJArray = new JArray()
         {
-            AppleJObject,
-            McDonaldsJObject
+            appleName,
+            mcDonaldsName
         };
     }
 }

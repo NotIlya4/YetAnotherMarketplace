@@ -1,18 +1,19 @@
+using Domain.Interfaces;
 using Domain.Primitives;
 
 namespace Domain.Entities;
 
-public class Product
+public record Product : IEntityComparable<Product>
 {
-    public Guid Id { get; set; }
-    public Name Name { get; set; }
-    public Description Description { get; set; }
-    public Price Price { get; set; }
-    public Uri PictureUrl { get; set; }
-    public ProductType ProductType { get; set; }
-    public Brand Brand { get; set; }
+    public Guid Id { get; }
+    public Name Name { get; }
+    public Description Description { get; }
+    public Price Price { get; }
+    public Uri PictureUrl { get; }
+    public Name ProductType { get; }
+    public Name Brand { get; }
 
-    public Product(Guid id, Name name, Description description, Price price, Uri pictureUrl, ProductType productType, Brand brand)
+    public Product(Guid id, Name name, Description description, Price price, Uri pictureUrl, Name productType, Name brand)
     {
         Id = id;
         Name = name;
@@ -21,5 +22,10 @@ public class Product
         PictureUrl = pictureUrl;
         ProductType = productType;
         Brand = brand;
+    }
+
+    public bool EqualId(Product entity)
+    {
+        return Id.Equals(entity.Id);
     }
 }

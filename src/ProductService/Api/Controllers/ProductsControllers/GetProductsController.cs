@@ -1,10 +1,12 @@
-using Api.Controllers.Attributes;
+using Api.Controllers.ProductsControllers.Helpers;
 using Api.Controllers.ProductsControllers.Views;
+using Api.ProducesAttributes;
+using Api.SwaggerEnrichers.ProductStrictFilterView;
 using Domain.Entities;
 using Domain.Primitives;
 using Infrastructure.FilteringSystem;
 using Infrastructure.FilteringSystem.Product;
-using Infrastructure.Services.ProductService;
+using Infrastructure.ProductService;
 using Infrastructure.SortingSystem.Product;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,11 +15,15 @@ namespace Api.Controllers.ProductsControllers;
 [Tags("Products")]
 public class GetProductsController : ProductsControllerBase
 {
-    private readonly SortingInfoParser _sortingInfoParser;
+    private IProductService ProductService { get; }
+    private ViewMapper Mapper { get; }
+    private SortingInfoParser SortingInfoParser { get; }
 
-    public GetProductsController(IProductService productService, SortingInfoParser sortingInfoParser) : base(productService)
+    public GetProductsController(IProductService productService, ViewMapper mapper, SortingInfoParser sortingInfoParser)
     {
-        _sortingInfoParser = sortingInfoParser;
+        ProductService = productService;
+        Mapper = mapper;
+        SortingInfoParser = sortingInfoParser;
     }
 
     [HttpGet]
@@ -28,15 +34,15 @@ public class GetProductsController : ProductsControllerBase
         {
             Pagination = new Pagination(offset: queryView.Offset, limit: queryView.Limit),
             SortingCollection = 
-                new ProductSortingCollection(_sortingInfoParser.ParseProductSortingInfo(queryView.Sortings ?? new List<string>())),
+                new ProductSortingCollection(SortingInfoParser.ParseProductSortingInfo(queryView.Sortings ?? new List<string>())),
             FluentFilters = new ProductFluentFilters(
-                productTypeName: queryView.ProductTypeName is null ? null : new Name(queryView.ProductTypeName),
-                brandName: queryView.BrandName is null ? null : new Name(queryView.BrandName),
+                productTypeName: queryView.ProductType is null ? null : new Name(queryView.ProductType),
+                brandName: queryView.Brand is null ? null : new Name(queryView.Brand),
                 searching: queryView.Searching is null ? null : new Name(queryView.Searching))
         };
 
         GetProductsResult result = await ProductService.GetProducts(query);
-        List<ProductView> productViews = ProductView.FromDomain(result.Products);
+        List<ProductView> productViews = Mapper.MapProduct(result.Products);
         
         return Ok(new GetProductsResultView()
         {
@@ -46,13 +52,15 @@ public class GetProductsController : ProductsControllerBase
     }
 
     [HttpGet]
-    [Route("{propertyName}/{value}", Name = nameof(GetProduct))]
+    [Route("{propertyName}/{value}")]
     [ProducesOk]
-    [ProducesProductNotFound]
-    public async Task<ActionResult<ProductView>> GetProduct(string propertyName, string value)
+    [ProducesEntityNotFound]
+    public async Task<ActionResult<ProductView>> GetProduct([ProductStrictFilterPropertyName] string propertyName, string value)
     {
-        Product productDto = await ProductService.GetProduct(new ProductStrictFilter(propertyName, value));
-        ProductView productView = ProductView.FromDomain(productDto);
+        Product product = await ProductService.GetProduct(new ProductStrictFilter(
+            productPropertyName: propertyName, 
+            expectedValue: value));
+        ProductView productView = Mapper.MapProduct(product);
         return Ok(productView);
     }
 }

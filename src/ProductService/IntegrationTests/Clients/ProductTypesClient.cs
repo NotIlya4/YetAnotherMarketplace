@@ -11,12 +11,10 @@ public class ProductTypesClient
         Client = client;
     }
     
-    public async Task<JObject> PostNewProductType(string productTypeName)
+    public async Task Add(string productTypeName)
     {
         HttpResponseMessage response = await Client.PostAsync($"api/product-types/{productTypeName}");
         response.EnsureSuccessStatusCode();
-        
-        return await response.ExtractJObject();
     }
 
     public async Task<JArray> GetProductTypes()
@@ -27,7 +25,7 @@ public class ProductTypesClient
         return await response.ExtractJArray();
     }
     
-    public async Task DeleteProductType(string productTypeName)
+    public async Task Delete(string productTypeName)
     {
         HttpResponseMessage response = await Client.DeleteAsync($"api/product-types/{productTypeName}");
         response.EnsureSuccessStatusCode();

@@ -31,9 +31,4 @@ public class ParametersProvider
     {
         return Configuration.GetSection(parameterName).Get<T>() ?? throw new ParameterNotFoundException(parameterName);
     }
-    
-    private T? GetParameter<T>(string parameterName)
-    {
-        return Configuration.GetSection(parameterName).Get<T>();
-    }
 }

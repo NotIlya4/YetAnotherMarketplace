@@ -43,8 +43,6 @@ public class CreateProductsControllerTests
         
         Assert.Equal(expectProducts, products);
 
-        await Client.DeleteProduct("id", newProduct.String("id"));
-
         await AppFixture.ReloadDb();
     }
 }

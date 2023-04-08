@@ -24,7 +24,7 @@ public class GetProductsController_SortingTests
     {
         JArray expect = new()
         {
-            AppFixture.ProductsList.QuerterPounderJObject,
+            AppFixture.ProductsList.QuarterPounderJObject,
             AppFixture.ProductsList.IPhone13ProMaxJObject,
             AppFixture.ProductsList.IPhone13JObject,
             AppFixture.ProductsList.IBurgerJObject,
@@ -42,7 +42,7 @@ public class GetProductsController_SortingTests
         JArray expect = new()
         {
             AppFixture.ProductsList.BigMacJObject,
-            AppFixture.ProductsList.QuerterPounderJObject,
+            AppFixture.ProductsList.QuarterPounderJObject,
             AppFixture.ProductsList.IBurgerJObject,
             AppFixture.ProductsList.IPhone13JObject,
             AppFixture.ProductsList.IPhone13ProMaxJObject,
@@ -61,7 +61,7 @@ public class GetProductsController_SortingTests
             AppFixture.ProductsList.IPhone13ProMaxJObject,
             AppFixture.ProductsList.IPhone13JObject,
             AppFixture.ProductsList.IBurgerJObject,
-            AppFixture.ProductsList.QuerterPounderJObject,
+            AppFixture.ProductsList.QuarterPounderJObject,
             AppFixture.ProductsList.BigMacJObject,
         };
         

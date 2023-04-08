@@ -1,4 +1,4 @@
-﻿using Infrastructure.EntityFramework.Models;
+﻿using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
@@ -6,8 +6,8 @@ namespace Infrastructure.Repositories.Extensions;
 
 public static class DbContextExtensions
 {
-    public static EntityEntry<TEntity> SetEntry<TEntity>(this DbContext dbContext,
-        TEntity entity) where TEntity : class, IEntity<TEntity>
+    public static void DeleteEntry<TEntity>(this DbContext dbContext, TEntity entity)
+        where TEntity : class, IEntityComparable<TEntity>
     {
         EntityEntry<TEntity>? entry = dbContext.ChangeTracker.Entries<TEntity>()
             .FirstOrDefault(e => e.Entity.EqualId(entity));
@@ -16,7 +16,12 @@ public static class DbContextExtensions
         {
             entry.State = EntityState.Detached;
         }
+    }
 
-        return dbContext.Entry(entity);
+    public static void SetEntry<TEntity>(this DbContext dbContext, TEntity entity)
+        where TEntity : class, IEntityComparable<TEntity>
+    {
+        dbContext.DeleteEntry(entity);
+        dbContext.Entry(entity).State = EntityState.Unchanged;
     }
 }

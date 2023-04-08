@@ -9,21 +9,14 @@ ParametersProvider parametersProvider = new(builder.Configuration);
 services.AddServices();
 services.AddSingleton(parametersProvider);
 services.AddRepositories();
+services.AddMappers();
 services.AddAppDbContext(parametersProvider.GetConnectionString());
 services.AddExceptionCatcherMiddlewareServicesConfigured();
 services.AddControllers()
     .AddXmlDataContractSerializerFormatters();
 services.AddEndpointsApiExplorer();
 services.AddConfiguredSwaggerGen();
-services.AddCors(options =>
-{
-    options.AddPolicy("All", policyBuilder =>
-    {
-        policyBuilder.AllowAnyHeader();
-        policyBuilder.AllowAnyMethod();
-        policyBuilder.AllowAnyOrigin();
-    });
-});
+services.AddConfiguredCors();
 
 var app = builder.Build();
 
@@ -32,7 +25,7 @@ if (parametersProvider.AutoApplyMigrations())
     app.ApplyMigrations();
 }
 
-app.UseCors("All");
+app.UseConfiguredCors();
 app.UseExceptionCatcherMiddleware();
 app.UseSwagger();
 app.UseSwaggerUI();

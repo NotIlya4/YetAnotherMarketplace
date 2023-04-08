@@ -1,34 +1,19 @@
-﻿using Api.Swagger.Enrichers.Product;
-using Domain.Primitives;
-using Infrastructure.Services.ProductService;
+﻿using Api.SwaggerEnrichers.ProductView;
 
 namespace Api.Controllers.ProductsControllers.Views;
 
-public class CreateProductCommandView
+public record CreateProductCommandView
 {
     [ProductName]
-    public required string Name { get; set; }
+    public required string Name { get; init; }
     [ProductDescription]
-    public required string Description { get; set; }
+    public required string Description { get; init; }
     [ProductPrice]
-    public required decimal Price { get; set; }
+    public required decimal Price { get; init; }
     [ProductPictureUrl]
-    public required Uri PictureUrl { get; set; }
+    public required Uri PictureUrl { get; init; }
     [ProductType]
-    public required string ProductType { get; set; }
+    public required string ProductType { get; init; }
     [ProductBrandName]
-    public required string Brand { get; set; }
-    
-    public CreateProductCommand ToCreateProductDto()
-    {
-        return new CreateProductCommand()
-        {
-            Name = new Name(Name),
-            Description = new Description(Description),
-            Price = new Price(Price),
-            PictureUrl = PictureUrl,
-            ProductTypeName = new Name(ProductType),
-            BrandName = new Name(Brand)
-        };
-    }
+    public required string Brand { get; init; }
 }

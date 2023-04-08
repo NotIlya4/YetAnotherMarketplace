@@ -1,33 +1,11 @@
-﻿using Domain.Entities;
-using Domain.Primitives;
+﻿using Domain.Interfaces;
 
 namespace Infrastructure.EntityFramework.Models;
 
-public class BrandData : IEntity<BrandData>
+public record BrandData : IEntityComparable<BrandData>
 {
-    public required string Id { get; set; }
-    public required string Name { get; set; }
-
-    public Brand ToDomain()
-    {
-        return new Brand(
-            id: new Guid(Id),
-            name: new Name(Name));
-    }
-
-    public static BrandData FromDomain(Brand brand)
-    {
-        return new BrandData()
-        {
-            Id = brand.Id.ToString(),
-            Name = brand.Name.Value
-        };
-    }
-
-    public static List<BrandData> FromDomain(IEnumerable<Brand> brands)
-    {
-        return brands.Select(FromDomain).ToList();
-    }
+    public required string Id { get; init; }
+    public required string Name { get; init; }
 
     public bool EqualId(BrandData entity)
     {

@@ -34,11 +34,10 @@ public class ProductTypesControllerTests
     {
         string newProductType = "Door";
 
-        JObject postProductTypeResponse = await Client.PostNewProductType(newProductType);
-        Assert.Equal(newProductType, postProductTypeResponse.String("name"));
+        await Client.Add(newProductType);
 
         List<JToken> expectProductTypesInDb = new JArray(InitialDb).ToList();
-        expectProductTypesInDb.Insert(1, postProductTypeResponse);
+        expectProductTypesInDb.Insert(1, newProductType);
         
         List<JToken> productTypesInDb = (await Client.GetProductTypes()).ToList();
         Assert.Equal(expectProductTypesInDb, productTypesInDb);
@@ -49,8 +48,8 @@ public class ProductTypesControllerTests
     [Fact]
     public async Task DeleteProductType_DeleteProductType()
     {
-        await Client.PostNewProductType("Keyboard");
-        await Client.DeleteProductType("Keyboard");
+        await Client.Add("Keyboard");
+        await Client.Delete("Keyboard");
         JArray productTypesAfterDelete = await Client.GetProductTypes();
         
         Assert.Equal(InitialDb, productTypesAfterDelete);
