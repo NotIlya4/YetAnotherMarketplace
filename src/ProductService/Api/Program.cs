@@ -12,26 +12,19 @@ services.AddRepositories();
 services.AddMappers();
 services.AddAppDbContext(parametersProvider.GetConnectionString());
 services.AddExceptionCatcherMiddlewareServicesConfigured();
-services.AddControllers()
-    .AddXmlDataContractSerializerFormatters();
+services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddConfiguredSwaggerGen();
 services.AddConfiguredCors();
 
 var app = builder.Build();
 
-if (parametersProvider.AutoApplyMigrations())
-{
-    app.ApplyMigrations();
-}
+await app.MigrationsAndSeeding(parametersProvider);
 
-app.UseConfiguredCors();
 app.UseExceptionCatcherMiddleware();
+app.UseConfiguredCors();
 app.UseSwagger();
 app.UseSwaggerUI();
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-app.UseAuthorization();
 app.MapControllers();
 
 app.Run();

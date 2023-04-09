@@ -10,21 +10,21 @@ namespace Api.Controllers.ProductsControllers;
 [Tags("Products")]
 public class CreateProductsController : ProductsControllerBase
 {
-    private IProductService ProductService { get; }
-    private ViewMapper Mapper { get; }
+    private readonly IProductService _productService;
+    private readonly ViewMapper _mapper;
 
     public CreateProductsController(IProductService productService, ViewMapper mapper)
     {
-        ProductService = productService;
-        Mapper = mapper;
+        _productService = productService;
+        _mapper = mapper;
     }
 
     [HttpPost]
     [ProducesOk]
     public async Task<ActionResult<ProductView>> CreateProduct(CreateProductCommandView commandView)
     {
-        Product product = await ProductService.CreateNewProduct(Mapper.MapCreateProductCommand(commandView));
-        ProductView productView = Mapper.MapProduct(product);
+        Product product = await _productService.CreateNewProduct(_mapper.MapCreateProductCommand(commandView));
+        ProductView productView = _mapper.MapProduct(product);
         return Ok(productView);
     }
 }

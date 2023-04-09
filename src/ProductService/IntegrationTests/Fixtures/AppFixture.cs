@@ -1,5 +1,6 @@
-﻿using Api.Extensions;
-using Infrastructure.EntityFramework;
+﻿using Infrastructure.EntityFramework;
+using Infrastructure.EntityFramework.Seeder;
+using Infrastructure.Extensions;
 using IntegrationTests.EntityLists;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -15,6 +16,8 @@ public class AppFixture : ICollectionFixture<AppFixture>, IDisposable
     public BrandsList BrandsList { get; }
     public ProductTypesList ProductTypesList { get; }
     public ProductsList ProductsList { get; }
+    private readonly DbSeeder _seeder;
+    private readonly DbMigrator _migrator;
 
     public AppFixture()
     {
@@ -31,23 +34,24 @@ public class AppFixture : ICollectionFixture<AppFixture>, IDisposable
         var scope = WebApplicationFactory.Services.CreateScope();
         ApplicationDbContext dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         dbContext.Database.EnsureDeleted();
-        WebApplicationFactory.Services.ApplyMigrations();
-        
-        DbSeeder seeder = new(BrandsList.BrandDatas, ProductTypesList.ProductTypeDatas, ProductsList.ProductDatas);
-        seeder.Seed(dbContext);
-        scope.Dispose();
+
+        _migrator = new DbMigrator(WebApplicationFactory.Services);
+        _migrator.Migrate().GetAwaiter().GetResult();
+
+        _seeder = new DbSeeder(WebApplicationFactory.Services, BrandsList.BrandDatas, ProductTypesList.ProductTypeDatas,
+            ProductsList.ProductDatas);
+        _seeder.Seed().GetAwaiter().GetResult();
     }
 
     public async Task ReloadDb()
     {
-        var scope = WebApplicationFactory.Services.CreateScope();
-        ApplicationDbContext dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        await dbContext.Database.EnsureDeletedAsync();
-        WebApplicationFactory.Services.ApplyMigrations();
-        
-        DbSeeder seeder = new(BrandsList.BrandDatas, ProductTypesList.ProductTypeDatas, ProductsList.ProductDatas);
-        seeder.Seed(dbContext);
-        scope.Dispose();
+        await WebApplicationFactory.Services.UsingScope<ApplicationDbContext>(async dbContext =>
+        {
+            await dbContext.Database.EnsureDeletedAsync();
+        });
+
+        await _migrator.Migrate();
+        await _seeder.Seed();
     }
 
     public void Dispose()

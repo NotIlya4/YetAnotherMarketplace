@@ -2,9 +2,6 @@ services:
   product-service:
     build: ./src/ProductService/
     container_name: product-service
-    depends_on:
-      - sql-server
-      - nginx
     restart: always
     environment:
       - ASPNETCORE_ENVIRONMENT=DockerCompose
@@ -39,9 +36,6 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=DockerCompose
     restart: always
-    depends_on:
-      - redis
-      - nginx
     ports:
       - 5002:80
     

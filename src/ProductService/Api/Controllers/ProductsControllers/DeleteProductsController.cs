@@ -1,8 +1,7 @@
-﻿using Api.Controllers.ProductsControllers.Helpers;
-using Api.ProducesAttributes;
+﻿using Api.ProducesAttributes;
 using Api.SwaggerEnrichers.ProductStrictFilterView;
 using Infrastructure.FilteringSystem.Product;
-using Infrastructure.Repositories.ProductRepository;
+using Infrastructure.ProductService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.ProductsControllers;
@@ -10,13 +9,11 @@ namespace Api.Controllers.ProductsControllers;
 [Tags("Products")]
 public class DeleteProductsController : ProductsControllerBase
 {
-    private IProductRepository ProductRepository { get; }
-    public ViewMapper Mapper { get; }
+    private readonly IProductService _productService;
 
-    public DeleteProductsController(IProductRepository productRepository, ViewMapper mapper)
+    public DeleteProductsController(IProductService productService)
     {
-        ProductRepository = productRepository;
-        Mapper = mapper;
+        _productService = productService;
     }
     
     [HttpDelete]
@@ -25,7 +22,7 @@ public class DeleteProductsController : ProductsControllerBase
     [ProducesNoContent]
     public async Task<IActionResult> DeleteProduct([ProductStrictFilterPropertyName] string propertyName, string value)
     {
-        await ProductRepository.Delete(new ProductStrictFilter(
+        await _productService.DeleteProduct(new ProductStrictFilter(
             productPropertyName: propertyName, 
             expectedValue: value));
         return NoContent();

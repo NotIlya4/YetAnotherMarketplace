@@ -34,6 +34,11 @@ public class ProductService : IProductService
         return product;
     }
 
+    public async Task DeleteProduct(ProductStrictFilter filter)
+    {
+        await _productRepository.Delete(filter);
+    }
+
     public async Task<GetProductsResult> GetProducts(GetProductsQuery query)
     {
         List<Product> products = await _productRepository.GetProducts(query);

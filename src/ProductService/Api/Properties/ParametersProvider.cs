@@ -22,9 +22,14 @@ public class ParametersProvider
         return connectionString;
     }
 
-    public bool AutoApplyMigrations()
+    public bool AutoMigrate()
     {
-        return GetRequiredParameter<bool>("AutoApplyMigrations");
+        return GetRequiredParameter<bool>("AutoMigrate");
+    }
+
+    public bool AutoSeed()
+    {
+        return GetRequiredParameter<bool>("AutoSeed");
     }
 
     private T GetRequiredParameter<T>(string parameterName)

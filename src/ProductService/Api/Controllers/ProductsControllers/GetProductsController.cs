@@ -15,15 +15,15 @@ namespace Api.Controllers.ProductsControllers;
 [Tags("Products")]
 public class GetProductsController : ProductsControllerBase
 {
-    private IProductService ProductService { get; }
-    private ViewMapper Mapper { get; }
-    private SortingInfoParser SortingInfoParser { get; }
+    private readonly IProductService _productService;
+    private readonly ViewMapper _mapper;
+    private readonly SortingInfoParser _sortingInfoParser;
 
     public GetProductsController(IProductService productService, ViewMapper mapper, SortingInfoParser sortingInfoParser)
     {
-        ProductService = productService;
-        Mapper = mapper;
-        SortingInfoParser = sortingInfoParser;
+        _productService = productService;
+        _mapper = mapper;
+        _sortingInfoParser = sortingInfoParser;
     }
 
     [HttpGet]
@@ -34,15 +34,15 @@ public class GetProductsController : ProductsControllerBase
         {
             Pagination = new Pagination(offset: queryView.Offset, limit: queryView.Limit),
             SortingCollection = 
-                new ProductSortingCollection(SortingInfoParser.ParseProductSortingInfo(queryView.Sortings ?? new List<string>())),
+                new ProductSortingCollection(_sortingInfoParser.ParseProductSortingInfo(queryView.Sortings ?? new List<string>())),
             FluentFilters = new ProductFluentFilters(
                 productTypeName: queryView.ProductType is null ? null : new Name(queryView.ProductType),
                 brandName: queryView.Brand is null ? null : new Name(queryView.Brand),
                 searching: queryView.Searching is null ? null : new Name(queryView.Searching))
         };
 
-        GetProductsResult result = await ProductService.GetProducts(query);
-        List<ProductView> productViews = Mapper.MapProduct(result.Products);
+        GetProductsResult result = await _productService.GetProducts(query);
+        List<ProductView> productViews = _mapper.MapProduct(result.Products);
         
         return Ok(new GetProductsResultView()
         {
@@ -57,10 +57,10 @@ public class GetProductsController : ProductsControllerBase
     [ProducesEntityNotFound]
     public async Task<ActionResult<ProductView>> GetProduct([ProductStrictFilterPropertyName] string propertyName, string value)
     {
-        Product product = await ProductService.GetProduct(new ProductStrictFilter(
+        Product product = await _productService.GetProduct(new ProductStrictFilter(
             productPropertyName: propertyName, 
             expectedValue: value));
-        ProductView productView = Mapper.MapProduct(product);
+        ProductView productView = _mapper.MapProduct(product);
         return Ok(productView);
     }
 }
