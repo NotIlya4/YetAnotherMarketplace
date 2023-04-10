@@ -1,3 +1,6 @@
 [submodule "src/ProductService"]
 	path = src/ProductService
 	url = https://github.com/NotIlya4/Skinet.ProductService
+[submodule "src/Frontend"]
+	path = src/Frontend
+	url = https://github.com/NotIlya4/Skinet.Frontend
