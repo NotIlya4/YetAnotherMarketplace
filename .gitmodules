@@ -1,0 +1,3 @@
+[submodule "src/ProductService"]
+	path = src/ProductService
+	url = https://github.com/NotIlya4/Skinet.ProductService
