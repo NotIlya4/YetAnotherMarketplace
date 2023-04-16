@@ -4,3 +4,9 @@
 [submodule "src/Frontend"]
 	path = src/Frontend
 	url = https://github.com/NotIlya4/Skinet.Frontend
+[submodule "src/AccountService"]
+	path = src/AccountService
+	url = https://github.com/NotIlya4/Skinet.AccountService
+[submodule "src/Gateway"]
+	path = src/Gateway
+	url = https://github.com/NotIlya4/Skinet.Gateway

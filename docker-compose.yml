@@ -7,6 +7,22 @@ services:
       - ASPNETCORE_ENVIRONMENT=DockerCompose
     ports:
       - 5001:80
+  account-service:
+    build: ./src/AccountService/
+    container_name: account-service
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=DockerCompose
+    ports:
+      - 5002:80
+  gateway:
+    build: .
+    container_name: gateway
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=DockerCompose
+    ports:
+      - 5003:80
   sql-server:
     image: mcr.microsoft.com/mssql/server
     container_name: sql-server
