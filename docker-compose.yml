@@ -16,7 +16,7 @@ services:
     ports:
       - 5002:80
   gateway:
-    build: .
+    build: ./src/Gateway/
     container_name: gateway
     restart: always
     environment:
