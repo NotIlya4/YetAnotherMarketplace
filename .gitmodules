@@ -10,3 +10,6 @@
 [submodule "src/Gateway"]
 	path = src/Gateway
 	url = https://github.com/NotIlya4/Skinet.Gateway
+[submodule "src/BasketService"]
+	path = src/BasketService
+	url = https://github.com/NotIlya4/BasketService
