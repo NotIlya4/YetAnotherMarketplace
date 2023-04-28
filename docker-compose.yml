@@ -23,6 +23,14 @@ services:
       - ASPNETCORE_ENVIRONMENT=DockerCompose
     ports:
       - 5003:80
+  basket-service:
+    build: ./src/BasketService/
+    container_name: basket-service
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=DockerCompose
+    ports:
+      - 5004:80
   sql-server:
     image: mcr.microsoft.com/mssql/server
     container_name: sql-server
@@ -46,14 +54,6 @@ services:
     volumes:
       - redis-data:/data
     command: ["redis-server", "--appendonly", "yes"]
-  basket-service:
-    build: ./src/BasketService/
-    container_name: basket-service
-    environment:
-      - ASPNETCORE_ENVIRONMENT=DockerCompose
-    restart: always
-    ports:
-      - 5002:80
     
 volumes:
   sql-server-volume:

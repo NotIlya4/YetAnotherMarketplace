@@ -22,6 +22,7 @@ tabs = [
     build_tab("product-service", PROJECT_FOLDER),
     build_tab("account-service", PROJECT_FOLDER),
     build_tab("gateway", PROJECT_FOLDER),
+    build_tab("basket-service", PROJECT_FOLDER),
     build_tab("git", PROJECT_FOLDER),
 ]
 
