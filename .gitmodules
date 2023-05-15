@@ -13,6 +13,3 @@
 [submodule "src/BasketService"]
 	path = src/BasketService
 	url = https://github.com/NotIlya4/YetAnotherMarketplace.BasketService
-[submodule "src/OrderService"]
-	path = src/OrderService
-	url = https://github.com/NotIlya4/YetAnotherMarketplace.OrderService
