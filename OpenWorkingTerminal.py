@@ -12,7 +12,7 @@ def build_query(tabs: [str]):
     return query[:-2]
 
 
-PROJECT_FOLDER = "D:\Projects\Programming\cs\skinet"
+PROJECT_FOLDER = "D:\Projects\Programming\cs\YetAnotherMarketplace"
 FRONTEND_FOLDER = f"{PROJECT_FOLDER}\src\Frontend"
 
 tabs = [
