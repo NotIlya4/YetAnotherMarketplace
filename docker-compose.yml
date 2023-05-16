@@ -1,32 +1,51 @@
 services:
   product-service:
     build: ./src/ProductService/
+    image: notilya4/product-service
     container_name: product-service
     restart: always
+    depends_on:
+      - sql-server
+      - seq
     environment:
       - ASPNETCORE_ENVIRONMENT=DockerCompose
     ports:
       - 5001:80
   account-service:
     build: ./src/AccountService/
+    image: notilya4/account-service
     container_name: account-service
     restart: always
+    depends_on:
+      - sql-server
+      - redis
+      - seq
     environment:
       - ASPNETCORE_ENVIRONMENT=DockerCompose
     ports:
       - 5002:80
   gateway:
     build: ./src/Gateway/
+    image: notilya4/gateway
     container_name: gateway
     restart: always
+    depends_on:
+      - account-service
+      - basket-service
+      - product-service
+      - seq
     environment:
       - ASPNETCORE_ENVIRONMENT=DockerCompose
     ports:
       - 5003:80
   basket-service:
     build: ./src/BasketService/
+    image: notilya4/basket-service
     container_name: basket-service
     restart: always
+    depends_on:
+      - redis
+      - seq
     environment:
       - ASPNETCORE_ENVIRONMENT=DockerCompose
     ports:
@@ -40,9 +59,9 @@ services:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=1tsJusT@S@mpleP@ssword!
     volumes:
-      - sql-server-volume:/var/opt/mssql
+      - sql-server-data:/var/opt/mssql
   nginx:
-    build: ./src/nginx/
+    build: ./src/Nginx/
     container_name: nginx
     ports:
       - 5000:80
@@ -66,6 +85,6 @@ services:
     
     
 volumes:
-  sql-server-volume:
+  sql-server-data:
   redis-data:
   seq-data:
