@@ -23,10 +23,10 @@ Backend consists of several REST API Services that work behind a gateway. Some t
 - `ProductService` Provides products, brands and product types.
 
 ### Logging
-Services use serilog + seq for logging. Gateway generates request id and propagates it to forwarding request `x-request-id` header so you can track logs for same request among services.
+Services use serilog + seq for logging. Gateway generates request id and propagates it when forwarding request in `x-request-id` header thus you can track logs for same request among services.
 
 ### CI/CD
-Services repositories have actions for build application, run unit and integration tests, publish image to dockerhub.
+Service repositories have github actions workflows for build application, run unit and integration tests and publish image to dockerhub.
 
 ### Authorization
 Authorization is done by `AccountService` that utilize jwt and refresh tokens. Gateway expects jwt token in `Authorization` header.
