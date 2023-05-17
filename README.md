@@ -2,9 +2,11 @@
 This is a main repo of YetAnotherMarketplace project. YetAnotherMarketplace is a study marketplace website currently it has only a few features: `Register and login`, `Basket linked to user`, `Products sorting and filtering`.
 
 ## Run
-Write in console `docker-compose up` and navigate:
+Write in console `docker-compose up`. After all services fully launches run `docker-compose -f docker-compose.services.yml up` and navigate:
 - `http://localhost:4200` Frontend.
 - `http://localhost:5003/swagger/index.html` Gateway swagger docs.
+
+The reason why deploy splitted on two parts is that sql server and seq in particular emits that they are "ready" too early when they are not ready to consume requests hence sometimes services try to run migration from zero because they think that db doesn't exists.
 
 ## Frontend
 Frontend is written using Angular. I tried to make it modular so i extracted some components to make them presentational components. It has several pages:

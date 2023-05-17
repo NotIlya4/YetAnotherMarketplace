@@ -1,0 +1,54 @@
+services:
+  product-service:
+    build: ./src/ProductService/
+    image: notilya4/product-service
+    container_name: product-service
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=DockerCompose
+    ports:
+      - 5001:80
+    networks:
+      - net
+  account-service:
+    build: ./src/AccountService/
+    image: notilya4/account-service
+    container_name: account-service
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=DockerCompose
+    ports:
+      - 5002:80
+    networks:
+      - net
+  gateway:
+    build: ./src/Gateway/
+    image: notilya4/gateway
+    container_name: gateway
+    restart: always
+    depends_on:
+      - account-service
+      - basket-service
+      - product-service
+    environment:
+      - ASPNETCORE_ENVIRONMENT=DockerCompose
+    ports:
+      - 5003:80
+    networks:
+      - net
+  basket-service:
+    build: ./src/BasketService/
+    image: notilya4/basket-service
+    container_name: basket-service
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=DockerCompose
+    ports:
+      - 5004:80
+    networks:
+      - net
+
+networks:
+  net:
+    name: yet-another-marketplace-network
+    external: true
