@@ -4,8 +4,9 @@ This is a main repo of YetAnotherMarketplace project. YetAnotherMarketplace is a
 ## Deploy
 To deploy an app do following steps:
 1. Run `git clone https://github.com/NotIlya4/YetAnotherMarketplace`.
-2. Write in console `docker-compose up`. And wait until all services launch.
-3. After all services fully launch run `docker-compose -f docker-compose.services.yml up`
+2. Run `cd YetAnotherMarketplace`.
+3. Write in console `docker-compose up`. And wait until all services launch.
+4. After all services fully launch run `docker-compose -f docker-compose.services.yml up`
 
 Now application fully deployed and you can navigate:
 - `http://localhost:4200` Frontend.
