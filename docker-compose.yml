@@ -2,8 +2,6 @@ services:
   sql-server:
     image: mcr.microsoft.com/mssql/server
     container_name: sql-server
-    ports:
-      - 1433:1433
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=1tsJusT@S@mpleP@ssword!
@@ -21,8 +19,6 @@ services:
   redis:
     image: redis
     container_name: redis
-    ports:
-      - 6379:6379
     volumes:
       - redis-data:/data
     command: ["redis-server", "--appendonly", "yes"]
