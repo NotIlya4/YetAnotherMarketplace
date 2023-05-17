@@ -1,8 +1,13 @@
 # YetAnotherMarketplace
 This is a main repo of YetAnotherMarketplace project. YetAnotherMarketplace is a study marketplace website currently it has only a few features: `Register and login`, `Basket linked to user`, `Products sorting and filtering`.
 
-## Run
-Write in console `docker-compose up`. After all services fully launches run `docker-compose -f docker-compose.services.yml up` and navigate:
+## Deploy
+To deploy an app do following steps:
+1. Run `git clone https://github.com/NotIlya4/YetAnotherMarketplace`.
+2. Write in console `docker-compose up`. And wait until all services launch.
+3. After all services fully launch run `docker-compose -f docker-compose.services.yml up`
+
+Now application fully deployed and you can navigate:
 - `http://localhost:4200` Frontend.
 - `http://localhost:5003/swagger/index.html` Gateway swagger docs.
 

@@ -39,6 +39,14 @@ services:
       - ACCEPT_EULA=Y
     networks:
       - net
+  frontend:
+    build: ./src/Frontend
+    image: notilya4/frontend
+    container_name: frontend
+    ports:
+      - 4200:80
+    networks:
+      - net
     
 volumes:
   sql-server-data:
