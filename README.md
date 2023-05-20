@@ -1,5 +1,5 @@
 # YetAnotherMarketplace
-This is a main repo of YetAnotherMarketplace project. YetAnotherMarketplace is a study marketplace website currently it has only a few features: `Register and login`, `Basket linked to user`, `Products sorting and filtering`.
+This is a main repo of YetAnotherMarketplace project. YetAnotherMarketplace is a study marketplace website currently it has only a few features: `Register and login`, `Basket linked to user`, `Products sorting and filtering`. This project has short [video overview](https://youtu.be/IczJgJISVK4)
 
 ## Deploy
 To deploy an app do following steps:
