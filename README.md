@@ -1,18 +1,15 @@
 # YetAnotherMarketplace
-This is a main repo of YetAnotherMarketplace project. YetAnotherMarketplace is a study marketplace website currently it has only a few features: `Register and login`, `Basket linked to user`, `Products sorting and filtering`. This project has short [video overview](https://youtu.be/IczJgJISVK4)
+This is a main repo of YetAnotherMarketplace project. YetAnotherMarketplace is a study marketplace website currently it has only a few features: `Register and login`, `Basket linked to user`, `Products sorting and filtering`. This project has short [video overview](https://youtu.be/IczJgJISVK4).
 
 ## Deploy
 To deploy an app do following steps:
 1. Run `git clone https://github.com/NotIlya4/YetAnotherMarketplace` or if you want to download all services source code run `git clone --recursive https://github.com/NotIlya4/YetAnotherMarketplace`.
 2. Run `cd YetAnotherMarketplace`.
-3. Write in console `docker-compose up`. And wait until all services launch.
-4. After all services fully launch run `docker-compose -f docker-compose.services.yml up`
+3. Write in console `docker-compose up`.
 
 Now application fully deployed and you can navigate:
 - `http://localhost:4200` Frontend.
 - `http://localhost:5003/swagger/index.html` Gateway swagger docs.
-
-The reason why deploy splitted on two parts is that sql server and seq in particular emits that they are "ready" too early when they are not ready to consume requests hence sometimes services try to run migration from zero because they think that db doesn't exists.
 
 ## Frontend
 Frontend is written using Angular. I tried to make it modular so i extracted some components to make them presentational components. It has several pages:
