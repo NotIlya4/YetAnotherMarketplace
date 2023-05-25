@@ -1,7 +1,7 @@
 services:
   product-service:
     build: ./src/ProductService/
-    image: notilya4/product-service
+    image: notilya4/yet-another-marketplace.product-service
     container_name: product-service
     restart: always
     environment:
@@ -11,7 +11,7 @@ services:
       - seq
   account-service:
     build: ./src/AccountService/
-    image: notilya4/account-service
+    image: notilya4/yet-another-marketplace.account-service
     container_name: account-service
     restart: always
     environment:
@@ -22,7 +22,7 @@ services:
       - seq
   gateway:
     build: ./src/Gateway/
-    image: notilya4/gateway
+    image: notilya4/yet-another-marketplace.gateway
     container_name: gateway
     restart: always
     environment:
@@ -35,7 +35,7 @@ services:
       - 5003:80
   basket-service:
     build: ./src/BasketService/
-    image: notilya4/basket-service
+    image: notilya4/yet-another-marketplace.basket-service
     container_name: basket-service
     restart: always
     environment:
@@ -66,14 +66,14 @@ services:
     image: datalust/seq
     container_name: seq
     ports:
-      - 5431:80
+      - 5341:80
     volumes:
       - seq-data:/data
     environment:
       - ACCEPT_EULA=Y
   frontend:
     build: ./src/Frontend
-    image: notilya4/frontend
+    image: notilya4/yet-another-marketplace.frontend
     container_name: frontend
     ports:
       - 4200:80
