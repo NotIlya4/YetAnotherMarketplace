@@ -1,6 +1,16 @@
 # YetAnotherMarketplace
 This is a main repo of YetAnotherMarketplace project. YetAnotherMarketplace is a marketplace website currently it has only a few features: `Register and login`, `Basket linked to user`, `Products sorting and filtering`. This project has short [video overview](https://youtu.be/IczJgJISVK4).
 
+## Screenshots
+### Products main page
+![Screenshot1](./assets/s1.png)
+
+### Basket page
+![Screenshot2](./assets/s2.png)
+
+### Login/Register page
+![Screenshot3](./assets/s3.png)
+
 ## Deploy
 To deploy an app do following steps:
 1. Run `git clone https://github.com/NotIlya4/YetAnotherMarketplace` or if you want to download all services source code run `git clone --recursive https://github.com/NotIlya4/YetAnotherMarketplace`.
